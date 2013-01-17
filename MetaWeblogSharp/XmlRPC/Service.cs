@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 
 namespace MetaWeblogSharp.XmlRPC
@@ -29,11 +30,19 @@ namespace MetaWeblogSharp.XmlRPC
 
             using (var webResponse = (System.Net.HttpWebResponse)request.GetResponse())
             {
-                using (var reader = new System.IO.StreamReader(webResponse.GetResponseStream()))
+                using (var responseStream = webResponse.GetResponseStream())
                 {
-                    string webpageContent = reader.ReadToEnd();
-                    var response = new MethodResponse(webpageContent);
-                    return response;
+                    if (responseStream == null)
+                    {
+                        throw new XmlRPCException("Response Stream is unexpectedly null");
+                    }
+
+                    using (var reader = new System.IO.StreamReader(responseStream))
+                    {
+                        string webpageContent = reader.ReadToEnd();
+                        var response = new MethodResponse(webpageContent);
+                        return response;
+                    }                    
                 }
             }
         }

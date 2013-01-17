@@ -4,13 +4,6 @@ using System.Linq;
 
 namespace MetaWeblogSharp.XmlRPC
 {
-    public class Fault
-    {
-        public int Code;
-        public string String;
-        public object FaultValue;
-    }
-
     public class MethodResponse
     {
         public string Raw;
@@ -67,7 +60,8 @@ namespace MetaWeblogSharp.XmlRPC
             if (value_el.HasElements)
             {
                 var type_el = value_el.Elements().First();
-                if (type_el.Name == "array")
+                string typename = type_el.Name.ToString();
+                if (typename == "array")
                 {
                     var data_el = type_el.Element("data");
 
@@ -80,7 +74,7 @@ namespace MetaWeblogSharp.XmlRPC
                     }
                     return list;
                 }
-                else if (type_el.Name == "struct")
+                else if (typename == "struct")
                 {
                     var member_els = type_el.Elements("member").ToList();
                     var dic = new Dictionary<string, object>();
@@ -96,11 +90,11 @@ namespace MetaWeblogSharp.XmlRPC
                     }
                     return dic;
                 }
-                else if (type_el.Name == "string")
+                else if (typename == "string")
                 {
                     return input_value;
                 }
-                else if (type_el.Name == "dateTime.iso8601")
+                else if (typename == "dateTime.iso8601")
                 {
 
                     System.DateTime dt = System.DateTime.Now;
@@ -110,11 +104,11 @@ namespace MetaWeblogSharp.XmlRPC
                     }
                     return System.DateTime.ParseExact(input_value,"yyyyMMddTHH:mm:ss",null);
                 }
-                else if (type_el.Name == "int" | type_el.Name == "i4")
+                else if (typename == "int" | typename == "i4")
                 {
                     return int.Parse(input_value);
                 }
-                else if (type_el.Name == "boolean")
+                else if (typename == "boolean")
                 {
                     var i = int.Parse(input_value);
                     var b = (i != 0);
@@ -122,7 +116,7 @@ namespace MetaWeblogSharp.XmlRPC
                 }
                 else
                 {
-                    string msg = string.Format("Unsupported type: {0}", type_el.Name.ToString());
+                    string msg = string.Format("Unsupported type: {0}", typename.ToString());
                     throw new XmlRPCException(msg);
                 }
             }
