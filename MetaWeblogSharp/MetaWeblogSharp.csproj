@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MetaWeblog\BlogInfo.cs" />
     <Compile Include="MetaWeblog\MediaObjectInfo.cs" />
     <Compile Include="MetaWeblog\PostInfo.cs" />
     <Compile Include="MetaWeblog\Service.cs" />

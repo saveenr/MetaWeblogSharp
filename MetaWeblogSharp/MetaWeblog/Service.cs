@@ -12,6 +12,7 @@ namespace MetaWeblogSharp
         public string BlogID;
         public string Username;
         public string Password;
+        private string _appkey = "0123456789ABCDEF";
 
         public Service(string url, string blogid, string user, string password)
         {
@@ -133,6 +134,18 @@ namespace MetaWeblogSharp
             }
         }
 
+        private bool getbool(IDictionary<string, object> dic, string name)
+        {
+            if (dic.ContainsKey(name))
+            {
+                return (bool)dic[name];
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public string NewPost(string title, string description, IList<string> categories, bool publish)
         {
             List<object> cats=null;
@@ -169,12 +182,10 @@ namespace MetaWeblogSharp
 
         public bool DeletePost(string postid)
         {
-            string appkey = "0123456789ABCDEF";
-
             var service = new XmlRPC.Service(this.URL);
 
             var method = new XmlRPC.MethodCall("metaWeblog.deletePost");
-            method.AddParameter(appkey);
+            method.AddParameter(_appkey);
             method.AddParameter(postid);
             method.AddParameter(Username);
             method.AddParameter(Password);
@@ -187,5 +198,29 @@ namespace MetaWeblogSharp
             return success;
         }
 
+        public BlogInfo GetUsersBlogs()
+        {
+            var service = new XmlRPC.Service(this.URL);
+
+            var method = new XmlRPC.MethodCall("metaWeblog.getUsersBlogs");
+            method.AddParameter(this._appkey); 
+            method.AddParameter(Username);
+            method.AddParameter(Password);
+
+            var response = service.ExecuteRaw(method);
+            var list = (List<object>)response.Parameters[0];
+            var struct_ = (Dictionary<string, object>)list[0];
+            var item = new BlogInfo();
+
+            //item.Categories 
+            item.BlogID= (string)struct_["blogid"];
+            item.URL= (string)struct_["url"];
+            item.BlogName= (string)struct_["blogName"];
+            item.IsAdmin = getbool(struct_,"isAdmin");
+            item.SiteName= getstring(struct_,"siteName");
+            item.Capabilities = getstring(struct_,"capabilities");
+            item.XmlRPCEndPoint = getstring(struct_, "xmlrpc");
+            return item;
+        }
     }
 }

@@ -9,12 +9,15 @@ namespace DemoApp
     {
         static void Main(string[] args)
         {
-            var doc = System.Xml.Linq.XDocument.Load("D:\\saveenr\\skydrive\\msdn.xml");
+            //var doc = System.Xml.Linq.XDocument.Load("D:\\saveenr\\skydrive\\msdn.xml");
+            var doc = System.Xml.Linq.XDocument.Load("D:\\saveenr\\skydrive\\viziblr.xml");
+
             var root = doc.Root;
             string blogid = root.Element("blogid").Value;
             string blog_metweblog_url = root.Element("metaweblog_url").Value;
             string username = root.Element("username").Value;
             string password = root.Element("password").Value;
+
 
             var service = new MetaWeblogSharp.Service(blog_metweblog_url, blogid, username, password);
             var response = service.GetRecentPosts(10);
@@ -30,9 +33,11 @@ namespace DemoApp
                 // "A", "B", "C"
             };
 
-            var new_post_id = service.NewPost("test" + System.DateTime.Now.ToString(), string.Format("<p>HI {0}</p>", System.DateTime.Now), categories, false);
-            var new_post_info = service.GetPost(new_post_id);
-            var success = service.DeletePost(new_post_id);
+            var blogs = service.GetUsersBlogs();
+
+            //var new_post_id = service.NewPost("test" + System.DateTime.Now.ToString(), string.Format("<p>HI {0}</p>", System.DateTime.Now), categories, false);
+            //var new_post_info = service.GetPost(new_post_id);
+            //var success = service.DeletePost(new_post_id);
 
         }
     }
