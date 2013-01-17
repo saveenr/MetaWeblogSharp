@@ -12,7 +12,7 @@ namespace MetaWeblogSharp
         public string BlogID;
         public string Username;
         public string Password;
-        private string _appkey = "0123456789ABCDEF";
+        public string AppKey = "0123456789ABCDEF";
 
         public Service(string url, string blogid, string user, string password)
         {
@@ -53,7 +53,6 @@ namespace MetaWeblogSharp
                 pi.PermaLink= getstring(struct_,"permaLink");
                 pi.Description = (string)struct_["description"];
                 items.Add(pi);
-                int x = 1;
             }
             return items;
         }
@@ -185,7 +184,7 @@ namespace MetaWeblogSharp
             var service = new XmlRPC.Service(this.URL);
 
             var method = new XmlRPC.MethodCall("metaWeblog.deletePost");
-            method.AddParameter(_appkey);
+            method.AddParameter(AppKey);
             method.AddParameter(postid);
             method.AddParameter(Username);
             method.AddParameter(Password);
@@ -203,7 +202,7 @@ namespace MetaWeblogSharp
             var service = new XmlRPC.Service(this.URL);
 
             var method = new XmlRPC.MethodCall("metaWeblog.getUsersBlogs");
-            method.AddParameter(this._appkey); 
+            method.AddParameter(this.AppKey); 
             method.AddParameter(Username);
             method.AddParameter(Password);
 
