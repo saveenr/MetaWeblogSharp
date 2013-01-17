@@ -4,16 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6B7B4E91-1248-4EA6-A93D-DB9A9AD36D11}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{0F9C46C6-EE2C-4DC0-BB3F-84CCFC9E5322}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MetaWeblogSharp</RootNamespace>
-    <AssemblyName>MetaWeblogSharp</AssemblyName>
+    <RootNamespace>DemoApp</RootNamespace>
+    <AssemblyName>DemoApp</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -40,14 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MetaWeblog\MediaObjectInfo.cs" />
-    <Compile Include="MetaWeblog\PostInfo.cs" />
-    <Compile Include="MetaWeblog\Service.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="XmlRPC\MethodCall.cs" />
-    <Compile Include="XmlRPC\MethodResponse.cs" />
-    <Compile Include="XmlRPC\Service.cs" />
-    <Compile Include="XmlRPC\XmlRPCException.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MetaWeblogSharp\MetaWeblogSharp.csproj">
+      <Project>{6b7b4e91-1248-4ea6-a93d-db9a9ad36d11}</Project>
+      <Name>MetaWeblogSharp</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
