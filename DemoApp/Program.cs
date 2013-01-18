@@ -24,7 +24,7 @@ namespace DemoApp
 
             var first_post_1 = response[0];
             var first_post_2 = service.GetPost(first_post_1.PostID);
-            var bytes = System.IO.File.ReadAllBytes("D:\\test.png");
+            var bytes = System.IO.File.ReadAllBytes("test1.png");
 
             var response2 = service.NewMediaObject("12356789012356/789012356789012345678901234567890.png", "image/png", bytes);
 
