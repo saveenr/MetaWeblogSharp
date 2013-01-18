@@ -40,16 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MetaWeblog\BlogInfo.cs" />
-    <Compile Include="MetaWeblog\MediaObjectInfo.cs" />
-    <Compile Include="MetaWeblog\PostInfo.cs" />
-    <Compile Include="MetaWeblog\Service.cs" />
+    <Compile Include="BlogInfo.cs" />
+    <Compile Include="MediaObjectInfo.cs" />
+    <Compile Include="PostInfo.cs" />
+    <Compile Include="Service.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XmlRPC\Fault.cs" />
     <Compile Include="XmlRPC\MethodCall.cs" />
     <Compile Include="XmlRPC\MethodResponse.cs" />
     <Compile Include="XmlRPC\Service.cs" />
     <Compile Include="XmlRPC\XmlRPCException.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="MetaWeblog\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
