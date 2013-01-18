@@ -250,5 +250,45 @@ namespace MetaWeblogSharp
             return success;
         }
 
+        public List<CategoryInfo> GetCategories()
+        {
+            var service = new XmlRPC.Service(this.URL);
+
+            var method = new XmlRPC.MethodCall("metaWeblog.getCategories");
+            method.AddParameter(BlogID);
+            method.AddParameter(Username);
+            method.AddParameter(Password);
+
+            var response = service.ExecuteRaw(method);
+
+            var param = response.Parameters[0];
+            var array = (List<object>)param;
+
+            var items = new List<CategoryInfo>();
+            foreach (var value in array)
+            {
+                var struct_ = (Dictionary<string, object>)value;
+
+                var pi = new CategoryInfo();
+                pi.Title = getstring(struct_,"title");
+                pi.Description = getstring(struct_, "description");
+                pi.HTMLURL= getstring(struct_, "htmlUrl");
+                pi.RSSURL= getstring(struct_, "rssUrl");
+                pi.CategoryID= getstring(struct_, "categoryid");
+
+                items.Add(pi);
+            }
+            return items;
+        }
+
+    }
+
+    public class CategoryInfo
+    {
+        public string Description;
+        public string HTMLURL;
+        public string RSSURL;
+        public string Title;
+        public string CategoryID;
     }
 }

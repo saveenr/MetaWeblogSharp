@@ -20,9 +20,9 @@ namespace DemoApp
 
 
             var service = new MetaWeblogSharp.Service(blog_metweblog_url, blogid, username, password);
-            var response = service.GetRecentPosts(10);
+            var posts = service.GetRecentPosts(10);
 
-            var first_post_1 = response[0];
+            var first_post_1 = posts[0];
             var first_post_2 = service.GetPost(first_post_1.PostID);
             var bytes = System.IO.File.ReadAllBytes("test1.png");
 
@@ -32,6 +32,8 @@ namespace DemoApp
             {
                 // "A", "B", "C"
             };
+
+            var categories2 = service.GetCategories();
 
             var blogs = service.GetUsersBlogs();
 
@@ -48,4 +50,5 @@ namespace DemoApp
 
         }
     }
+
 }
