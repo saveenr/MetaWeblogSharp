@@ -28,16 +28,23 @@ namespace DemoApp
 
             var response2 = service.NewMediaObject("12356789012356/789012356789012345678901234567890.png", "image/png", bytes);
 
-            var categories = new List<string>
+            var categories1 = new List<string>
             {
                 // "A", "B", "C"
             };
 
             var blogs = service.GetUsersBlogs();
 
-            //var new_post_id = service.NewPost("test" + System.DateTime.Now.ToString(), string.Format("<p>HI {0}</p>", System.DateTime.Now), categories, false);
-            //var new_post_info = service.GetPost(new_post_id);
-            //var success = service.DeletePost(new_post_id);
+            var title1 = "test" + System.DateTime.Now.ToString();
+            var description1 = string.Format("<p>HI {0}</p>", System.DateTime.Now);
+            var new_post_id = service.NewPost(title1, description1, categories1, false);
+            var new_post_info = service.GetPost(new_post_id);
+
+            var successedit1 = service.EditPost(new_post_info.PostID, title1 + "XXX", description1 + "XXX", categories1, false);
+
+            var new_post_info2 = service.GetPost(new_post_id);
+
+            var success_delete = service.DeletePost(new_post_id);
 
         }
     }

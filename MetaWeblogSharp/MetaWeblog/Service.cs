@@ -147,16 +147,7 @@ namespace MetaWeblogSharp
 
         public string NewPost(string title, string description, IList<string> categories, bool publish)
         {
-            List<object> cats=null;
-
-            if (categories == null)
-            {
-                cats = new List<object>(0);
-            }
-            else
-            {
-                cats = categories.Select(i => (object) i).ToList();
-            }
+            var cats= create_cats(categories);
 
             var service = new XmlRPC.Service(this.URL);
 
@@ -177,6 +168,18 @@ namespace MetaWeblogSharp
             var postid = (string) param;
 
             return postid;
+        }
+
+        private static List<object> create_cats(IList<string> categories)
+        {
+            if (categories == null)
+            {
+                return new List<object>(0);
+            }
+
+            var cats = new List<object>(categories.Count);
+            cats = categories.Select(i => (object) i).ToList();
+            return cats;
         }
 
         public bool DeletePost(string postid)
@@ -221,5 +224,31 @@ namespace MetaWeblogSharp
             item.XmlRPCEndPoint = getstring(struct_, "xmlrpc");
             return item;
         }
+
+        public bool EditPost(string postid, string title, string description, IList<string> categories, bool publish)
+        {
+            var cats = create_cats(categories);
+
+            var service = new XmlRPC.Service(this.URL);
+
+            var struct_ = new Dictionary<string, object>();
+            struct_["title"] = title;
+            struct_["description"] = description;
+            struct_["categories"] = cats;
+
+            var method = new XmlRPC.MethodCall("metaWeblog.editPost");
+            method.AddParameter(postid);
+            method.AddParameter(Username);
+            method.AddParameter(Password);
+            method.AddParameter(struct_);
+            method.AddParameter(publish);
+
+            var response = service.ExecuteRaw(method);
+            var param = response.Parameters[0];
+            var success = (bool)param;
+
+            return success;
+        }
+
     }
 }
