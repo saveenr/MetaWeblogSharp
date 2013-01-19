@@ -43,7 +43,7 @@
     <Compile Include="BlogInfo.cs" />
     <Compile Include="MediaObjectInfo.cs" />
     <Compile Include="PostInfo.cs" />
-    <Compile Include="Service.cs" />
+    <Compile Include="MetaWeblogClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XmlRPC\Fault.cs" />
     <Compile Include="XmlRPC\MethodCall.cs" />

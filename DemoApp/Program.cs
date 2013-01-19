@@ -19,7 +19,7 @@ namespace DemoApp
             string password = root.Element("password").Value;
 
 
-            var service = new MetaWeblogSharp.Service(blog_metweblog_url, blogid, username, password);
+            var service = new MetaWeblogSharp.MetaWeblogClient(blog_metweblog_url, blogid, username, password);
             var posts = service.GetRecentPosts(10);
 
             var first_post_1 = posts[0];
