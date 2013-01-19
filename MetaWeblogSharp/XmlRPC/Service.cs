@@ -6,7 +6,7 @@ namespace MetaWeblogSharp.XmlRPC
 {
     public class Service
     {
-        public String URL;
+        public String URL { get; private set; }
 
         public Service(string url)
         {

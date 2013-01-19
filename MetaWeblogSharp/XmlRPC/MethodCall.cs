@@ -7,7 +7,7 @@ namespace MetaWeblogSharp.XmlRPC
     public class MethodCall
     {
         private List<object> Parameters;
-        private string Name;
+        public string Name { get; private set; }
 
         public MethodCall(string name)
         {
@@ -69,7 +69,6 @@ namespace MetaWeblogSharp.XmlRPC
             }
 
             return doc;
-
         }
 
         private static string type_to_name(System.Type t)
@@ -102,7 +101,6 @@ namespace MetaWeblogSharp.XmlRPC
             {
                 throw new KeyNotFoundException();
             }
-            
         }
         private static void AddValueEl(XElement parent, object value)
         {

@@ -6,8 +6,8 @@ namespace MetaWeblogSharp.XmlRPC
 {
     public class MethodResponse
     {
-        public string Raw;
-        public List<object> Parameters;
+        public string RawData { get; private set; }
+        public List<object> Parameters { get; private set; }
 
         private Fault parsefault(System.Xml.Linq.XElement fault_el)
         {
@@ -27,9 +27,9 @@ namespace MetaWeblogSharp.XmlRPC
         {
             this.Parameters = new List<object>();
 
-            this.Raw = content;
+            this.RawData = content;
 
-            var doc = System.Xml.Linq.XDocument.Parse(this.Raw);
+            var doc = System.Xml.Linq.XDocument.Parse(this.RawData);
             var root = doc.Root;
             var fault_el = root.Element("fault");
             if (fault_el != null)
