@@ -182,7 +182,7 @@ namespace MetaWeblogSharp
         {
             var service = new XmlRPC.Service(this.URL);
 
-            var method = new XmlRPC.MethodCall("metaWeblog.deletePost");
+            var method = new XmlRPC.MethodCall("blogger.deletePost");
             method.AddParameter(AppKey);
             method.AddParameter(postid);
             method.AddParameter(Username);

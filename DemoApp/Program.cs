@@ -48,6 +48,16 @@ namespace DemoApp
 
             var success_delete = service.DeletePost(new_post_id);
 
+            try
+            {
+                // this will raise an exception if the post does not exist
+                var x = service.GetPost(new_post_id);
+            }
+            catch (MetaWeblogSharp.XmlRPC.XmlRPCException exc)
+            {
+                // do nothing
+            }
+
         }
     }
 

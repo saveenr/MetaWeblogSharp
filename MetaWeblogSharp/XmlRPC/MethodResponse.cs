@@ -35,8 +35,9 @@ namespace MetaWeblogSharp.XmlRPC
             if (fault_el != null)
             {
                 var f = parsefault(fault_el);
-                
-                var exc = new XmlRPCException("XMLRPC FAULT: " + f.String);
+
+                string msg = string.Format("XMLRPC FAULT [{0}]: \"{1}\"", f.Code, f.String);
+                var exc = new XmlRPCException(msg);
                 exc.Fault = f;
 
                 throw exc;
