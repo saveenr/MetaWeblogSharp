@@ -13,7 +13,7 @@ namespace MetaWeblogSharp.XmlRPC
             this.URL = url;
         }
 
-        public MethodResponse ExecuteRaw(MethodCall methodcall)
+        public MethodResponse Execute(MethodCall methodcall)
         {
             var doc = methodcall.CreateDocument();
             var request = System.Net.WebRequest.Create(this.URL);
