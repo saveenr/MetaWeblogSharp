@@ -46,10 +46,10 @@ namespace MetaWeblogSharp
                 pi.DateCreated = (System.DateTime) struct_["dateCreated"];
                 pi.Link = (string)struct_["link"];
                 pi.PostID = (string)struct_["postid"];
-                pi.UserID = getstring(struct_,"userid");
-                pi.CommentCount = getint(struct_,"commentCount");
-                pi.PostStatus = getstring(struct_,"post_status");
-                pi.PermaLink= getstring(struct_,"permaLink");
+                pi.UserID = struct_.GetString("userid");
+                pi.CommentCount = struct_.GetInt("commentCount");
+                pi.PostStatus = struct_.GetString("post_status");
+                pi.PermaLink = struct_.GetString("permaLink");
                 pi.Description = (string)struct_["description"];
                 pi.RawData = struct_;
 
@@ -99,42 +99,18 @@ namespace MetaWeblogSharp
             var item = new PostInfo();
 
             //item.Categories 
-            item.PostID = (string) struct_["postid"];
-            item.Description = (string) struct_["description"];
+            item.PostID = struct_.GetString("postid");
+            item.Description = struct_.GetString("description");
             //item.Tags
-            item.Link = (string)struct_["link"];
+            item.Link = struct_.GetString("link");
             item.DateCreated = (System.DateTime)struct_["dateCreated"];
-            item.PermaLink = getstring(struct_,"permaLink");
-            item.PostStatus = getstring(struct_,"post_status");
-            item.Title = (string)struct_["title"];
-            item.UserID = getstring(struct_,"userid");
+            item.PermaLink = struct_.GetString("permaLink");
+            item.PostStatus = struct_.GetString("post_status");
+            item.Title = struct_.GetString("title");
+            item.UserID = struct_.GetString("userid");
 
             item.RawData = struct_;
             return item;
-        }
-
-        private string getstring(IDictionary<string, object> dic, string name)
-        {
-            if (dic.ContainsKey(name))
-            {
-                return (string)dic[name];
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        private int getint(IDictionary<string, object> dic, string name)
-        {
-            if (dic.ContainsKey(name))
-            {
-                return (int)dic[name];
-            }
-            else
-            {
-                return 0;
-            }
         }
 
         private bool getbool(IDictionary<string, object> dic, string name)
@@ -220,9 +196,9 @@ namespace MetaWeblogSharp
             item.URL= (string)struct_["url"];
             item.BlogName= (string)struct_["blogName"];
             item.IsAdmin = getbool(struct_,"isAdmin");
-            item.SiteName= getstring(struct_,"siteName");
-            item.Capabilities = getstring(struct_,"capabilities");
-            item.XmlRPCEndPoint = getstring(struct_, "xmlrpc");
+            item.SiteName = struct_.GetString("siteName");
+            item.Capabilities = struct_.GetString("capabilities");
+            item.XmlRPCEndPoint = struct_.GetString("xmlrpc");
             item.RawData = struct_;
             return item;
         }
@@ -287,11 +263,11 @@ namespace MetaWeblogSharp
                 var struct_ = (XmlRPC.Struct)value;
 
                 var pi = new CategoryInfo();
-                pi.Title = getstring(struct_,"title");
-                pi.Description = getstring(struct_, "description");
-                pi.HTMLURL= getstring(struct_, "htmlUrl");
-                pi.RSSURL= getstring(struct_, "rssUrl");
-                pi.CategoryID= getstring(struct_, "categoryid");
+                pi.Title = struct_.GetString("title");
+                pi.Description = struct_.GetString("description");
+                pi.HTMLURL = struct_.GetString("htmlUrl");
+                pi.RSSURL = struct_.GetString("rssUrl");
+                pi.CategoryID = struct_.GetString("categoryid");
 
                 pi.RawData = struct_;
                 items.Add(pi);
@@ -313,16 +289,15 @@ namespace MetaWeblogSharp
             var struct_ = (XmlRPC.Struct)param;
             var item = new UserInfo();
 
-            item.UserID = getstring(struct_, "userid");
-            item.Nickname= getstring(struct_, "nickname");
-            item.FirstName= getstring(struct_, "firstname");
-            item.LastName= getstring(struct_, "lastname");
-            item.URL= getstring(struct_, "url");
+            item.UserID = struct_.GetString("userid");
+            item.Nickname = struct_.GetString("nickname");
+            item.FirstName = struct_.GetString("firstname");
+            item.LastName = struct_.GetString("lastname");
+            item.URL = struct_.GetString("url");
 
             item.RawData = struct_;
             return item;
         }
-
     }
 
     public class UserInfo
