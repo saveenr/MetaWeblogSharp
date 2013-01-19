@@ -67,7 +67,7 @@ namespace MetaWeblogSharp.XmlRPC
                     var data_el = type_el.Element("data");
 
                     var value_els = data_el.Elements("value").ToList();
-                    var list = new List<object>();
+                    var list = new XmlRPC.Array();
                     foreach (var value_el2 in value_els)
                     {
                         var o = XmlToValue(value_el2);

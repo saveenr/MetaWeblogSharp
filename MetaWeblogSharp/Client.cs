@@ -34,7 +34,7 @@ namespace MetaWeblogSharp
             var response = service.Execute(method);
 
             var param = response.Parameters[0];
-            var array = (List<object>) param;
+            var array = (XmlRPC.Array) param;
 
             var items = new List<PostInfo>();
             foreach (var value in array)
@@ -211,7 +211,7 @@ namespace MetaWeblogSharp
             method.AddParameter(Password);
 
             var response = service.Execute(method);
-            var list = (List<object>)response.Parameters[0];
+            var list = (XmlRPC.Array)response.Parameters[0];
             var struct_ = (XmlRPC.Struct)list[0];
             var item = new BlogInfo();
 
@@ -279,7 +279,7 @@ namespace MetaWeblogSharp
             var response = service.Execute(method);
 
             var param = response.Parameters[0];
-            var array = (List<object>)param;
+            var array = (XmlRPC.Array)param;
 
             var items = new List<CategoryInfo>();
             foreach (var value in array)

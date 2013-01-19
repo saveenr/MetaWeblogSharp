@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
 namespace MetaWeblogSharp.XmlRPC
 {
-    public class Struct: Dictionary<string,object>
-    {
-        
-    }
     public class Service
     {
         public String URL;
