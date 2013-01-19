@@ -9,5 +9,7 @@
         public string Capabilities;
         public bool IsAdmin;
         public string XmlRPCEndPoint;
+
+        public object RawData;
     }
 }

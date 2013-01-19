@@ -12,6 +12,7 @@
         public string PermaLink;
         public string Description;
 
+        public object RawData;
         public PostInfo()
         {
             

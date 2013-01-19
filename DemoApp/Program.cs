@@ -58,6 +58,7 @@ namespace DemoApp
                 // do nothing
             }
 
+            var u1 = service.GetUserInfo();
         }
     }
 

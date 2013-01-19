@@ -51,6 +51,8 @@ namespace MetaWeblogSharp
                 pi.PostStatus = getstring(struct_,"post_status");
                 pi.PermaLink= getstring(struct_,"permaLink");
                 pi.Description = (string)struct_["description"];
+                pi.RawData = struct_;
+
                 items.Add(pi);
             }
             return items;
@@ -77,6 +79,7 @@ namespace MetaWeblogSharp
             var item = new MediaObjectInfo();
 
             item.URL = (string) struct_["url"];
+            item.RawData = struct_;
 
             return item;
         }
@@ -105,6 +108,8 @@ namespace MetaWeblogSharp
             item.PostStatus = getstring(struct_,"post_status");
             item.Title = (string)struct_["title"];
             item.UserID = getstring(struct_,"userid");
+
+            item.RawData = struct_;
             return item;
         }
 
@@ -218,6 +223,7 @@ namespace MetaWeblogSharp
             item.SiteName= getstring(struct_,"siteName");
             item.Capabilities = getstring(struct_,"capabilities");
             item.XmlRPCEndPoint = getstring(struct_, "xmlrpc");
+            item.RawData = struct_;
             return item;
         }
 
@@ -287,11 +293,47 @@ namespace MetaWeblogSharp
                 pi.RSSURL= getstring(struct_, "rssUrl");
                 pi.CategoryID= getstring(struct_, "categoryid");
 
+                pi.RawData = struct_;
                 items.Add(pi);
             }
             return items;
         }
 
+        public UserInfo GetUserInfo()
+        {
+            var service = new XmlRPC.Service(this.URL);
+
+            var method = new XmlRPC.MethodCall("blogger.getUserInfo");
+            method.AddParameter(this.AppKey);
+            method.AddParameter(Username);
+            method.AddParameter(Password);
+
+            var response = service.Execute(method);
+            var param = response.Parameters[0];
+            var struct_ = (Dictionary<string, object>)param;
+            var item = new UserInfo();
+
+            item.UserID = getstring(struct_, "userid");
+            item.Nickname= getstring(struct_, "nickname");
+            item.FirstName= getstring(struct_, "firstname");
+            item.LastName= getstring(struct_, "lastname");
+            item.URL= getstring(struct_, "url");
+
+            item.RawData = struct_;
+            return item;
+        }
+
+    }
+
+    public class UserInfo
+    {
+        public string UserID;
+        public string Nickname;
+        public string FirstName;
+        public string LastName;
+        public string URL;
+
+        public object RawData;
     }
 
     public class CategoryInfo
@@ -301,5 +343,7 @@ namespace MetaWeblogSharp
         public string RSSURL;
         public string Title;
         public string CategoryID;
+
+        public object RawData;
     }
 }
