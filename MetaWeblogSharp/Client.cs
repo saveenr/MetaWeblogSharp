@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace MetaWeblogSharp
 {
-    public class MetaWeblogClient
+    public class Client
     {
         //http://xmlrpc.scripting.com/metaWeblogApi.html
         
@@ -13,7 +13,7 @@ namespace MetaWeblogSharp
         public string Password;
         public string AppKey = "0123456789ABCDEF";
 
-        public MetaWeblogClient(string url, string blogid, string user, string password)
+        public Client(string url, string blogid, string user, string password)
         {
             this.URL = url;
             this.BlogID = blogid;
