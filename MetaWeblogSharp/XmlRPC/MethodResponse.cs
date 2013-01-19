@@ -23,6 +23,7 @@ namespace MetaWeblogSharp.XmlRPC
             f.FaultValue = fault_el.Document.ToString();
             return f;
         }
+
         public MethodResponse(string content)
         {
             this.Parameters = new List<object>();

@@ -4,7 +4,7 @@ namespace MetaWeblogSharp.XmlRPC
 {
     public class Struct: Dictionary<string,object>
     {
-        public int GetInt(string name)
+        public int GetInt (string name)
         {
             if (this.ContainsKey(name))
             {
@@ -25,6 +25,18 @@ namespace MetaWeblogSharp.XmlRPC
             else
             {
                 return null;
+            }
+        }
+
+        public bool GetBool(string name)
+        {
+            if (this.ContainsKey(name))
+            {
+                return (bool)this[name];
+            }
+            else
+            {
+                return false;
             }
         }
     }

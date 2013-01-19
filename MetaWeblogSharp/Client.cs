@@ -113,18 +113,6 @@ namespace MetaWeblogSharp
             return item;
         }
 
-        private bool getbool(IDictionary<string, object> dic, string name)
-        {
-            if (dic.ContainsKey(name))
-            {
-                return (bool)dic[name];
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         public string NewPost(string title, string description, IList<string> categories, bool publish)
         {
             List<object> cats=null;
@@ -195,7 +183,7 @@ namespace MetaWeblogSharp
             item.BlogID= (string)struct_["blogid"];
             item.URL= (string)struct_["url"];
             item.BlogName= (string)struct_["blogName"];
-            item.IsAdmin = getbool(struct_,"isAdmin");
+            item.IsAdmin = struct_.GetBool("isAdmin");
             item.SiteName = struct_.GetString("siteName");
             item.Capabilities = struct_.GetString("capabilities");
             item.XmlRPCEndPoint = struct_.GetString("xmlrpc");
@@ -298,27 +286,5 @@ namespace MetaWeblogSharp
             item.RawData = struct_;
             return item;
         }
-    }
-
-    public class UserInfo
-    {
-        public string UserID;
-        public string Nickname;
-        public string FirstName;
-        public string LastName;
-        public string URL;
-
-        public object RawData;
-    }
-
-    public class CategoryInfo
-    {
-        public string Description;
-        public string HTMLURL;
-        public string RSSURL;
-        public string Title;
-        public string CategoryID;
-
-        public object RawData;
     }
 }

@@ -41,10 +41,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlogInfo.cs" />
+    <Compile Include="CategoryInfo.cs" />
     <Compile Include="MediaObjectInfo.cs" />
     <Compile Include="PostInfo.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserInfo.cs" />
     <Compile Include="XmlRPC\Array.cs" />
     <Compile Include="XmlRPC\Fault.cs" />
     <Compile Include="XmlRPC\MethodCall.cs" />
