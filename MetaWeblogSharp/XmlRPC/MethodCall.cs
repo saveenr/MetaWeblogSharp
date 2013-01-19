@@ -40,7 +40,7 @@ namespace MetaWeblogSharp.XmlRPC
             this.Parameters.Add(value);
         }
 
-        public void AddParameter(Dictionary<string, object> dic)
+        public void AddParameter(Struct dic)
         {
             this.Parameters.Add(dic);            
         }
@@ -82,7 +82,7 @@ namespace MetaWeblogSharp.XmlRPC
             {
                 return "int";
             }
-            else if (t == typeof(Dictionary<string,object>))
+            else if (t == typeof(Struct))
             {
                 return "struct";
             }
@@ -130,9 +130,9 @@ namespace MetaWeblogSharp.XmlRPC
                     type_el.Add("0");                                       
                 }
             }
-            else if (value is Dictionary<string, object>)
+            else if (value is Struct)
             {
-                var dic = (Dictionary<string, object>)value;
+                var dic = (Struct)value;
                 foreach (var pair in dic)
                 {
                     var member_el = new System.Xml.Linq.XElement("member");

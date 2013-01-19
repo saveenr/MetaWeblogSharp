@@ -13,7 +13,7 @@ namespace MetaWeblogSharp.XmlRPC
         {
             var value_el = fault_el.Element("value");
 
-            var fault_value = (Dictionary<string, object>)XmlToValue(value_el);
+            var fault_value = (Struct)XmlToValue(value_el);
             int fault_code = (int)fault_value["faultCode"];
             string fault_string = (string)fault_value["faultString"];
 
@@ -78,7 +78,7 @@ namespace MetaWeblogSharp.XmlRPC
                 else if (typename == "struct")
                 {
                     var member_els = type_el.Elements("member").ToList();
-                    var dic = new Dictionary<string, object>();
+                    var dic = new Struct();
                     foreach (var member_el in member_els)
                     {
                         var name_el = member_el.Element("name");
