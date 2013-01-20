@@ -2,7 +2,7 @@
 
 namespace MetaWeblogSharp.XmlRPC
 {
-    public class Struct
+    public class Struct : IEnumerable<KeyValuePair<string, object>>
     {
         private Dictionary<string, object> dic;
 
@@ -38,16 +38,6 @@ namespace MetaWeblogSharp.XmlRPC
                 this.dic[index] = value;
             }
         }
-
-        public IEnumerable<KeyValuePair<string, object>>  Members
-        {
-           get {
-               foreach (var o in this.dic)
-               {
-                   yield return o;
-               }
-           }
-        }
         
         public int Count
         {
@@ -59,5 +49,16 @@ namespace MetaWeblogSharp.XmlRPC
 
             return this.dic.ContainsKey(name);
         }
+
+        public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
+        {
+            return dic.GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
     }
 }

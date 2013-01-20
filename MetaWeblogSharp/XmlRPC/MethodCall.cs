@@ -133,7 +133,7 @@ namespace MetaWeblogSharp.XmlRPC
             else if (value is Struct)
             {
                 var struct_ = (Struct)value;
-                foreach (var pair in struct_.Members)
+                foreach (var pair in struct_)
                 {
 
                     var member_el = new System.Xml.Linq.XElement("member");
@@ -153,11 +153,11 @@ namespace MetaWeblogSharp.XmlRPC
                 string s = System.Convert.ToBase64String(bytes);
                 type_el.Add(s);
             }
-            else if (value is List<object>)
+            else if (value is XmlRPC.Array)
             {
                 var data_el = new System.Xml.Linq.XElement("data");
                 type_el.Add(data_el);
-                var list = (List<object>) value;
+                var list = (XmlRPC.Array) value;
                 foreach (var item in list)
                 {
                     AddValueEl(data_el,item);
