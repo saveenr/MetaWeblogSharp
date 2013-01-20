@@ -132,9 +132,10 @@ namespace MetaWeblogSharp.XmlRPC
             }
             else if (value is Struct)
             {
-                var dic = (Struct)value;
-                foreach (var pair in dic)
+                var struct_ = (Struct)value;
+                foreach (var pair in struct_.Values)
                 {
+
                     var member_el = new System.Xml.Linq.XElement("member");
                     type_el.Add(member_el);
 

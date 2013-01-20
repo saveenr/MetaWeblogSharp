@@ -14,8 +14,8 @@ namespace MetaWeblogSharp.XmlRPC
             var value_el = fault_el.Element("value");
 
             var fault_value = (Struct)XmlToValue(value_el);
-            int fault_code = (int)fault_value["faultCode"];
-            string fault_string = (string)fault_value["faultString"];
+            int fault_code = fault_value.GetItem<int>("faultCode",-1);
+            string fault_string = fault_value.GetItem<string>("faultString",null);
 
             var f = new Fault();
             f.FaultCode = fault_code;

@@ -42,15 +42,15 @@ namespace MetaWeblogSharp
                 var struct_ = (XmlRPC.Struct)value;
 
                 var pi = new PostInfo();
-                pi.Title = (string)struct_["title"];
-                pi.DateCreated = (System.DateTime) struct_["dateCreated"];
-                pi.Link = (string)struct_["link"];
-                pi.PostID = (string)struct_["postid"];
+                pi.Title = struct_.GetItem<string>("title",null);
+                pi.DateCreated = struct_.GetItem<System.DateTime>("dateCreated",System.DateTime.MaxValue);
+                pi.Link = struct_.GetItem<string>("link",null);
+                pi.PostID = struct_.GetItem<string>("postid", null);
                 pi.UserID = struct_.GetItem<string>("userid", null);
                 pi.CommentCount = struct_.GetItem<int>("commentCount",0);
                 pi.PostStatus = struct_.GetItem<string>("post_status",null);
                 pi.PermaLink = struct_.GetItem<string>("permaLink",null);
-                pi.Description = (string)struct_["description"];
+                pi.Description = struct_.GetItem<string>("description", null);
                 pi.RawData = struct_;
 
                 items.Add(pi);
@@ -78,7 +78,7 @@ namespace MetaWeblogSharp
             var struct_ = (XmlRPC.Struct)param;
             var item = new MediaObjectInfo();
 
-            item.URL = (string) struct_["url"];
+            item.URL = struct_.GetItem<string>("url",null);
             item.RawData = struct_;
 
             return item;
@@ -103,7 +103,7 @@ namespace MetaWeblogSharp
             item.Description = struct_.GetItem<string>("description", null);
             //item.Tags
             item.Link = struct_.GetItem<string>("link", null);
-            item.DateCreated = (System.DateTime)struct_["dateCreated"];
+            item.DateCreated = struct_.GetItem<System.DateTime>("dateCreated",System.DateTime.MaxValue);
             item.PermaLink = struct_.GetItem<string>("permaLink", null);
             item.PostStatus = struct_.GetItem<string>("post_status", null);
             item.Title = struct_.GetItem<string>("title", null);
@@ -181,9 +181,9 @@ namespace MetaWeblogSharp
             var item = new BlogInfo();
 
             //item.Categories 
-            item.BlogID= (string)struct_["blogid"];
-            item.URL= (string)struct_["url"];
-            item.BlogName= (string)struct_["blogName"];
+            item.BlogID= struct_.GetItem<string>("blogid",null);
+            item.URL= struct_.GetItem<string>("url",null);
+            item.BlogName = struct_.GetItem<string>("blogName", null);
             item.IsAdmin = struct_.GetItem<bool>("isAdmin",false);
             item.SiteName = struct_.GetItem<string>("siteName", null);
             item.Capabilities = struct_.GetItem<string>("capabilities", null);
