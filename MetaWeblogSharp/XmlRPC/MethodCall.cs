@@ -133,7 +133,7 @@ namespace MetaWeblogSharp.XmlRPC
             else if (value is Struct)
             {
                 var struct_ = (Struct)value;
-                foreach (var pair in struct_.Values)
+                foreach (var pair in struct_.Members)
                 {
 
                     var member_el = new System.Xml.Linq.XElement("member");

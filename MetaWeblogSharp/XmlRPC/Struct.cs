@@ -39,7 +39,7 @@ namespace MetaWeblogSharp.XmlRPC
             }
         }
 
-        public IEnumerable<KeyValuePair<string, object>>  Values
+        public IEnumerable<KeyValuePair<string, object>>  Members
         {
            get {
                foreach (var o in this.dic)
@@ -49,6 +49,15 @@ namespace MetaWeblogSharp.XmlRPC
            }
         }
         
+        public int Count
+        {
+            get { return this.dic.Count; }
+        }
 
+        public bool ContainsKey(string name)
+        {
+
+            return this.dic.ContainsKey(name);
+        }
     }
 }
