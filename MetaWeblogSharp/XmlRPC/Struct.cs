@@ -4,40 +4,24 @@ namespace MetaWeblogSharp.XmlRPC
 {
     public class Struct: Dictionary<string,object>
     {
-        public int GetInt (string name)
+        public T GetItem<T>(string name, T defval)
         {
             if (this.ContainsKey(name))
             {
-                return (int)this[name];
+                var o = this[name];
+                var vt = o.GetType();
+                if (vt != typeof (T))
+                {
+                    string msg = string.Format("Expected type {0} instead got {1}", typeof (T).Name, vt.Name);
+                }
+                var v = (T)o;
+                return v;
             }
             else
             {
-                return 0;
+                return defval;
             }
         }
 
-        public string GetString(string name)
-        {
-            if (this.ContainsKey(name))
-            {
-                return (string)this[name];
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        public bool GetBool(string name)
-        {
-            if (this.ContainsKey(name))
-            {
-                return (bool)this[name];
-            }
-            else
-            {
-                return false;
-            }
-        }
     }
 }

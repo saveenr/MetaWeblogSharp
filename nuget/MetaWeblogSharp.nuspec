@@ -1,0 +1,24 @@
+<package >
+  <metadata>
+    <id>MetaWeblogSharp</id>
+    <version>1.0.14</version>
+    <authors>saveenr</authors>
+    <owners>saveenr</owners>
+    <licenseUrl>http://metaweblogsharp.codeplex.com</licenseUrl>
+    <projectUrl>http://metaweblogsharp.codeplex.com</projectUrl>
+    <iconUrl>about:blank</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>MetaWeblogSharp is a simple MetWeblog client. It has no dependencies on other libraries. 
+</description>
+    <releaseNotes>
+Initial Release.
+    </releaseNotes>
+    <copyright>Copyright 2013</copyright>
+    <tags>Visio</tags>
+    <dependencies>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\MetaWeblogSharp\bin\debug\*.dll" target="lib\net40"/>
+  </files>
+</package>
