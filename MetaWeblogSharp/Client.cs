@@ -115,15 +115,16 @@ namespace MetaWeblogSharp
 
         public string NewPost(string title, string description, IList<string> categories, bool publish)
         {
-            List<object> cats=null;
+            XmlRPC.Array cats=null;
 
             if (categories == null)
             {
-                cats = new List<object>(0);
+                cats = new XmlRPC.Array(0);
             }
             else
             {
-                cats = categories.Select(i => (object) i).ToList();
+                cats = new XmlRPC.Array(categories.Count);
+                cats.AddRange(categories.Cast<object>());
             }
 
             var service = new XmlRPC.Service(this.URL);
@@ -192,30 +193,23 @@ namespace MetaWeblogSharp
         }
 
 
-
-        private static List<object> create_cats(IList<string> categories)
+        public bool EditPost(string postid, string title, string description, IList<string> categories, bool publish)
         {
+            // Create an array to hold any categories
+            XmlRPC.Array categories_;
             if (categories == null)
             {
-                return new List<object>(0);
+                categories_ = new XmlRPC.Array(0);
             }
 
-            var cats = new List<object>(categories.Count);
-            cats = categories.Select(i => (object)i).ToList();
-            return cats;
-        }
-
-
-                public bool EditPost(string postid, string title, string description, IList<string> categories, bool publish)
-        {
-            var cats = create_cats(categories);
-
+            categories_ = new XmlRPC.Array(categories.Count);
+            categories_.AddRange(categories.Cast<object>());
+            
             var service = new XmlRPC.Service(this.URL);
-
             var struct_ = new XmlRPC.Struct();
             struct_["title"] = title;
             struct_["description"] = description;
-            struct_["categories"] = cats;
+            struct_["categories"] = categories_;
 
             var method = new XmlRPC.MethodCall("metaWeblog.editPost");
             method.AddParameter(postid);

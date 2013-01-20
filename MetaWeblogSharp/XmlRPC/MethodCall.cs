@@ -73,7 +73,7 @@ namespace MetaWeblogSharp.XmlRPC
 
         private static string type_to_name(System.Type t)
         {
-            if (t == typeof(System.String))
+            if (t == typeof(string))
             {
                 return "string";
             }
@@ -81,11 +81,11 @@ namespace MetaWeblogSharp.XmlRPC
             {
                 return "int";
             }
-            else if (t == typeof(Struct))
+            else if (t == typeof(XmlRPC.Struct))
             {
                 return "struct";
             }
-            else if (t == typeof(List<object>))
+            else if (t == typeof(XmlRPC.Array))
             {
                 return "array";
             }
@@ -99,7 +99,8 @@ namespace MetaWeblogSharp.XmlRPC
             }
             else
             {
-                throw new KeyNotFoundException();
+                string msg = string.Format("Unsupported type {0}", t.Name);
+                throw new System.ArgumentException(msg);
             }
         }
 

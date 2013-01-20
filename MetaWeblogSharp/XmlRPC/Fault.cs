@@ -2,8 +2,8 @@
 {
     public class Fault
     {
-        public int Code;
-        public string String;
-        public object FaultValue;
+        public int FaultCode;
+        public string FaultString;
+        public object RawData;
     }
 }

@@ -18,9 +18,9 @@ namespace MetaWeblogSharp.XmlRPC
             string fault_string = (string)fault_value["faultString"];
 
             var f = new Fault();
-            f.Code = fault_code;
-            f.String = fault_string;
-            f.FaultValue = fault_el.Document.ToString();
+            f.FaultCode = fault_code;
+            f.FaultString = fault_string;
+            f.RawData = fault_el.Document.ToString();
             return f;
         }
 
@@ -37,7 +37,7 @@ namespace MetaWeblogSharp.XmlRPC
             {
                 var f = parsefault(fault_el);
 
-                string msg = string.Format("XMLRPC FAULT [{0}]: \"{1}\"", f.Code, f.String);
+                string msg = string.Format("XMLRPC FAULT [{0}]: \"{1}\"", f.FaultCode, f.FaultString);
                 var exc = new XmlRPCException(msg);
                 exc.Fault = f;
 
