@@ -2,12 +2,12 @@
 {
     public class UserInfo
     {
-        public string UserID;
-        public string Nickname;
-        public string FirstName;
-        public string LastName;
-        public string URL;
+        public string UserID { get; set; }
+        public string Nickname { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string URL { get; set; }
 
-        public object RawData;
+        public object RawData { get; set; }
     }
 }

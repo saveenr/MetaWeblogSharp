@@ -2,12 +2,11 @@
 {
     public class CategoryInfo
     {
-        public string Description;
-        public string HTMLURL;
-        public string RSSURL;
-        public string Title;
-        public string CategoryID;
-
-        public object RawData;
+        public string Description { get; set; }
+        public string HTMLURL { get; set; }
+        public string RSSURL { get; set; }
+        public string Title { get; set; }
+        public string CategoryID { get; set; }
+        public object RawData { get; set; }
     }
 }

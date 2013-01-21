@@ -82,6 +82,10 @@ namespace MetaWeblogSharp.XmlRPC
                 {
                     return new Value(input_value);
                 }
+                else if (typename == "double")
+                {
+                    return new Value(input_value);
+                }
                 else if (typename == "dateTime.iso8601")
                 {
 
@@ -129,6 +133,11 @@ namespace MetaWeblogSharp.XmlRPC
             else if (value.Data is int)
             {
                 type_el.Add(value.Data.ToString());
+            }
+            else if (value.Data is double)
+            {
+                var d = (double) value.Data;
+                type_el.Add(d.ToString(System.Globalization.CultureInfo.InvariantCulture));
             }
             else if (value.Data is bool)
             {
@@ -209,6 +218,10 @@ namespace MetaWeblogSharp.XmlRPC
             else if (t == typeof(bool))
             {
                 return "boolean";
+            }
+            else if (t == typeof(double))
+            {
+                return "double";
             }
             else
             {
