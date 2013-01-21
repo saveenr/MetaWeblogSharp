@@ -94,7 +94,7 @@ namespace MetaWeblogSharp.XmlRPC
                 }
                 else if (typename == "double")
                 {
-                    return new Value(input_value);
+                    return new Value(double.Parse(input_value));
                 }
                 else if (typename == "dateTime.iso8601")
                 {

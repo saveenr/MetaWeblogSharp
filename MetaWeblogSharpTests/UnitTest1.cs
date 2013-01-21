@@ -18,7 +18,8 @@ namespace MetaWeblogSharpTests
         public void TestMethod2()
         {
             var s = new XmlRPC.Struct();
-            s["val_double"] = new XmlRPC.Value(5);
+            var svm = new XmlRPC.Value(5.10);
+            s["val_double"] = svm;
 
             var o1 = new XmlRPC.Value(s);
 
@@ -29,6 +30,11 @@ namespace MetaWeblogSharpTests
             var s2 = (XmlRPC.Struct) o2.Data;
 
             Assert.IsTrue(s2.ContainsKey("val_double"));
+
+            var z0 = s2.GetItem<double>("val_double", 0.0);
+            //Assert.AreEqual(
+            //    s2.GetItem<double>("val_double",0.0),
+            //    s.GetItem<double>("val_double", 0.0));
         }
     }
 }
