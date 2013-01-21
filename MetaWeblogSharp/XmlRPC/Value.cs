@@ -22,6 +22,11 @@ namespace MetaWeblogSharp.XmlRPC
             this.Data = data;
         }
 
+        public Value(double data)
+        {
+            this.Data = data;
+        }
+
         public Value(string data)
         {
             this.Data = data;
