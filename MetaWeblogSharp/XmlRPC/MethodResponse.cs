@@ -7,7 +7,7 @@ namespace MetaWeblogSharp.XmlRPC
     public class MethodResponse
     {
         public string RawData { get; private set; }
-        public List<object> Parameters { get; private set; }
+        public List<Value> Parameters { get; private set; }
 
         private Fault parsefault(System.Xml.Linq.XElement fault_el)
         {
@@ -26,7 +26,7 @@ namespace MetaWeblogSharp.XmlRPC
 
         public MethodResponse(string content)
         {
-            this.Parameters = new List<object>();
+            this.Parameters = new List<Value>();
 
             this.RawData = content;
 
@@ -52,7 +52,7 @@ namespace MetaWeblogSharp.XmlRPC
                 var value_el = param_el.Element("value");
 
                 var val = XmlToValue(value_el);
-                this.Parameters.Add(val);
+                this.Parameters.Add( new Value(val) );
             }
         }
 
@@ -88,7 +88,7 @@ namespace MetaWeblogSharp.XmlRPC
                         var value_el2 = member_el.Element("value");
                         var o = XmlToValue(value_el2);
 
-                        dic[name] = o;
+                        dic[name] = new XmlRPC.Value(o);
                     }
                     return dic;
                 }

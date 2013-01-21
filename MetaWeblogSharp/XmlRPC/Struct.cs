@@ -2,20 +2,21 @@
 
 namespace MetaWeblogSharp.XmlRPC
 {
-    public class Struct : IEnumerable<KeyValuePair<string, object>>
+    public class Struct : IEnumerable<KeyValuePair<string, Value>>
     {
-        private Dictionary<string, object> dic;
+        private Dictionary<string, Value> dic;
 
         public Struct()
         {
-            this.dic = new Dictionary<string, object>();
+            this.dic = new Dictionary<string, Value>();
         }
 
         public T GetItem<T>(string name, T defval)
         {
             if (this.dic.ContainsKey(name))
             {
-                var o = this.dic[name];
+                var o_ = this.dic[name];
+                var o = o_.Data;
                 var vt = o.GetType();
                 if (vt != typeof (T))
                 {
@@ -40,7 +41,7 @@ namespace MetaWeblogSharp.XmlRPC
             }
         }
 
-        public object this[string index]
+        public Value this[string index]
         {
             //get {  /* return the specified index here */ }
             set
@@ -60,7 +61,7 @@ namespace MetaWeblogSharp.XmlRPC
             return this.dic.ContainsKey(name);
         }
 
-        public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
+        public IEnumerator<KeyValuePair<string, Value>> GetEnumerator()
         {
             return dic.GetEnumerator();
         }

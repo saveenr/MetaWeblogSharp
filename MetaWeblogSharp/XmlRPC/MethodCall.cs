@@ -6,13 +6,13 @@ namespace MetaWeblogSharp.XmlRPC
 {
     public class MethodCall
     {
-        private List<object> Parameters;
+        private List<Value> Parameters;
         public string Name { get; private set; }
 
         public MethodCall(string name)
         {
             this.Name = name;
-            this.Parameters = new List<object>();
+            this.Parameters = new List<Value>();
         }
 
         public void AddParameter(bool value)
@@ -35,16 +35,22 @@ namespace MetaWeblogSharp.XmlRPC
             this.AddParameterX(bytes);
         }
 
-        public void AddParameterX(object value)
+        private void AddParameterX(object value)
         {
-            this.Parameters.Add(value);
+            var p = new Value(value);
+            this.Parameters.Add(p);
         }
 
-        public void AddParameter(Struct dic)
+        public void AddParameter(Struct struct_)
         {
-            this.Parameters.Add(dic);            
+            this.AddParameterX(struct_);
         }
 
+        public void AddParameter(Array array)
+        {
+            this.AddParameterX(array);
+        }
+        
         public System.Xml.Linq.XDocument CreateDocument()
         {
             var doc = new System.Xml.Linq.XDocument();
@@ -104,23 +110,23 @@ namespace MetaWeblogSharp.XmlRPC
             }
         }
 
-        private static void AddValueEl(XElement parent, object value)
+        private static void AddValueEl(XElement parent, Value value)
         {
             var value_el = new System.Xml.Linq.XElement("value");
-            var type_el = new System.Xml.Linq.XElement(type_to_name(value.GetType()));
+            var type_el = new System.Xml.Linq.XElement(type_to_name(value.Data.GetType()));
             value_el.Add(type_el);
             
-            if (value is string)
+            if (value.Data is string)
             {
-                type_el.Add((string) value);
+                type_el.Add((string)value.Data);
             }
-            else if (value is int)
+            else if (value.Data is int)
             {
-                type_el.Add(value.ToString());
+                type_el.Add(value.Data.ToString());
             }
-            else if (value is bool)
+            else if (value.Data is bool)
             {
-                var bv = (bool) value;
+                var bv = (bool)value.Data;
                 if (bv)
                 {
                     type_el.Add("1");                   
@@ -130,9 +136,9 @@ namespace MetaWeblogSharp.XmlRPC
                     type_el.Add("0");                                       
                 }
             }
-            else if (value is Struct)
+            else if (value.Data is Struct)
             {
-                var struct_ = (Struct)value;
+                var struct_ = (Struct)value.Data;
                 foreach (var pair in struct_)
                 {
 
@@ -147,20 +153,20 @@ namespace MetaWeblogSharp.XmlRPC
 
                 }
             }
-            else if (value is byte[])
+            else if (value.Data is byte[])
             {
-                var bytes = (byte[]) value;
+                var bytes = (byte[])value.Data;
                 string s = System.Convert.ToBase64String(bytes);
                 type_el.Add(s);
             }
-            else if (value is XmlRPC.Array)
+            else if (value.Data is XmlRPC.Array)
             {
                 var data_el = new System.Xml.Linq.XElement("data");
                 type_el.Add(data_el);
-                var list = (XmlRPC.Array) value;
-                foreach (var item in list)
+                var list = (XmlRPC.Array)value.Data;
+                foreach (XmlRPC.Value item in list)
                 {
-                    AddValueEl(data_el,item);
+                    AddValueEl(data_el, item);
                 }
             }
             else
