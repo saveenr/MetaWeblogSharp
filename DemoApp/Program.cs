@@ -7,7 +7,7 @@ namespace DemoApp
 {
     class Program
     {
-        static void Mains(string[] args)
+        public static void Main(string[] args)
         {
             // string blogdef = "D:\\saveenr\\skydrive\\private\\reference\\msdn.xml";
             string blogdef = "D:\\saveenr\\skydrive\\private\\reference\\viziblr.xml";
