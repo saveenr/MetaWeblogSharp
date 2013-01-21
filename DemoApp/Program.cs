@@ -12,7 +12,7 @@ namespace DemoApp
             // string blogdef = "D:\\saveenr\\skydrive\\private\\reference\\msdn.xml";
             string blogdef = "D:\\saveenr\\skydrive\\private\\reference\\viziblr.xml";
 
-            var blogaccount = MetaWeblogSharp.BlogAccount.Load(blogdef);
+            var blogaccount = MetaWeblogSharp.BlogConnectionInfo.Load(blogdef);
 
             var service = new MetaWeblogSharp.Client(blogaccount);
             var posts = service.GetRecentPosts(10);
