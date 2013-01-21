@@ -19,7 +19,17 @@ namespace MetaWeblogSharp.XmlRPC
                 var vt = o.GetType();
                 if (vt != typeof (T))
                 {
-                    string msg = string.Format("Expected type {0} instead got {1}", typeof (T).Name, vt.Name);
+                    if (typeof (T) == typeof (int) && vt==typeof(string))
+                    {
+                        // handle the one-off case where someone gave a string when an int was needed
+                        o = int.Parse((string) o);
+
+                    }
+                    else
+                    {
+                        string msg = string.Format("Expected type {0} instead got {1}", typeof(T).Name, vt.Name);
+                        throw new XmlRPCException(msg);                        
+                    }
                 }
                 var v = (T)o;
                 return v;
