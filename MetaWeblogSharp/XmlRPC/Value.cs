@@ -101,7 +101,7 @@ namespace MetaWeblogSharp.XmlRPC
                     }
                     return new Value(System.DateTime.ParseExact(input_value, "yyyyMMddTHH:mm:ss", null));
                 }
-                else if (typename == "int" | typename == "i4")
+                else if (typename == "int" || typename == "i4")
                 {
                     return new Value(int.Parse(input_value));
                 }
