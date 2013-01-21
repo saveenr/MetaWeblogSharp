@@ -44,6 +44,11 @@ namespace MetaWeblogSharp.XmlRPC
 
         public static XmlRPC.Value ParseXml(System.Xml.Linq.XElement value_el)
         {
+            if (value_el.Name != "value")
+            {
+                string msg = string.Format("XML Element should have name \"value\" instead found \"{0}\"", value_el.Name);
+                throw new XmlRPCException();
+            }
             var input_value = value_el.Value;
             if (value_el.HasElements)
             {
@@ -119,7 +124,7 @@ namespace MetaWeblogSharp.XmlRPC
             }
         }
 
-        public void AddXmlElement(System.Xml.Linq.XElement parent)
+        public System.Xml.Linq.XElement AddXmlElement(System.Xml.Linq.XElement parent)
         {
             var value = this;
             var value_el = new System.Xml.Linq.XElement("value");
@@ -191,6 +196,8 @@ namespace MetaWeblogSharp.XmlRPC
             }
 
             parent.Add(value_el);
+
+            return value_el;
         }
 
         private static string type_to_name(System.Type t)

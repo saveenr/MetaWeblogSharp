@@ -23,9 +23,9 @@ namespace MetaWeblogSharpTests
             var o1 = new XmlRPC.Value(s);
 
             var parent = new System.Xml.Linq.XElement("X");
-            o1.AddXmlElement(parent);
+            var value_el = o1.AddXmlElement(parent);
 
-            var o2 = XmlRPC.Value.ParseXml(parent.Element("value"));
+            var o2 = XmlRPC.Value.ParseXml(value_el);
             var s2 = (XmlRPC.Struct) o2.Data;
 
             Assert.IsTrue(s2.ContainsKey("val_double"));
