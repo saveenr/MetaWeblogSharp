@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlogAccount.cs" />
     <Compile Include="BlogInfo.cs" />
     <Compile Include="CategoryInfo.cs" />
     <Compile Include="MediaObjectInfo.cs" />

@@ -9,24 +9,19 @@ namespace DemoApp
     {
         static void Main(string[] args)
         {
-            //var doc = System.Xml.Linq.XDocument.Load("D:\\saveenr\\skydrive\\msdn.xml");
-            var doc = System.Xml.Linq.XDocument.Load("D:\\saveenr\\skydrive\\viziblr.xml");
+            // string blogdef = "D:\\saveenr\\skydrive\\msdn.xml";
+            string blogdef = "D:\\saveenr\\skydrive\\viziblr.xml";
 
-            var root = doc.Root;
-            string blogid = root.Element("blogid").Value;
-            string blog_metweblog_url = root.Element("metaweblog_url").Value;
-            string username = root.Element("username").Value;
-            string password = root.Element("password").Value;
+            var blogaccount = MetaWeblogSharp.BlogAccount.Load(blogdef);
 
-
-            var service = new MetaWeblogSharp.Client(blog_metweblog_url, blogid, username, password);
+            var service = new MetaWeblogSharp.Client(blogaccount);
             var posts = service.GetRecentPosts(10);
 
             var first_post_1 = posts[0];
             var first_post_2 = service.GetPost(first_post_1.PostID);
             var bytes = System.IO.File.ReadAllBytes("test1.png");
 
-            var response2 = service.NewMediaObject("12356789012356/789012356789012345678901234567890.png", "image/png", bytes);
+            var response2 = service.NewMediaObject("8901234567890.png", "image/png", bytes);
 
             var categories1 = new List<string>
             {
@@ -61,5 +56,4 @@ namespace DemoApp
             var u1 = service.GetUserInfo();
         }
     }
-
 }
