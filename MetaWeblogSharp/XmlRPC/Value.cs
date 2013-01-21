@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace MetaWeblogSharp.XmlRPC
 {
@@ -39,6 +40,79 @@ namespace MetaWeblogSharp.XmlRPC
         public Value(Struct data)
         {
             this.Data = data;
+        }
+
+        public static XmlRPC.Value ParseXml(System.Xml.Linq.XElement value_el)
+        {
+            var input_value = value_el.Value;
+            if (value_el.HasElements)
+            {
+                var type_el = value_el.Elements().First();
+                string typename = type_el.Name.ToString();
+                if (typename == "array")
+                {
+                    var data_el = type_el.Element("data");
+
+                    var value_els = data_el.Elements("value").ToList();
+                    var list = new XmlRPC.Array();
+                    foreach (var value_el2 in value_els)
+                    {
+                        var o = ParseXml(value_el2);
+                        list.Add(o);
+                    }
+                    return new Value(list);
+                }
+                else if (typename == "struct")
+                {
+                    var member_els = type_el.Elements("member").ToList();
+                    var dic = new Struct();
+                    foreach (var member_el in member_els)
+                    {
+                        var name_el = member_el.Element("name");
+                        string name = name_el.Value;
+
+                        var value_el2 = member_el.Element("value");
+                        var o = ParseXml(value_el2);
+
+                        dic[name] = o;
+                    }
+                    return new Value(dic);
+                }
+                else if (typename == "string")
+                {
+                    return new Value(input_value);
+                }
+                else if (typename == "dateTime.iso8601")
+                {
+
+                    System.DateTime dt = System.DateTime.Now;
+                    if (System.DateTime.TryParse(input_value, out dt))
+                    {
+                        return new Value(dt);
+                    }
+                    return new Value(System.DateTime.ParseExact(input_value, "yyyyMMddTHH:mm:ss", null));
+                }
+                else if (typename == "int" | typename == "i4")
+                {
+                    return new Value(int.Parse(input_value));
+                }
+                else if (typename == "boolean")
+                {
+                    var i = int.Parse(input_value);
+                    var b = (i != 0);
+                    return new Value(b);
+                }
+                else
+                {
+                    string msg = string.Format("Unsupported type: {0}", typename.ToString());
+                    throw new XmlRPCException(msg);
+                }
+            }
+            else
+            {
+                // no sub elements must be a string
+                return new Value(input_value);
+            }
         }
 
         public void AddXmlElement(System.Xml.Linq.XElement parent)
