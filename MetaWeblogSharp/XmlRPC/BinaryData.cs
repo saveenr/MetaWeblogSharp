@@ -1,10 +1,10 @@
 ﻿namespace MetaWeblogSharp.XmlRPC
 {
-    public class BinaryData
+    public class Base64Data
     {
         public byte[] Bytes;
 
-        public BinaryData(byte[] bytes)
+        public Base64Data(byte[] bytes)
         {
             this.Bytes = bytes;
         }

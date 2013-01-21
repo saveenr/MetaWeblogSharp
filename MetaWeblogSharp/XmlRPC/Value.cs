@@ -32,7 +32,7 @@ namespace MetaWeblogSharp.XmlRPC
             this.Data = data;
         }
 
-        public Value(BinaryData data)
+        public Value(Base64Data data)
         {
             this.Data = data;
         }
@@ -178,9 +178,9 @@ namespace MetaWeblogSharp.XmlRPC
 
                 }
             }
-            else if (value.Data is BinaryData)
+            else if (value.Data is Base64Data)
             {
-                var bytes = (BinaryData)value.Data;
+                var bytes = (Base64Data)value.Data;
                 string s = System.Convert.ToBase64String(bytes.Bytes);
                 type_el.Add(s);
             }
@@ -223,7 +223,7 @@ namespace MetaWeblogSharp.XmlRPC
             {
                 return "array";
             }
-            else if (t == typeof(BinaryData))
+            else if (t == typeof(Base64Data))
             {
                 return "base64";
             }

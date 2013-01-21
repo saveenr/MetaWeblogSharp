@@ -60,7 +60,7 @@ namespace MetaWeblogSharp
             var input_struct_ = new XmlRPC.Struct();
             input_struct_["name"] = new XmlRPC.Value(name);
             input_struct_["type"] = new XmlRPC.Value(type);
-            input_struct_["bits"] = new XmlRPC.Value( new BinaryData(bits));
+            input_struct_["bits"] = new XmlRPC.Value( new Base64Data(bits));
 
             var method = new XmlRPC.MethodCall("metaWeblog.newMediaObject");
             method.AddParameter(new XmlRPC.Value(this.BlogConnectionInfo.BlogID));
