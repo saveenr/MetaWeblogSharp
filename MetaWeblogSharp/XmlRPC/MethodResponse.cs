@@ -12,8 +12,7 @@ namespace MetaWeblogSharp.XmlRPC
         private Fault parsefault(System.Xml.Linq.XElement fault_el)
         {
             var value_el = fault_el.Element("value");
-
-            var fault_value = (Struct)XmlToValue(value_el);
+            var fault_value = (Struct)XmlToValue(value_el).Data;
             int fault_code = fault_value.GetItem<int>("faultCode",-1);
             string fault_string = fault_value.GetItem<string>("faultString",null);
 
@@ -52,11 +51,11 @@ namespace MetaWeblogSharp.XmlRPC
                 var value_el = param_el.Element("value");
 
                 var val = XmlToValue(value_el);
-                this.Parameters.Add( new Value(val) );
+                this.Parameters.Add( val );
             }
         }
 
-        private object XmlToValue(System.Xml.Linq.XElement value_el)
+        private XmlRPC.Value  XmlToValue(System.Xml.Linq.XElement value_el)
         {
             var input_value = value_el.Value;
             if (value_el.HasElements)
@@ -74,7 +73,7 @@ namespace MetaWeblogSharp.XmlRPC
                         var o = XmlToValue(value_el2);
                         list.Add(o);
                     }
-                    return list;
+                    return new Value(list);
                 }
                 else if (typename == "struct")
                 {
@@ -88,13 +87,13 @@ namespace MetaWeblogSharp.XmlRPC
                         var value_el2 = member_el.Element("value");
                         var o = XmlToValue(value_el2);
 
-                        dic[name] = new XmlRPC.Value(o);
+                        dic[name] = o;
                     }
-                    return dic;
+                    return new Value(dic);
                 }
                 else if (typename == "string")
                 {
-                    return input_value;
+                    return new Value(input_value);
                 }
                 else if (typename == "dateTime.iso8601")
                 {
@@ -102,19 +101,19 @@ namespace MetaWeblogSharp.XmlRPC
                     System.DateTime dt = System.DateTime.Now;
                     if (System.DateTime.TryParse(input_value, out dt))
                     {
-                        return dt;
+                        return new Value(dt);
                     }
-                    return System.DateTime.ParseExact(input_value,"yyyyMMddTHH:mm:ss",null);
+                    return new Value(System.DateTime.ParseExact(input_value, "yyyyMMddTHH:mm:ss", null));
                 }
                 else if (typename == "int" | typename == "i4")
                 {
-                    return int.Parse(input_value);
+                    return new Value(int.Parse(input_value));
                 }
                 else if (typename == "boolean")
                 {
                     var i = int.Parse(input_value);
                     var b = (i != 0);
-                    return b;
+                    return new Value(b);
                 }
                 else
                 {
@@ -125,7 +124,7 @@ namespace MetaWeblogSharp.XmlRPC
             else
             {
                 // no sub elements must be a string
-                return input_value;
+                return new Value(input_value);
             }
         }
     }

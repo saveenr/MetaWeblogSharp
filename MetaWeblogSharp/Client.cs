@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using MetaWeblogSharp.XmlRPC;
 
 namespace MetaWeblogSharp
 {
@@ -20,10 +21,10 @@ namespace MetaWeblogSharp
             var service = new XmlRPC.Service(this.BlogAccount.MetaWeblogURL);
 
             var method = new XmlRPC.MethodCall("metaWeblog.getRecentPosts");
-            method.AddParameter(this.BlogAccount.BlogID);
-            method.AddParameter(this.BlogAccount.Username);
-            method.AddParameter(this.BlogAccount.Password);
-            method.AddParameter(numposts);
+            method.AddParameter(new XmlRPC.Value(this.BlogAccount.BlogID));
+            method.AddParameter(new XmlRPC.Value(this.BlogAccount.Username));
+            method.AddParameter(new XmlRPC.Value(this.BlogAccount.Password));
+            method.AddParameter(new XmlRPC.Value(numposts));
 
             var response = service.Execute(method);
 
@@ -62,10 +63,10 @@ namespace MetaWeblogSharp
             input_struct_["bits"] = new XmlRPC.Value(bits);
 
             var method = new XmlRPC.MethodCall("metaWeblog.newMediaObject");
-            method.AddParameter(this.BlogAccount.BlogID);
-            method.AddParameter(this.BlogAccount.Username);
-            method.AddParameter(this.BlogAccount.Password);
-            method.AddParameter(input_struct_);
+            method.AddParameter(new XmlRPC.Value(this.BlogAccount.BlogID));
+            method.AddParameter(new XmlRPC.Value(this.BlogAccount.Username));
+            method.AddParameter(new XmlRPC.Value(this.BlogAccount.Password));
+            method.AddParameter(new XmlRPC.Value(input_struct_));
 
             var response = service.Execute(method);
             var param = response.Parameters[0];
@@ -83,9 +84,9 @@ namespace MetaWeblogSharp
             var service = new XmlRPC.Service(this.BlogAccount.MetaWeblogURL);
 
             var method = new XmlRPC.MethodCall("metaWeblog.getPost");
-            method.AddParameter(postid); // notice this is the postid, not the blogid
-            method.AddParameter(this.BlogAccount.Username);
-            method.AddParameter(this.BlogAccount.Password);
+            method.AddParameter(new XmlRPC.Value(postid)); // notice this is the postid, not the blogid
+            method.AddParameter(new XmlRPC.Value(this.BlogAccount.Username));
+            method.AddParameter(new XmlRPC.Value(this.BlogAccount.Password));
 
             var response = service.Execute(method);
             var param = response.Parameters[0];
@@ -118,7 +119,7 @@ namespace MetaWeblogSharp
             else
             {
                 cats = new XmlRPC.Array(categories.Count);
-                cats.AddRange(categories.Cast<object>());
+                cats.AddRange( categories.Select(c=>new Value(c)));
             }
 
             var service = new XmlRPC.Service(this.BlogAccount.MetaWeblogURL);
@@ -129,11 +130,11 @@ namespace MetaWeblogSharp
             struct_["categories"] = new XmlRPC.Value(cats);
 
             var method = new XmlRPC.MethodCall("metaWeblog.newPost");
-            method.AddParameter(this.BlogAccount.BlogID);
-            method.AddParameter(this.BlogAccount.Username);
-            method.AddParameter(this.BlogAccount.Password);
-            method.AddParameter(struct_);
-            method.AddParameter(publish);
+            method.AddParameter( new XmlRPC.Value(this.BlogAccount.BlogID));
+            method.AddParameter(new XmlRPC.Value(this.BlogAccount.Username));
+            method.AddParameter(new XmlRPC.Value(this.BlogAccount.Password));
+            method.AddParameter(new XmlRPC.Value(struct_));
+            method.AddParameter(new XmlRPC.Value(publish));
 
             var response = service.Execute(method);
             var param = response.Parameters[0];
@@ -147,11 +148,11 @@ namespace MetaWeblogSharp
             var service = new XmlRPC.Service(this.BlogAccount.MetaWeblogURL);
 
             var method = new XmlRPC.MethodCall("blogger.deletePost");
-            method.AddParameter(AppKey);
-            method.AddParameter(postid);
-            method.AddParameter(this.BlogAccount.Username);
-            method.AddParameter(this.BlogAccount.Password);
-            method.AddParameter(true);
+            method.AddParameter(new XmlRPC.Value(AppKey));
+            method.AddParameter(new XmlRPC.Value(postid));
+            method.AddParameter(new XmlRPC.Value(this.BlogAccount.Username));
+            method.AddParameter(new XmlRPC.Value(this.BlogAccount.Password));
+            method.AddParameter(new XmlRPC.Value(true));
 
             var response = service.Execute(method);
             var param = response.Parameters[0];
@@ -165,9 +166,9 @@ namespace MetaWeblogSharp
             var service = new XmlRPC.Service(this.BlogAccount.MetaWeblogURL);
 
             var method = new XmlRPC.MethodCall("blogger.getUsersBlogs");
-            method.AddParameter(this.AppKey);
-            method.AddParameter(this.BlogAccount.Username);
-            method.AddParameter(this.BlogAccount.Password);
+            method.AddParameter(new XmlRPC.Value(this.AppKey));
+            method.AddParameter(new XmlRPC.Value(this.BlogAccount.Username));
+            method.AddParameter(new XmlRPC.Value(this.BlogAccount.Password));
 
             var response = service.Execute(method);
             var list = (XmlRPC.Array)response.Parameters[0].Data;
@@ -197,7 +198,7 @@ namespace MetaWeblogSharp
             }
 
             categories_ = new XmlRPC.Array(categories.Count);
-            categories_.AddRange(categories.Cast<object>());
+            categories_.AddRange(categories.Select(c=>new Value(c)));
 
             var service = new XmlRPC.Service(this.BlogAccount.MetaWeblogURL);
             var struct_ = new XmlRPC.Struct();
@@ -206,11 +207,11 @@ namespace MetaWeblogSharp
             struct_["categories"] = new XmlRPC.Value(categories_);
 
             var method = new XmlRPC.MethodCall("metaWeblog.editPost");
-            method.AddParameter(postid);
-            method.AddParameter(this.BlogAccount.Username);
-            method.AddParameter(this.BlogAccount.Password);
-            method.AddParameter(struct_);
-            method.AddParameter(publish);
+            method.AddParameter(new XmlRPC.Value(postid));
+            method.AddParameter(new XmlRPC.Value(this.BlogAccount.Username));
+            method.AddParameter(new XmlRPC.Value(this.BlogAccount.Password));
+            method.AddParameter(new XmlRPC.Value(struct_));
+            method.AddParameter(new XmlRPC.Value(publish));
 
             var response = service.Execute(method);
             var param = response.Parameters[0];
@@ -224,9 +225,9 @@ namespace MetaWeblogSharp
             var service = new XmlRPC.Service(this.BlogAccount.MetaWeblogURL);
 
             var method = new XmlRPC.MethodCall("metaWeblog.getCategories");
-            method.AddParameter(this.BlogAccount.BlogID);
-            method.AddParameter(this.BlogAccount.Username);
-            method.AddParameter(this.BlogAccount.Password);
+            method.AddParameter(new XmlRPC.Value(this.BlogAccount.BlogID));
+            method.AddParameter(new XmlRPC.Value(this.BlogAccount.Username));
+            method.AddParameter(new XmlRPC.Value(this.BlogAccount.Password));
 
             var response = service.Execute(method);
 
@@ -256,9 +257,9 @@ namespace MetaWeblogSharp
             var service = new XmlRPC.Service(this.BlogAccount.MetaWeblogURL);
 
             var method = new XmlRPC.MethodCall("blogger.getUserInfo");
-            method.AddParameter(this.AppKey);
-            method.AddParameter(this.BlogAccount.Username);
-            method.AddParameter(this.BlogAccount.Password);
+            method.AddParameter(new XmlRPC.Value(this.AppKey));
+            method.AddParameter(new XmlRPC.Value(this.BlogAccount.Username));
+            method.AddParameter(new XmlRPC.Value(this.BlogAccount.Password));
 
             var response = service.Execute(method);
             var param = response.Parameters[0];

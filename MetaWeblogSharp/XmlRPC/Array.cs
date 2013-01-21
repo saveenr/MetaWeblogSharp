@@ -16,16 +16,16 @@ namespace MetaWeblogSharp.XmlRPC
             this.items = new List<Value>(capacity);
         }
 
-        public void Add(object o)
+        public void Add(Value v)
         {
-            this.items.Add(new Value(o));
+            this.items.Add(v);
         }
 
-        public void AddRange(IEnumerable<object> items)
+        public void AddRange(IEnumerable<Value> items)
         {
             foreach (var item in items)
             {
-                this.items.Add(new Value(item));
+                this.items.Add(item);
             }
         }
 

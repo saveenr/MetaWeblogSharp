@@ -6,7 +6,37 @@ namespace MetaWeblogSharp.XmlRPC
     {
         public object Data;
 
-        public Value(object data)
+        public Value(System.DateTime data)
+        {
+            this.Data = data;
+        }
+
+        public Value(bool data)
+        {
+            this.Data = data;
+        }
+
+        public Value(int data)
+        {
+            this.Data = data;
+        }
+
+        public Value(string data)
+        {
+            this.Data = data;
+        }
+
+        public Value(byte [] data)
+        {
+            this.Data = data;
+        }
+
+        public Value(Array data)
+        {
+            this.Data = data;
+        }
+
+        public Value(Struct data)
         {
             this.Data = data;
         }
