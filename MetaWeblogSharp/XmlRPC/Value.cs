@@ -59,7 +59,7 @@ namespace MetaWeblogSharp.XmlRPC
             {
                 var type_el = value_el.Elements().First();
                 string typename = type_el.Name.ToString();
-                if (typename == "array")
+                if (typename == Array.TypeString)
                 {
                     var data_el = type_el.Element("data");
 
@@ -72,7 +72,7 @@ namespace MetaWeblogSharp.XmlRPC
                     }
                     return new Value(list);
                 }
-                else if (typename == "struct")
+                else if (typename == Struct.TypeString)
                 {
                     var member_els = type_el.Elements("member").ToList();
                     var dic = new Struct();
@@ -95,6 +95,12 @@ namespace MetaWeblogSharp.XmlRPC
                 else if (typename == "double")
                 {
                     return new Value(double.Parse(input_value));
+                }
+                else if (typename == Base64Data.TypeString)
+                {
+                    var bytes = System.Convert.FromBase64String(input_value);
+                    var b = new Base64Data(bytes);
+                    return new Value(b);
                 }
                 else if (typename == "dateTime.iso8601")
                 {
@@ -133,7 +139,7 @@ namespace MetaWeblogSharp.XmlRPC
         {
             var value = this;
             var value_el = new System.Xml.Linq.XElement("value");
-            var type_el = new System.Xml.Linq.XElement(type_to_name(value.Data.GetType()));
+            var type_el = new System.Xml.Linq.XElement(GetTypeStringFromObject(value.Data));
             value_el.Add(type_el);
 
             if (value.Data is string)
@@ -205,39 +211,39 @@ namespace MetaWeblogSharp.XmlRPC
             return value_el;
         }
 
-        private static string type_to_name(System.Type t)
+        private static string GetTypeStringFromObject(object t)
         {
-            if (t == typeof(string))
+            if (t is string)
             {
                 return "string";
             }
-            else if (t == typeof(int))
+            else if (t is int)
             {
                 return "int";
             }
-            else if (t == typeof(XmlRPC.Struct))
+            else if (t is XmlRPC.Struct)
             {
-                return "struct";
+                return Struct.TypeString;
             }
-            else if (t == typeof(XmlRPC.Array))
+            else if (t is XmlRPC.Array)
             {
-                return "array";
+                return Array.TypeString;
             }
-            else if (t == typeof(Base64Data))
+            else if (t is Base64Data)
             {
-                return "base64";
+                return Base64Data.TypeString;
             }
-            else if (t == typeof(bool))
+            else if (t is bool)
             {
                 return "boolean";
             }
-            else if (t == typeof(double))
+            else if (t is double)
             {
                 return "double";
             }
             else
             {
-                string msg = string.Format("Unsupported type {0}", t.Name);
+                string msg = string.Format("Unsupported type {0}", t.GetType().Name);
                 throw new System.ArgumentException(msg);
             }
         }

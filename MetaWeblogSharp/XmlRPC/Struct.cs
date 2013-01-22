@@ -71,5 +71,10 @@ namespace MetaWeblogSharp.XmlRPC
             return GetEnumerator();
         }
 
+        public static string TypeString
+        {
+            get { return "struct"; }
+        }
+
     }
 }

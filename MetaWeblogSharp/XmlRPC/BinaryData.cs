@@ -8,5 +8,10 @@
         {
             this.Bytes = bytes;
         }
+
+        public static string TypeString
+        {
+            get { return "base64"; }
+        }
     }
 }
