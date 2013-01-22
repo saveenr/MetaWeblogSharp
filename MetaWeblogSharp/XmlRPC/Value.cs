@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Xml.Linq;
 
 namespace MetaWeblogSharp.XmlRPC
 {
@@ -170,35 +171,18 @@ namespace MetaWeblogSharp.XmlRPC
             else if (value.Data is Struct)
             {
                 var struct_ = (Struct)value.Data;
-                foreach (var pair in struct_)
-                {
-
-                    var member_el = new System.Xml.Linq.XElement("member");
-                    type_el.Add(member_el);
-
-                    var name_el = new System.Xml.Linq.XElement("name");
-                    member_el.Add(name_el);
-                    name_el.Value = pair.Key;
-
-                    pair.Value.AddXmlElement(member_el);
-
-                }
+                struct_.AddToTypeEl(type_el);
             }
             else if (value.Data is Base64Data)
             {
-                var bytes = (Base64Data)value.Data;
-                string s = System.Convert.ToBase64String(bytes.Bytes);
-                type_el.Add(s);
+                var base64 = (Base64Data)value.Data;
+                base64.AddToTypeEl(type_el);
             }
             else if (value.Data is XmlRPC.Array)
             {
-                var data_el = new System.Xml.Linq.XElement("data");
-                type_el.Add(data_el);
-                var list = (XmlRPC.Array)value.Data;
-                foreach (XmlRPC.Value item in list)
-                {
-                    item.AddXmlElement(data_el);
-                }
+                var array = (XmlRPC.Array)value.Data;
+
+                array.AddToTypeEl(type_el);
             }
             else
             {

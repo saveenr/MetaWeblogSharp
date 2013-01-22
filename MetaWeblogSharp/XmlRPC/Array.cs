@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Xml.Linq;
 
 namespace MetaWeblogSharp.XmlRPC
 {
@@ -49,5 +50,14 @@ namespace MetaWeblogSharp.XmlRPC
             get { return "array"; }
         }
 
+        internal void AddToTypeEl(XElement type_el)
+        {
+            var data_el = new System.Xml.Linq.XElement("data");
+            type_el.Add(data_el);
+            foreach (XmlRPC.Value item in this)
+            {
+                item.AddXmlElement(data_el);
+            }
+        }
     }
 }

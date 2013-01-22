@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Xml.Linq;
 
 namespace MetaWeblogSharp.XmlRPC
 {
@@ -76,5 +77,19 @@ namespace MetaWeblogSharp.XmlRPC
             get { return "struct"; }
         }
 
+        internal void AddToTypeEl(XElement type_el)
+        {
+            foreach (var pair in this)
+            {
+                var member_el = new System.Xml.Linq.XElement("member");
+                type_el.Add(member_el);
+
+                var name_el = new System.Xml.Linq.XElement("name");
+                member_el.Add(name_el);
+                name_el.Value = pair.Key;
+
+                pair.Value.AddXmlElement(member_el);
+            }
+        }
     }
 }
