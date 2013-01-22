@@ -9,8 +9,8 @@ namespace DemoApp
     {
         public static void Main(string[] args)
         {
-            // string blogdef = "D:\\saveenr\\skydrive\\private\\reference\\msdn.xml";
-            string blogdef = "c:\\saveenr\\skydrive\\private\\reference\\viziblr.xml";
+            // string blogdef = "\\saveenr\\skydrive\\private\\reference\\msdn.xml";
+            string blogdef = "\\saveenr\\skydrive\\private\\reference\\viziblr.xml";
 
             var blogaccount = MetaWeblogSharp.BlogConnectionInfo.Load(blogdef);
 

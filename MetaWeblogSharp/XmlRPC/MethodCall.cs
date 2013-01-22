@@ -15,11 +15,46 @@ namespace MetaWeblogSharp.XmlRPC
             this.Parameters = new List<Value>();
         }
 
-        public void AddParameter(Value value)
+        public void AddParameter(int value)
         {
-            this.Parameters.Add(value);
+            this.Parameters.Add(new Value(value));
         }
-       
+
+        public void AddParameter(bool value)
+        {
+            this.Parameters.Add(new Value(value));
+        }
+
+        public void AddParameter(System.DateTime value)
+        {
+            this.Parameters.Add(new Value(value));
+        }
+
+        public void AddParameter(double value)
+        {
+            this.Parameters.Add(new Value(value));
+        }
+
+        public void AddParameter(Array value)
+        {
+            this.Parameters.Add(new Value(value));
+        }
+
+        public void AddParameter(Struct value)
+        {
+            this.Parameters.Add(new Value(value));
+        }
+
+        public void AddParameter(Base64Data value)
+        {
+            this.Parameters.Add(new Value(value));
+        }
+
+        public void AddParameter(string value)
+        {
+            this.Parameters.Add(new Value(value));
+        }
+
         public System.Xml.Linq.XDocument CreateDocument()
         {
             var doc = new System.Xml.Linq.XDocument();
