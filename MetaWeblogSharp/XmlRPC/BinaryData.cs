@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using System;
+using System.Xml.Linq;
 
 namespace MetaWeblogSharp.XmlRPC
 {
@@ -18,7 +19,14 @@ namespace MetaWeblogSharp.XmlRPC
 
         internal void AddToTypeEl(XElement type_el)
         {
-            type_el.Add(System.Convert.ToBase64String(Bytes));
+            type_el.Add(Convert.ToBase64String(Bytes));
+        }
+
+        internal static Base64Data TypeElToValue(XElement type_el)
+        {
+            var bytes = Convert.FromBase64String(type_el.Value);
+            var b = new Base64Data(bytes);
+            return b;
         }
     }
 }

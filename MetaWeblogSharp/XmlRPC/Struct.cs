@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 
 namespace MetaWeblogSharp.XmlRPC
@@ -24,12 +27,12 @@ namespace MetaWeblogSharp.XmlRPC
                     if (typeof (T) == typeof (int) && vt==typeof(string))
                     {
                         // handle the one-off case where someone gave a string when an int was needed
-                        o = int.Parse((string) o);
+                        o = Int32.Parse((string) o);
 
                     }
                     else
                     {
-                        string msg = string.Format("Expected type {0} instead got {1}", typeof(T).Name, vt.Name);
+                        string msg = String.Format("Expected type {0} instead got {1}", typeof(T).Name, vt.Name);
                         throw new XmlRPCException(msg);                        
                     }
                 }
@@ -67,7 +70,7 @@ namespace MetaWeblogSharp.XmlRPC
             return dic.GetEnumerator();
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
@@ -77,19 +80,36 @@ namespace MetaWeblogSharp.XmlRPC
             get { return "struct"; }
         }
 
-        internal void AddToTypeEl(XElement type_el)
+        public void AddToTypeEl(XElement type_el)
         {
             foreach (var pair in this)
             {
-                var member_el = new System.Xml.Linq.XElement("member");
+                var member_el = new XElement("member");
                 type_el.Add(member_el);
 
-                var name_el = new System.Xml.Linq.XElement("name");
+                var name_el = new XElement("name");
                 member_el.Add(name_el);
                 name_el.Value = pair.Key;
 
                 pair.Value.AddXmlElement(member_el);
             }
+        }
+
+        public static Struct TypeElToValue(XElement type_el)
+        {
+            var member_els = type_el.Elements("member").ToList();
+            var struct_ = new Struct();
+            foreach (var member_el in member_els)
+            {
+                var name_el = member_el.Element("name");
+                string name = name_el.Value;
+
+                var value_el2 = member_el.Element("value");
+                var o = Value.ParseXml(value_el2);
+
+                struct_[name] = o;
+            }
+            return struct_;
         }
     }
 }

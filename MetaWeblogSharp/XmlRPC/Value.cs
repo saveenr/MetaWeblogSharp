@@ -62,32 +62,13 @@ namespace MetaWeblogSharp.XmlRPC
                 string typename = type_el.Name.ToString();
                 if (typename == Array.TypeString)
                 {
-                    var data_el = type_el.Element("data");
-
-                    var value_els = data_el.Elements("value").ToList();
-                    var list = new XmlRPC.Array();
-                    foreach (var value_el2 in value_els)
-                    {
-                        var o = ParseXml(value_el2);
-                        list.Add(o);
-                    }
-                    return new Value(list);
+                    var array = Array.TypeElToValue(type_el);
+                    return new Value(array);
                 }
                 else if (typename == Struct.TypeString)
                 {
-                    var member_els = type_el.Elements("member").ToList();
-                    var dic = new Struct();
-                    foreach (var member_el in member_els)
-                    {
-                        var name_el = member_el.Element("name");
-                        string name = name_el.Value;
-
-                        var value_el2 = member_el.Element("value");
-                        var o = ParseXml(value_el2);
-
-                        dic[name] = o;
-                    }
-                    return new Value(dic);
+                    var struct_ = Struct.TypeElToValue(type_el);
+                    return new Value(struct_);
                 }
                 else if (typename == "string")
                 {
@@ -99,8 +80,7 @@ namespace MetaWeblogSharp.XmlRPC
                 }
                 else if (typename == Base64Data.TypeString)
                 {
-                    var bytes = System.Convert.FromBase64String(input_value);
-                    var b = new Base64Data(bytes);
+                    var b = Base64Data.TypeElToValue(type_el);
                     return new Value(b);
                 }
                 else if (typename == "dateTime.iso8601")

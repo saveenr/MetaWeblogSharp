@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 
 namespace MetaWeblogSharp.XmlRPC
@@ -40,7 +42,7 @@ namespace MetaWeblogSharp.XmlRPC
             return items.GetEnumerator();
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
@@ -52,12 +54,26 @@ namespace MetaWeblogSharp.XmlRPC
 
         internal void AddToTypeEl(XElement type_el)
         {
-            var data_el = new System.Xml.Linq.XElement("data");
+            var data_el = new XElement("data");
             type_el.Add(data_el);
-            foreach (XmlRPC.Value item in this)
+            foreach (Value item in this)
             {
                 item.AddXmlElement(data_el);
             }
+        }
+
+        internal static Array TypeElToValue(XElement type_el)
+        {
+            var data_el = type_el.Element("data");
+
+            var value_els = data_el.Elements("value").ToList();
+            var list = new XmlRPC.Array();
+            foreach (var value_el2 in value_els)
+            {
+                var o = Value.ParseXml(value_el2);
+                list.Add(o);
+            }
+            return list;
         }
     }
 }
