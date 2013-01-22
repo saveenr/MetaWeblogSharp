@@ -4,11 +4,41 @@ using System.Xml.Linq;
 
 namespace MetaWeblogSharp.XmlRPC
 {
+    public class DateTimeX
+    {
+        public System.DateTime Data;
+        public DateTimeX(System.DateTime dt)
+        {
+            this.Data = dt;
+        }
+
+        public static string TypeString
+        {
+            get { return "dateTime.iso8601"; }
+        }
+        
+        public void AddToTypeEl(XElement type_el)
+        {
+            throw new Exception();
+        }
+
+        public static DateTimeX TypeElToValue(XElement type_el)
+        {
+            System.DateTime dt = System.DateTime.Now;
+            if (System.DateTime.TryParse(type_el.Value, out dt))
+            {
+                return new DateTimeX(dt);
+            }
+            var x = System.DateTime.ParseExact(type_el.Value, "yyyyMMddTHH:mm:ss", null);
+            var y = new DateTimeX(x);
+            return y;
+        }
+    }
     public class Value
     {
         public object Data;
 
-        public Value(System.DateTime data)
+        public Value(DateTimeX data)
         {
             this.Data = data;
         }
@@ -83,15 +113,10 @@ namespace MetaWeblogSharp.XmlRPC
                     var b = Base64Data.TypeElToValue(type_el);
                     return new Value(b);
                 }
-                else if (typename == "dateTime.iso8601")
+                else if (typename == DateTimeX.TypeString)
                 {
-
-                    System.DateTime dt = System.DateTime.Now;
-                    if (System.DateTime.TryParse(input_value, out dt))
-                    {
-                        return new Value(dt);
-                    }
-                    return new Value(System.DateTime.ParseExact(input_value, "yyyyMMddTHH:mm:ss", null));
+                    var dt = DateTimeX.TypeElToValue(type_el);
+                    return new Value(dt);
                 }
                 else if (typename == "int" || typename == "i4")
                 {
@@ -125,7 +150,7 @@ namespace MetaWeblogSharp.XmlRPC
 
             if (value.Data is string)
             {
-                type_el.Add((string)value.Data);
+                type_el.Add(value.Data);
             }
             else if (value.Data is int)
             {
@@ -163,6 +188,12 @@ namespace MetaWeblogSharp.XmlRPC
                 var array = (XmlRPC.Array)value.Data;
 
                 array.AddToTypeEl(type_el);
+            }
+            else if (value.Data is DateTimeX)
+            {
+                var dt = (DateTimeX)value.Data;
+
+                dt.AddToTypeEl(type_el);
             }
             else
             {

@@ -38,7 +38,7 @@ namespace MetaWeblogSharp
 
                 var pi = new PostInfo();
                 pi.Title = struct_.GetItem<string>("title",null);
-                pi.DateCreated = struct_.GetItem<System.DateTime>("dateCreated",System.DateTime.MaxValue);
+                pi.DateCreated = struct_.GetItem<DateTimeX>("dateCreated",null).Data;
                 pi.Link = struct_.GetItem<string>("link",null);
                 pi.PostID = struct_.GetItem<string>("postid", null);
                 pi.UserID = struct_.GetItem<string>("userid", null);
@@ -98,7 +98,7 @@ namespace MetaWeblogSharp
             item.Description = struct_.GetItem<string>("description", null);
             //item.Tags
             item.Link = struct_.GetItem<string>("link", null);
-            item.DateCreated = struct_.GetItem<System.DateTime>("dateCreated",System.DateTime.MaxValue);
+            item.DateCreated = struct_.GetItem<DateTimeX>("dateCreated",null).Data;
             item.PermaLink = struct_.GetItem<string>("permaLink", null);
             item.PostStatus = struct_.GetItem<string>("post_status", null);
             item.Title = struct_.GetItem<string>("title", null);

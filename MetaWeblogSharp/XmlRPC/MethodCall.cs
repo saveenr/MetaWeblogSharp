@@ -27,7 +27,7 @@ namespace MetaWeblogSharp.XmlRPC
 
         public void AddParameter(System.DateTime value)
         {
-            this.Parameters.Add(new Value(value));
+            this.Parameters.Add(new Value(new DateTimeX(value)));
         }
 
         public void AddParameter(double value)
