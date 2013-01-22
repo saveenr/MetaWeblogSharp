@@ -63,5 +63,26 @@ namespace MetaWeblogSharpTests
             }
         }
 
+        [TestMethod]
+        public void RoundTrip_DateTime()
+        {
+            var s = new XmlRPC.Struct();
+            var b0 = new XmlRPC.DateTimeX(System.DateTime.Now);
+            var svm = new XmlRPC.Value(b0);
+            s["val_base64"] = svm;
+
+            var o1 = new XmlRPC.Value(s);
+
+            var parent = new System.Xml.Linq.XElement("X");
+            var value_el = o1.AddXmlElement(parent);
+
+            var o2 = XmlRPC.Value.ParseXml(value_el);
+            var s2 = (XmlRPC.Struct)o2.Data;
+
+            Assert.IsTrue(s2.ContainsKey("val_base64"));
+
+            var z0 = s2.GetItem<MetaWeblogSharp.XmlRPC.DateTimeX>("val_base64", null);
+
+        }
     }
 }

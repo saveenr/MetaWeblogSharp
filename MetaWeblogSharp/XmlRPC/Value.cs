@@ -19,7 +19,8 @@ namespace MetaWeblogSharp.XmlRPC
         
         public void AddToTypeEl(XElement type_el)
         {
-            throw new Exception();
+            var s = this.Data.ToString("s", System.Globalization.CultureInfo.InvariantCulture);
+            type_el.Value = s;
         }
 
         public static DateTimeX TypeElToValue(XElement type_el)
@@ -235,6 +236,10 @@ namespace MetaWeblogSharp.XmlRPC
             else if (t is double)
             {
                 return "double";
+            }
+            else if (t is DateTimeX)
+            {
+                return DateTimeX.TypeString;
             }
             else
             {
