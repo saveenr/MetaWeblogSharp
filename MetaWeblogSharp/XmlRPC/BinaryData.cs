@@ -3,7 +3,7 @@ using System.Xml.Linq;
 
 namespace MetaWeblogSharp.XmlRPC
 {
-    public class Base64Data : XValue
+    public class Base64Data : Value
     {
         public byte[] Bytes;
 
@@ -17,9 +17,9 @@ namespace MetaWeblogSharp.XmlRPC
             get { return "base64"; }
         }
 
-        public override void AddToTypeEl(XElement type_el)
+        public override void AddToTypeEl(XElement parent)
         {
-            type_el.Add(Convert.ToBase64String(Bytes));
+            parent.Add(Convert.ToBase64String(Bytes));
         }
 
         internal static Base64Data TypeElToValue(XElement type_el)

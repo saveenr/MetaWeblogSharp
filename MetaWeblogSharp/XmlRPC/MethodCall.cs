@@ -17,42 +17,42 @@ namespace MetaWeblogSharp.XmlRPC
 
         public void AddParameter(int value)
         {
-            this.Parameters.Add(new Value(value));
+            this.Parameters.Add(new IntegerX(value));
         }
 
         public void AddParameter(bool value)
         {
-            this.Parameters.Add(new Value(value));
+            this.Parameters.Add(new BooleanX(value));
         }
 
         public void AddParameter(System.DateTime value)
         {
-            this.Parameters.Add(new Value(new DateTimeX(value)));
+            this.Parameters.Add(new DateTimeX(value));
         }
 
         public void AddParameter(double value)
         {
-            this.Parameters.Add(new Value(value));
+            this.Parameters.Add(new DoubleX(value));
         }
 
         public void AddParameter(Array value)
         {
-            this.Parameters.Add(new Value(value));
+            this.Parameters.Add(value);
         }
 
         public void AddParameter(Struct value)
         {
-            this.Parameters.Add(new Value(value));
+            this.Parameters.Add(value);
         }
 
         public void AddParameter(Base64Data value)
         {
-            this.Parameters.Add(new Value(value));
+            this.Parameters.Add(value);
         }
 
         public void AddParameter(string value)
         {
-            this.Parameters.Add(new Value(value));
+            this.Parameters.Add(new StringX(value));
         }
 
         public System.Xml.Linq.XDocument CreateDocument()

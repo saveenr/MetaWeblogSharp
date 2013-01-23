@@ -4,17 +4,14 @@ using System.Xml.Linq;
 
 namespace MetaWeblogSharp.XmlRPC
 {
-    public abstract class XValue
-    {
-        public abstract void AddToTypeEl(XElement type_el);
-    }
 
-    public class DateTimeX : XValue
+    public class DateTimeX : Value
     {
         public System.DateTime Data;
-        public DateTimeX(System.DateTime dt)
+
+        public DateTimeX(System.DateTime value)
         {
-            this.Data = dt;
+            this.Data = value;
         }
 
         public static string TypeString
@@ -22,31 +19,32 @@ namespace MetaWeblogSharp.XmlRPC
             get { return "dateTime.iso8601"; }
         }
         
-        public override void AddToTypeEl(XElement type_el)
+        public override void AddToTypeEl(XElement parent)
         {
             var s = this.Data.ToString("s", System.Globalization.CultureInfo.InvariantCulture);
-            type_el.Value = s;
+            parent.Value = s;
         }
 
-        public static DateTimeX TypeElToValue(XElement type_el)
+        public static DateTimeX TypeElToValue(XElement parent)
         {
             System.DateTime dt = System.DateTime.Now;
-            if (System.DateTime.TryParse(type_el.Value, out dt))
+            if (System.DateTime.TryParse(parent.Value, out dt))
             {
                 return new DateTimeX(dt);
             }
-            var x = System.DateTime.ParseExact(type_el.Value, "yyyyMMddTHH:mm:ss", null);
+            var x = System.DateTime.ParseExact(parent.Value, "yyyyMMddTHH:mm:ss", null);
             var y = new DateTimeX(x);
             return y;
         }
     }
 
-    public class BooleanX : XValue
+    public class BooleanX : Value
     {
         public bool Data;
-        public BooleanX (bool dt)
+        
+        public BooleanX (bool value)
         {
-            this.Data = dt;
+            this.Data = value;
         }
 
         public static string TypeString
@@ -54,15 +52,15 @@ namespace MetaWeblogSharp.XmlRPC
             get { return "boolean"; }
         }
 
-        public override void AddToTypeEl(XElement type_el)
+        public override void AddToTypeEl(XElement parent)
         {
             if (this.Data)
             {
-                type_el.Add("1");
+                parent.Add("1");
             }
             else
             {
-                type_el.Add("0");
+                parent.Add("0");
             }
         }
 
@@ -75,7 +73,7 @@ namespace MetaWeblogSharp.XmlRPC
         }
     }
 
-    public class IntegerX : XValue
+    public class IntegerX : Value
     {
         public int Data;
         public IntegerX(int dt)
@@ -88,19 +86,19 @@ namespace MetaWeblogSharp.XmlRPC
             get { return "int"; }
         }
 
-        public override void AddToTypeEl(XElement type_el)
+        public override void AddToTypeEl(XElement parent)
         {
-            type_el.Value = this.Data.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            parent.Value = this.Data.ToString(System.Globalization.CultureInfo.InvariantCulture);
         }
 
-        public static IntegerX TypeElToValue(XElement type_el)
+        public static IntegerX TypeElToValue(XElement parent)
         {
-            var bv = new IntegerX(int.Parse(type_el.Value));
+            var bv = new IntegerX(int.Parse(parent.Value));
             return bv;
         }
     }
 
-    public class DoubleX : XValue
+    public class DoubleX : Value
     {
         public double Data;
         public DoubleX(double dt)
@@ -113,19 +111,19 @@ namespace MetaWeblogSharp.XmlRPC
             get { return "double"; }
         }
 
-        public override void AddToTypeEl(XElement type_el)
+        public override void AddToTypeEl(XElement parent)
         {
-            type_el.Value = this.Data.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            parent.Value = this.Data.ToString(System.Globalization.CultureInfo.InvariantCulture);
         }
 
-        public static DoubleX TypeElToValue(XElement type_el)
+        public static DoubleX TypeElToValue(XElement parent)
         {
-            var bv = new DoubleX(double.Parse(type_el.Value));
+            var bv = new DoubleX(double.Parse(parent.Value));
             return bv;
         }
     }
 
-    public class StringX : XValue
+    public class StringX : Value
     {
         public string Data;
         public StringX(string dt)
@@ -138,83 +136,22 @@ namespace MetaWeblogSharp.XmlRPC
             get { return "string"; }
         }
 
-        public override void AddToTypeEl(XElement type_el)
+        public override void AddToTypeEl(XElement parent)
         {
-            type_el.Value = this.Data;
+            parent.Value = this.Data;
         }
 
-        public static StringX TypeElToValue(XElement type_el)
+        public static StringX TypeElToValue(XElement parent)
         {
-            var bv = new StringX(type_el.Value);
+            var bv = new StringX(parent.Value);
             return bv;
         }
     }
 
 
-    public class Value
+    public abstract class Value
     {
-        public object Data;
-
-        public Value(DateTimeX data)
-        {
-            this.Data = data;
-        }
-
-        public Value(bool data)
-        {
-            this.Data = new BooleanX(data);
-        }
-
-        public Value(BooleanX data)
-        {
-            this.Data = data;
-        }
-
-        public Value(int data)
-        {
-            this.Data = new IntegerX(data);
-        }
-
-        public Value(IntegerX data)
-        {
-            this.Data = data;
-        }
-        
-        public Value(double data)
-        {
-            this.Data = new DoubleX(data);
-        }
-
-        public Value(DoubleX data)
-        {
-            this.Data = data;
-        }
-
-
-        public Value(string data)
-        {
-            this.Data = new StringX(data);
-        }
-
-        public Value(StringX data)
-        {
-            this.Data = data;
-        }
-
-        public Value(Base64Data data)
-        {
-            this.Data = data;
-        }
-
-        public Value(Array data)
-        {
-            this.Data = data;
-        }
-
-        public Value(Struct data)
-        {
-            this.Data = data;
-        }
+        public abstract void AddToTypeEl(XElement parent);
 
         public static XmlRPC.Value ParseXml(System.Xml.Linq.XElement value_el)
         {
@@ -230,41 +167,35 @@ namespace MetaWeblogSharp.XmlRPC
                 string typename = type_el.Name.ToString();
                 if (typename == Array.TypeString)
                 {
-                    var array = Array.TypeElToValue(type_el);
-                    return new Value(array);
+                    return Array.TypeElToValue(type_el);
                 }
                 else if (typename == Struct.TypeString)
                 {
-                    var struct_ = Struct.TypeElToValue(type_el);
-                    return new Value(struct_);
+                    return Struct.TypeElToValue(type_el);
                 }
                 else if (typename == StringX.TypeString)
                 {
-                    var sxx = StringX.TypeElToValue(type_el);
-                    return new Value(sxx);
+                    return StringX.TypeElToValue(type_el);
                 }
                 else if (typename == DoubleX.TypeString)
                 {
-                    var xxx = DoubleX.TypeElToValue(type_el);
-                    return new Value(xxx);
+                    return DoubleX.TypeElToValue(type_el);
                 }
                 else if (typename == Base64Data.TypeString)
                 {
-                    var b = Base64Data.TypeElToValue(type_el);
-                    return new Value(b);
+                    return Base64Data.TypeElToValue(type_el);
                 }
                 else if (typename == DateTimeX.TypeString)
                 {
-                    var dt = DateTimeX.TypeElToValue(type_el);
-                    return new Value(dt);
+                    return DateTimeX.TypeElToValue(type_el);
                 }
-                else if (typename == IntegerX.TypeString)
+                else if (typename == IntegerX.TypeString || typename == "i4")
                 {
-                    return new Value(IntegerX.TypeElToValue(type_el));
+                    return IntegerX.TypeElToValue(type_el);
                 }
                 else if (typename == BooleanX.TypeString )
                 {
-                    return new Value( BooleanX.TypeElToValue(type_el));
+                    return BooleanX.TypeElToValue(type_el);
                 }
                 else
                 {
@@ -275,71 +206,60 @@ namespace MetaWeblogSharp.XmlRPC
             else
             {
                 // no sub elements must be a string
-                return new Value(input_value);
+                return new StringX(input_value);
             }
         }
 
         public System.Xml.Linq.XElement AddXmlElement(System.Xml.Linq.XElement parent)
         {
-            var value = this;
             var value_el = new System.Xml.Linq.XElement("value");
-            object vdata = value.Data;
-            var type_el = new System.Xml.Linq.XElement(GetTypeStringFromObject(vdata));
+            var type_el = new System.Xml.Linq.XElement(GetTypeString());
             value_el.Add(type_el);
 
-            if (vdata is XValue)
-            {
-                var x = (XValue) vdata;
-                x.AddToTypeEl(type_el);
-            }
-            else
-            {
-                string msg = string.Format("Unknown type {0}", value.GetType().Name);
-                throw new ArgumentException(msg);
-            }
+            this.AddToTypeEl(type_el);
 
             parent.Add(value_el);
 
             return value_el;
         }
 
-        private static string GetTypeStringFromObject(object t)
+        private string GetTypeString()
         {
-            if (t is StringX)
+            if (this is StringX)
             {
                 return StringX.TypeString;
             }
-            else if (t is IntegerX)
+            else if (this is IntegerX)
             {
                 return IntegerX.TypeString;
             }
-            else if (t is XmlRPC.Struct)
+            else if (this is XmlRPC.Struct)
             {
                 return Struct.TypeString;
             }
-            else if (t is XmlRPC.Array)
+            else if (this is XmlRPC.Array)
             {
                 return Array.TypeString;
             }
-            else if (t is Base64Data)
+            else if (this is Base64Data)
             {
                 return Base64Data.TypeString;
             }
-            else if (t is BooleanX)
+            else if (this is BooleanX)
             {
                 return BooleanX.TypeString;
             }
-            else if (t is DoubleX)
+            else if (this is DoubleX)
             {
                 return DoubleX.TypeString;
             }
-            else if (t is DateTimeX)
+            else if (this is DateTimeX)
             {
                 return DateTimeX.TypeString;
             }
             else
             {
-                string msg = string.Format("Unsupported type {0}", t.GetType().Name);
+                string msg = string.Format("Unsupported type {0}", GetType().Name);
                 throw new System.ArgumentException(msg);
             }
         }

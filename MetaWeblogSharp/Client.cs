@@ -29,12 +29,12 @@ namespace MetaWeblogSharp
             var response = service.Execute(method);
 
             var param = response.Parameters[0];
-            var array = (XmlRPC.Array)param.Data;
+            var array = (XmlRPC.Array)param;
 
             var items = new List<PostInfo>();
             foreach (var value in array)
             {
-                var struct_ = (XmlRPC.Struct)value.Data;
+                var struct_ = (XmlRPC.Struct)value;
 
                 var pi = new PostInfo();
                 pi.Title = struct_.GetString("title",null).Data;
@@ -58,9 +58,9 @@ namespace MetaWeblogSharp
             var service = new XmlRPC.Service(this.BlogConnectionInfo.MetaWeblogURL);
 
             var input_struct_ = new XmlRPC.Struct();
-            input_struct_["name"] = new XmlRPC.Value(name);
-            input_struct_["type"] = new XmlRPC.Value(type);
-            input_struct_["bits"] = new XmlRPC.Value( new Base64Data(bits));
+            input_struct_["name"] = new StringX(name);
+            input_struct_["type"] = new StringX(type);
+            input_struct_["bits"] = new Base64Data(bits);
 
             var method = new XmlRPC.MethodCall("metaWeblog.newMediaObject");
             method.AddParameter(this.BlogConnectionInfo.BlogID);
@@ -70,7 +70,7 @@ namespace MetaWeblogSharp
 
             var response = service.Execute(method);
             var param = response.Parameters[0];
-            var struct_ = (XmlRPC.Struct)param.Data;
+            var struct_ = (XmlRPC.Struct)param;
             var item = new MediaObjectInfo();
 
             item.URL = struct_.GetString("url", null).Data;
@@ -90,7 +90,7 @@ namespace MetaWeblogSharp
 
             var response = service.Execute(method);
             var param = response.Parameters[0];
-            var struct_ = (XmlRPC.Struct)param.Data;
+            var struct_ = (XmlRPC.Struct)param;
             var item = new PostInfo();
 
             //item.Categories 
@@ -119,15 +119,15 @@ namespace MetaWeblogSharp
             else
             {
                 cats = new XmlRPC.Array(categories.Count);
-                cats.AddRange( categories.Select(c=>new Value(c)));
+                cats.AddRange( categories.Select(c=>new StringX(c)));
             }
 
             var service = new XmlRPC.Service(this.BlogConnectionInfo.MetaWeblogURL);
 
             var struct_ = new XmlRPC.Struct();
-            struct_["title"] = new XmlRPC.Value(title);
-            struct_["description"] = new XmlRPC.Value(description);
-            struct_["categories"] = new XmlRPC.Value(cats);
+            struct_["title"] = new StringX(title);
+            struct_["description"] = new StringX(description);
+            struct_["categories"] = cats;
 
             var method = new XmlRPC.MethodCall("metaWeblog.newPost");
             method.AddParameter(this.BlogConnectionInfo.BlogID);
@@ -138,7 +138,7 @@ namespace MetaWeblogSharp
 
             var response = service.Execute(method);
             var param = response.Parameters[0];
-            var postid = ((StringX)param.Data).Data;
+            var postid = ((StringX)param).Data;
 
             return postid;
         }
@@ -156,7 +156,7 @@ namespace MetaWeblogSharp
 
             var response = service.Execute(method);
             var param = response.Parameters[0];
-            var success = (BooleanX)param.Data;
+            var success = (BooleanX)param;
 
             return success.Data;
         }
@@ -171,15 +171,15 @@ namespace MetaWeblogSharp
             method.AddParameter(this.BlogConnectionInfo.Password);
 
             var response = service.Execute(method);
-            var list = (XmlRPC.Array)response.Parameters[0].Data;
-            var struct_ = (XmlRPC.Struct)list[0].Data;
+            var list = (XmlRPC.Array)response.Parameters[0];
+            var struct_ = (XmlRPC.Struct)list[0];
             var item = new BlogInfo();
 
             //item.Categories 
             item.BlogID = struct_.GetString("blogid", null).Data;
             item.URL = struct_.GetString("url", null).Data;
             item.BlogName = struct_.GetString("blogName", null).Data;
-            item.IsAdmin = struct_.GetItem<bool>("isAdmin",false);
+            item.IsAdmin = struct_.GetItem3<BooleanX>("isAdmin", () => new BooleanX(false)).Data;
             item.SiteName = struct_.GetString("siteName", null).Data;
             item.Capabilities = struct_.GetString("capabilities", null).Data;
             item.XmlRPCEndPoint = struct_.GetString("xmlrpc", null).Data;
@@ -198,13 +198,13 @@ namespace MetaWeblogSharp
             }
 
             categories_ = new XmlRPC.Array(categories.Count);
-            categories_.AddRange(categories.Select(c=>new Value(c)));
+            categories_.AddRange(categories.Select(c=>new StringX(c)));
 
             var service = new XmlRPC.Service(this.BlogConnectionInfo.MetaWeblogURL);
             var struct_ = new XmlRPC.Struct();
-            struct_["title"] = new XmlRPC.Value(title);
-            struct_["description"] = new XmlRPC.Value(description);
-            struct_["categories"] = new XmlRPC.Value(categories_);
+            struct_["title"] = new StringX(title);
+            struct_["description"] = new StringX(description);
+            struct_["categories"] = categories_;
 
             var method = new XmlRPC.MethodCall("metaWeblog.editPost");
             method.AddParameter(postid);
@@ -215,7 +215,7 @@ namespace MetaWeblogSharp
 
             var response = service.Execute(method);
             var param = response.Parameters[0];
-            var success = (BooleanX)param.Data;
+            var success = (BooleanX)param;
 
             return success.Data;
         }
@@ -232,12 +232,12 @@ namespace MetaWeblogSharp
             var response = service.Execute(method);
 
             var param = response.Parameters[0];
-            var array = (XmlRPC.Array)param.Data;
+            var array = (XmlRPC.Array)param;
 
             var items = new List<CategoryInfo>();
             foreach (var value in array)
             {
-                var struct_ = (XmlRPC.Struct)value.Data;
+                var struct_ = (XmlRPC.Struct)value;
 
                 var pi = new CategoryInfo();
                 pi.Title = struct_.GetString("title", null).Data;
@@ -263,7 +263,7 @@ namespace MetaWeblogSharp
 
             var response = service.Execute(method);
             var param = response.Parameters[0];
-            var struct_ = (XmlRPC.Struct)param.Data;
+            var struct_ = (XmlRPC.Struct)param;
             var item = new UserInfo();
 
             item.UserID = struct_.GetString("userid", null).Data;

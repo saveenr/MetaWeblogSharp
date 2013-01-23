@@ -12,7 +12,7 @@ namespace MetaWeblogSharp.XmlRPC
         private Fault parsefault(System.Xml.Linq.XElement fault_el)
         {
             var value_el = fault_el.Element("value");
-            var fault_value = (Struct)XmlRPC.Value.ParseXml(value_el).Data;
+            var fault_value = (Struct)XmlRPC.Value.ParseXml(value_el);
             int fault_code = fault_value.GetItem<IntegerX>("faultCode").Data;
             string fault_string = fault_value.GetItem<StringX>("faultString").Data;
 
