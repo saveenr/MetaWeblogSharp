@@ -29,10 +29,10 @@ namespace MetaWeblogSharpTests
 
             Assert.IsTrue(s2.ContainsKey("val_double"));
 
-            var z0 = s2.GetItem<XmlRPC.DoubleValue>("val_double");
+            var z0 = s2.Get<XmlRPC.DoubleValue>("val_double");
             Assert.AreEqual(
-                s2.GetItem<XmlRPC.DoubleValue>("val_double").Data,
-                s.GetItem<XmlRPC.DoubleValue>("val_double").Data);
+                s2.Get<XmlRPC.DoubleValue>("val_double").Data,
+                s.Get<XmlRPC.DoubleValue>("val_double").Data);
         }
 
         [TestMethod]
@@ -50,7 +50,7 @@ namespace MetaWeblogSharpTests
 
             Assert.IsTrue(s2.ContainsKey("val_base64"));
 
-            var z0 = s2.GetItem<MetaWeblogSharp.XmlRPC.Base64Data>("val_base64");
+            var z0 = s2.Get<MetaWeblogSharp.XmlRPC.Base64Data>("val_base64");
 
             for (int i = 0; i < b0.Bytes.Length; i++)
             {

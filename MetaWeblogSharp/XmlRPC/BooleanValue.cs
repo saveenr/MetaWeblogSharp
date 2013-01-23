@@ -35,5 +35,11 @@ namespace MetaWeblogSharp.XmlRPC
             var bv = new BooleanValue(b);
             return bv;
         }
+
+        public static implicit operator BooleanValue (bool v)
+        {
+            return new BooleanValue(v);
+        }
+
     }
 }

@@ -38,11 +38,11 @@ namespace MetaWeblogSharp
 
                 var pi = new PostInfo();
                 pi.Title = struct_.GetString("title",null).Data;
-                pi.DateCreated = struct_.GetItem<DateTimeValue>("dateCreated",null).Data;
+                pi.DateCreated = struct_.Get<DateTimeValue>("dateCreated").Data;
                 pi.Link = struct_.GetString("link",null).Data;
                 pi.PostID = struct_.GetString("postid", null).Data;
                 pi.UserID = struct_.GetString("userid", null).Data;
-                pi.CommentCount = struct_.GetItem<IntegerValue>("commentCount").Data;
+                pi.CommentCount = struct_.Get<IntegerValue>("commentCount").Data;
                 pi.PostStatus = struct_.GetString("post_status", null).Data;
                 pi.PermaLink = struct_.GetString("permaLink", null).Data;
                 pi.Description = struct_.GetString("description", null).Data;
@@ -98,7 +98,7 @@ namespace MetaWeblogSharp
             item.Description = struct_.GetString("description", null).Data;
             //item.Tags
             item.Link = struct_.GetString("link", null).Data;
-            item.DateCreated = struct_.GetItem<DateTimeValue>("dateCreated",null).Data;
+            item.DateCreated = struct_.Get<DateTimeValue>("dateCreated").Data;
             item.PermaLink = struct_.GetString("permaLink", null).Data;
             item.PostStatus = struct_.GetString("post_status", null).Data;
             item.Title = struct_.GetString("title", null).Data;
@@ -179,7 +179,7 @@ namespace MetaWeblogSharp
             item.BlogID = struct_.GetString("blogid", null).Data;
             item.URL = struct_.GetString("url", null).Data;
             item.BlogName = struct_.GetString("blogName", null).Data;
-            item.IsAdmin = struct_.GetItem3<BooleanValue>("isAdmin", () => new BooleanValue(false)).Data;
+            item.IsAdmin = struct_.Get<BooleanValue>("isAdmin", false).Data;
             item.SiteName = struct_.GetString("siteName", null).Data;
             item.Capabilities = struct_.GetString("capabilities", null).Data;
             item.XmlRPCEndPoint = struct_.GetString("xmlrpc", null).Data;

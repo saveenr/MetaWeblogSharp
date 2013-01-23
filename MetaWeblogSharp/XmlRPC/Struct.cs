@@ -15,25 +15,86 @@ namespace MetaWeblogSharp.XmlRPC
             this.dic = new Dictionary<string, Value>();
         }
 
+        internal bool TryGetValue(string name, out Value v)
+        {
+            return this.dic.TryGetValue(name, out v);
+        }
+
+        internal Value TryGetValue(string name)
+        {
+            Value v=null;
+            var b = this.dic.TryGetValue(name, out v);
+            return v;
+        }
+
+        private void checktype<T>(Value v)
+        {
+            var expected = typeof (T);
+            var actual = v.GetType();
+            if (expected != actual)
+            {
+                string msg = String.Format("Expected type {0} instead got {1}", expected.Name, actual.Name);
+                throw new XmlRPCException(msg);
+            }
+        }
+
+        public T TryGet<T>(string name) where T:Value
+        {
+            var v = this.TryGetValue(name);
+            if (v == null)
+            {
+                return null;
+            }
+
+            this.checktype<T>(v);
+
+            return (T)v;
+        }
+
+        public T Get<T>(string name, T defval) where T : Value
+        {
+            var v = this.TryGetValue(name);
+            if (v == null)
+            {
+                return defval;
+            }
+
+            this.checktype<T>(v);
+
+            return (T)v;
+        }
+
+        public T Get<T>(string name) where T : Value
+        {
+            var v = this.TryGetValue(name);
+            if (v == null)
+            {
+                string msg = String.Format("Struct does not contains {0}", name);
+                throw new XmlRPCException(msg);
+            }
+
+            this.checktype<T>(v);
+
+            return (T)v;
+        }
+
+
+        public StringValue TryGetString(string name)
+        {
+            return TryGet<StringValue>(name);
+        }
+
         public StringValue GetString(string name, string defval)
         {
-            if (this.dic.ContainsKey(name))
-            {
-                var o_ = this.dic[name];
-                var o = o_;
-                var vt = o.GetType();
-                if (vt != typeof(StringValue))
-                {
-                    string msg = String.Format("Expected type {0} instead got {1}", typeof(StringValue).Name, vt.Name);
-                    throw new XmlRPCException(msg);
-                }
-                var v = (StringValue)o;
-                return v;
-            }
-            else
+            var v = this.TryGetValue(name);
+            if (v == null)
             {
                 return new StringValue(defval);
             }
+
+            this.checktype<StringValue>(v);
+
+            return (StringValue)v;
         }
 
 
@@ -65,100 +126,6 @@ namespace MetaWeblogSharp.XmlRPC
             else
             {
                 return defval;
-            }
-        }
-
-        public T GetItem3<T>(string name, System.Func<T> f) where T : Value
-        {
-            if (this.dic.ContainsKey(name))
-            {
-                var o_ = this.dic[name];
-                var o = o_;
-                var vt = o.GetType();
-                if (vt != typeof(T))
-                {
-                    if (typeof(T) == typeof(int) && vt == typeof(string))
-                    {
-                        // handle the one-off case where someone gave a string when an int was needed
-                        throw new Exception("dddd");
-                        //o = Int32.Parse((string) o);
-
-                    }
-                    else
-                    {
-                        string msg = String.Format("Expected type {0} instead got {1}", typeof(T).Name, vt.Name);
-                        throw new XmlRPCException(msg);
-                    }
-                }
-                var v = (T)o;
-                return v;
-            }
-            else
-            {
-                return f();
-            }
-        }
-
-
-        public T GetItem2<T>(string name) where T : Value
-        {
-            if (this.dic.ContainsKey(name))
-            {
-                var o_ = this.dic[name];
-                var o = o_;
-                var vt = o.GetType();
-                if (vt != typeof(T))
-                {
-                    if (typeof(T) == typeof(int) && vt == typeof(string))
-                    {
-                        // handle the one-off case where someone gave a string when an int was needed
-                        throw new Exception("dddd");
-                        //o = Int32.Parse((string) o);
-
-                    }
-                    else
-                    {
-                        string msg = String.Format("Expected type {0} instead got {1}", typeof(T).Name, vt.Name);
-                        throw new XmlRPCException(msg);
-                    }
-                }
-                var v = (T)o;
-                return v;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        public T GetItem<T>(string name) where T: Value
-        {
-            if (this.dic.ContainsKey(name))
-            {
-                var o_ = this.dic[name];
-                var o = o_;
-                var vt = o.GetType();
-                if (vt != typeof(T))
-                {
-                    if (typeof(T) == typeof(int) && vt == typeof(string))
-                    {
-                        // handle the one-off case where someone gave a string when an int was needed
-                       throw new Exception("!!!!!!!!!!");
-                        //o = Int32.Parse((string)o);
-
-                    }
-                    else
-                    {
-                        string msg = String.Format("Expected type {0} instead got {1}", typeof(T).Name, vt.Name);
-                        throw new XmlRPCException(msg);
-                    }
-                }
-                var v = (T)o;
-                return v;
-            }
-            else
-            {
-                throw new XmlRPCException("Struct did not contain key");
             }
         }
 
