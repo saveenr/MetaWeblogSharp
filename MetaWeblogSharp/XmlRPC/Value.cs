@@ -287,47 +287,10 @@ namespace MetaWeblogSharp.XmlRPC
             var type_el = new System.Xml.Linq.XElement(GetTypeStringFromObject(vdata));
             value_el.Add(type_el);
 
-            if (vdata is StringX)
+            if (vdata is XValue)
             {
-                var s = (StringX) vdata;
-                type_el.Add(s.Data);
-            }
-            else if (vdata is IntegerX)
-            {
-                var i = (IntegerX) vdata;
-                i.AddToTypeEl(type_el);
-            }
-            else if (vdata is DoubleX)
-            {
-                var d = (DoubleX) vdata;
-                d.AddToTypeEl(type_el);
-            }
-            else if (vdata is BooleanX)
-            {
-                var bv = (BooleanX)vdata;
-                bv.AddToTypeEl(type_el);
-            }
-            else if (vdata is Struct)
-            {
-                var struct_ = (Struct)vdata;
-                struct_.AddToTypeEl(type_el);
-            }
-            else if (vdata is Base64Data)
-            {
-                var base64 = (Base64Data)vdata;
-                base64.AddToTypeEl(type_el);
-            }
-            else if (vdata is XmlRPC.Array)
-            {
-                var array = (XmlRPC.Array)vdata;
-
-                array.AddToTypeEl(type_el);
-            }
-            else if (vdata is DateTimeX)
-            {
-                var dt = (DateTimeX)vdata;
-
-                dt.AddToTypeEl(type_el);
+                var x = (XValue) vdata;
+                x.AddToTypeEl(type_el);
             }
             else
             {
