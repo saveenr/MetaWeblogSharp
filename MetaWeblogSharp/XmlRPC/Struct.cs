@@ -64,7 +64,7 @@ namespace MetaWeblogSharp.XmlRPC
             return (T)v;
         }
 
-        public T Get<T>(string name) where T : Value
+        public Value Get(string name)
         {
             var v = this.TryGetValue(name);
             if (v == null)
@@ -72,9 +72,13 @@ namespace MetaWeblogSharp.XmlRPC
                 string msg = String.Format("Struct does not contains {0}", name);
                 throw new XmlRPCException(msg);
             }
+            return v;
+        }
 
+        public T Get<T>(string name) where T : Value
+        {
+            var v = this.Get(name);
             this.checktype<T>(v);
-
             return (T)v;
         }
 

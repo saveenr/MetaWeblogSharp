@@ -1,7 +1,7 @@
 <package >
   <metadata>
     <id>MetaWeblogSharp</id>
-    <version>1.0.17</version>
+    <version>1.0.19</version>
     <authors>saveenr</authors>
     <owners>saveenr</owners>
     <licenseUrl>http://metaweblogsharp.codeplex.com</licenseUrl>
@@ -11,7 +11,8 @@
     <description>MetaWeblogSharp is a simple MetWeblog client. It has no dependencies on other libraries. 
 </description>
     <releaseNotes>
-Fixed bugs. Internal changes to XMLRPC library    </releaseNotes>
+Made XMLRPC fault handling more robust
+</releaseNotes>
     <copyright>Copyright 2013</copyright>
     <tags>Visio</tags>
     <dependencies>

@@ -2,8 +2,43 @@
 {
     public class Fault
     {
-        public int FaultCode;
-        public string FaultString;
-        public object RawData;
+        public int FaultCode { get; set; }
+        public string FaultString { get; set; }
+        public object RawData { get; set; }
+
+        public static Fault ParseXml(System.Xml.Linq.XElement fault_el)
+        {
+            var value_el = fault_el.Element("value");
+            var fault_value = (Struct)XmlRPC.Value.ParseXml(value_el);
+
+            int fault_code = -1;
+            var fault_code_val = fault_value.Get("faultCode");
+            if (fault_code_val != null)
+            {
+                if (fault_code_val is StringValue)
+                {
+                    var s = (StringValue)fault_code_val;
+                    fault_code = int.Parse(s.Data);
+                }
+                else if (fault_code_val is IntegerValue)
+                {
+                    var i = (IntegerValue)fault_code_val;
+                    fault_code = i.Data;
+                }
+                else
+                {
+                    string msg = string.Format("Fault Code value is not int or string {0}", value_el.ToString());
+                    throw new XmlRPCException(msg);
+                }
+            }
+
+            string fault_string = fault_value.Get<StringValue>("faultString").Data;
+
+            var f = new Fault();
+            f.FaultCode = fault_code;
+            f.FaultString = fault_string;
+            f.RawData = fault_el.Document.ToString();
+            return f;
+        }
     }
 }
