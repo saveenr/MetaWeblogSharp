@@ -31,10 +31,10 @@ namespace MetaWeblogSharpTests
 
             Assert.IsTrue(s2.ContainsKey("val_double"));
 
-            var z0 = s2.GetItem<double>("val_double", 0.0);
+            var z0 = s2.GetItem<double>("val_double");
             Assert.AreEqual(
-                s2.GetItem<double>("val_double",0.0),
-                s.GetItem<double>("val_double", 0.0));
+                s2.GetItem<double>("val_double"),
+                s.GetItem<double>("val_double"));
         }
 
         [TestMethod]
@@ -55,7 +55,7 @@ namespace MetaWeblogSharpTests
 
             Assert.IsTrue(s2.ContainsKey("val_base64"));
 
-            var z0 = s2.GetItem<MetaWeblogSharp.XmlRPC.Base64Data>("val_base64", null);
+            var z0 = s2.GetItem<MetaWeblogSharp.XmlRPC.Base64Data>("val_base64");
 
             for (int i = 0; i < b0.Bytes.Length; i++)
             {
@@ -66,22 +66,22 @@ namespace MetaWeblogSharpTests
         [TestMethod]
         public void RoundTrip_DateTime()
         {
-            var s = new XmlRPC.Struct();
-            var b0 = new XmlRPC.DateTimeX(System.DateTime.Now);
-            var svm = new XmlRPC.Value(b0);
-            s["val_base64"] = svm;
+            var input_struct = new XmlRPC.Struct();
+            var input_data = new XmlRPC.DateTimeX(System.DateTime.Now);
+            var input_value = new XmlRPC.Value(input_data);
+            input_struct["x"] = input_value;
 
-            var o1 = new XmlRPC.Value(s);
+            var o1 = new XmlRPC.Value(input_struct);
 
             var parent = new System.Xml.Linq.XElement("X");
             var value_el = o1.AddXmlElement(parent);
 
             var o2 = XmlRPC.Value.ParseXml(value_el);
-            var s2 = (XmlRPC.Struct)o2.Data;
+            var output_struct = (XmlRPC.Struct)o2.Data;
 
-            Assert.IsTrue(s2.ContainsKey("val_base64"));
+            Assert.IsTrue(output_struct.ContainsKey("x"));
 
-            var z0 = s2.GetItem<MetaWeblogSharp.XmlRPC.DateTimeX>("val_base64", null);
+            var output_data = output_struct.GetItem<MetaWeblogSharp.XmlRPC.DateTimeX>("x");
 
         }
     }

@@ -45,6 +45,36 @@ namespace MetaWeblogSharp.XmlRPC
             }
         }
 
+        public T GetItem<T>(string name)
+        {
+            if (this.dic.ContainsKey(name))
+            {
+                var o_ = this.dic[name];
+                var o = o_.Data;
+                var vt = o.GetType();
+                if (vt != typeof(T))
+                {
+                    if (typeof(T) == typeof(int) && vt == typeof(string))
+                    {
+                        // handle the one-off case where someone gave a string when an int was needed
+                        o = Int32.Parse((string)o);
+
+                    }
+                    else
+                    {
+                        string msg = String.Format("Expected type {0} instead got {1}", typeof(T).Name, vt.Name);
+                        throw new XmlRPCException(msg);
+                    }
+                }
+                var v = (T)o;
+                return v;
+            }
+            else
+            {
+                throw new XmlRPCException("Struct did not contain key");
+            }
+        }
+
         public Value this[string index]
         {
             //get {  /* return the specified index here */ }
