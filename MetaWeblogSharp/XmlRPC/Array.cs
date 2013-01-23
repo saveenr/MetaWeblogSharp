@@ -24,6 +24,26 @@ namespace MetaWeblogSharp.XmlRPC
             this.items.Add(v);
         }
 
+        public void Add(int v)
+        {
+            this.items.Add(new IntegerValue(v));
+        }
+
+        public void Add(double v)
+        {
+            this.items.Add(new DoubleValue(v));
+        }
+
+        public void Add(bool v)
+        {
+            this.items.Add(new BooleanValue(v));
+        }
+
+        public void Add(System.DateTime v)
+        {
+            this.items.Add(new DateTimeValue(v));
+        }
+
         public void AddRange(IEnumerable<Value> items)
         {
             foreach (var item in items)
@@ -50,6 +70,11 @@ namespace MetaWeblogSharp.XmlRPC
         public static string TypeString
         {
             get { return "array"; }
+        }
+
+        public int Count
+        {
+            get { return this.items.Count; }
         }
 
         protected override void AddToTypeEl(XElement parent)
