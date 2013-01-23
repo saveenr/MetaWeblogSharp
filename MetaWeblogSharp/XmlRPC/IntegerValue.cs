@@ -15,7 +15,7 @@ namespace MetaWeblogSharp.XmlRPC
             get { return "int"; }
         }
 
-        public override void AddToTypeEl(XElement parent)
+        protected override void AddToTypeEl(XElement parent)
         {
             parent.Value = this.Data.ToString(System.Globalization.CultureInfo.InvariantCulture);
         }

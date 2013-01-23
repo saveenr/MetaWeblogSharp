@@ -6,7 +6,7 @@ namespace MetaWeblogSharp.XmlRPC
 {
     public abstract class Value
     {
-        public abstract void AddToTypeEl(XElement parent);
+        protected abstract void AddToTypeEl(XElement parent);
 
         public static XmlRPC.Value ParseXml(System.Xml.Linq.XElement value_el)
         {

@@ -52,7 +52,7 @@ namespace MetaWeblogSharp.XmlRPC
             get { return "array"; }
         }
 
-        public override void AddToTypeEl(XElement parent)
+        protected override void AddToTypeEl(XElement parent)
         {
             var data_el = new XElement("data");
             parent.Add(data_el);

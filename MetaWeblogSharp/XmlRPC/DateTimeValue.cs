@@ -15,8 +15,8 @@ namespace MetaWeblogSharp.XmlRPC
         {
             get { return "dateTime.iso8601"; }
         }
-        
-        public override void AddToTypeEl(XElement parent)
+
+        protected override void AddToTypeEl(XElement parent)
         {
             var s = this.Data.ToString("s", System.Globalization.CultureInfo.InvariantCulture);
             parent.Value = s;

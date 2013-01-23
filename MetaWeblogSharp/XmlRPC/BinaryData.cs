@@ -17,7 +17,7 @@ namespace MetaWeblogSharp.XmlRPC
             get { return "base64"; }
         }
 
-        public override void AddToTypeEl(XElement parent)
+        protected override void AddToTypeEl(XElement parent)
         {
             parent.Add(Convert.ToBase64String(Bytes));
         }

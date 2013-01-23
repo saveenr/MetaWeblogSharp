@@ -16,7 +16,7 @@ namespace MetaWeblogSharp.XmlRPC
             get { return "string"; }
         }
 
-        public override void AddToTypeEl(XElement parent)
+        protected override void AddToTypeEl(XElement parent)
         {
             parent.Value = this.Data;
         }

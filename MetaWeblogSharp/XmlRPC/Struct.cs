@@ -197,7 +197,7 @@ namespace MetaWeblogSharp.XmlRPC
             get { return "struct"; }
         }
 
-        public override void AddToTypeEl(XElement parent)
+        protected override void AddToTypeEl(XElement parent)
         {
             foreach (var pair in this)
             {
