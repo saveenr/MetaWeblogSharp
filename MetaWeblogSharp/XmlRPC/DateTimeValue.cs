@@ -33,5 +33,10 @@ namespace MetaWeblogSharp.XmlRPC
             var y = new DateTimeValue(x);
             return y;
         }
+
+        public static implicit operator DateTimeValue(System.DateTime v)
+        {
+            return new DateTimeValue(v);
+        }
     }
 }

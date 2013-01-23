@@ -25,5 +25,10 @@ namespace MetaWeblogSharp.XmlRPC
             var bv = new DoubleValue(double.Parse(parent.Value));
             return bv;
         }
+
+        public static implicit operator DoubleValue(double v)
+        {
+            return new DoubleValue(v);
+        }
     }
 }

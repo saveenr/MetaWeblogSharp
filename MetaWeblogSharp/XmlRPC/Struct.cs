@@ -78,57 +78,6 @@ namespace MetaWeblogSharp.XmlRPC
             return (T)v;
         }
 
-
-        public StringValue TryGetString(string name)
-        {
-            return TryGet<StringValue>(name);
-        }
-
-        public StringValue GetString(string name, string defval)
-        {
-            var v = this.TryGetValue(name);
-            if (v == null)
-            {
-                return new StringValue(defval);
-            }
-
-            this.checktype<StringValue>(v);
-
-            return (StringValue)v;
-        }
-
-
-        public T GetItem<T>(string name, T defval) where T : Value
-        {
-            if (this.dic.ContainsKey(name))
-            {
-                var o_ = this.dic[name];
-                var o = o_;
-                var vt = o.GetType();
-                if (vt != typeof (T))
-                {
-                    if (typeof (T) == typeof (int) && vt==typeof(string))
-                    {
-                        // handle the one-off case where someone gave a string when an int was needed
-                        throw new Exception("dddd");
-                        //o = Int32.Parse((string) o);
-
-                    }
-                    else
-                    {
-                        string msg = String.Format("Expected type {0} instead got {1}", typeof(T).Name, vt.Name);
-                        throw new XmlRPCException(msg);                        
-                    }
-                }
-                var v = (T)o;
-                return v;
-            }
-            else
-            {
-                return defval;
-            }
-        }
-
         public Value this[string index]
         {
             //get {  /* return the specified index here */ }

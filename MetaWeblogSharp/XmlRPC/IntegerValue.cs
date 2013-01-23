@@ -30,5 +30,10 @@ namespace MetaWeblogSharp.XmlRPC
         {
             get { return "i4"; }            
         }
+
+        public static implicit operator IntegerValue(int v)
+        {
+            return new IntegerValue(v);
+        }
     }
 }

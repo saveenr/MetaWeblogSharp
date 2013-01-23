@@ -28,5 +28,10 @@ namespace MetaWeblogSharp.XmlRPC
             var b = new Base64Data(bytes);
             return b;
         }
+
+        public static implicit operator Base64Data(byte [] v)
+        {
+            return new Base64Data(v);
+        }
     }
 }

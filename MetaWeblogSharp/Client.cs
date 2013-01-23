@@ -37,15 +37,15 @@ namespace MetaWeblogSharp
                 var struct_ = (XmlRPC.Struct)value;
 
                 var pi = new PostInfo();
-                pi.Title = struct_.GetString("title",null).Data;
+                pi.Title = struct_.Get<StringValue>("title", StringValue.NullString).Data;
                 pi.DateCreated = struct_.Get<DateTimeValue>("dateCreated").Data;
-                pi.Link = struct_.GetString("link",null).Data;
-                pi.PostID = struct_.GetString("postid", null).Data;
-                pi.UserID = struct_.GetString("userid", null).Data;
+                pi.Link = struct_.Get<StringValue>("link", StringValue.NullString).Data;
+                pi.PostID = struct_.Get<StringValue>("postid", StringValue.NullString).Data;
+                pi.UserID = struct_.Get<StringValue>("userid", StringValue.NullString).Data;
                 pi.CommentCount = struct_.Get<IntegerValue>("commentCount").Data;
-                pi.PostStatus = struct_.GetString("post_status", null).Data;
-                pi.PermaLink = struct_.GetString("permaLink", null).Data;
-                pi.Description = struct_.GetString("description", null).Data;
+                pi.PostStatus = struct_.Get<StringValue>("post_status", StringValue.NullString).Data;
+                pi.PermaLink = struct_.Get<StringValue>("permaLink", StringValue.NullString).Data;
+                pi.Description = struct_.Get<StringValue>("description", StringValue.NullString).Data;
                 pi.RawData = struct_;
 
                 items.Add(pi);
@@ -73,7 +73,7 @@ namespace MetaWeblogSharp
             var struct_ = (XmlRPC.Struct)param;
             var item = new MediaObjectInfo();
 
-            item.URL = struct_.GetString("url", null).Data;
+            item.URL = struct_.Get<StringValue>("url", StringValue.NullString).Data;
             item.RawData = struct_;
 
             return item;
@@ -94,15 +94,15 @@ namespace MetaWeblogSharp
             var item = new PostInfo();
 
             //item.Categories 
-            item.PostID = struct_.GetString("postid", null).Data;
-            item.Description = struct_.GetString("description", null).Data;
+            item.PostID = struct_.Get<StringValue>("postid").Data;
+            item.Description = struct_.Get<StringValue>("description").Data;
             //item.Tags
-            item.Link = struct_.GetString("link", null).Data;
+            item.Link = struct_.Get<StringValue>("link", StringValue.NullString).Data;
             item.DateCreated = struct_.Get<DateTimeValue>("dateCreated").Data;
-            item.PermaLink = struct_.GetString("permaLink", null).Data;
-            item.PostStatus = struct_.GetString("post_status", null).Data;
-            item.Title = struct_.GetString("title", null).Data;
-            item.UserID = struct_.GetString("userid", null).Data;
+            item.PermaLink = struct_.Get<StringValue>("permaLink", StringValue.NullString).Data;
+            item.PostStatus = struct_.Get<StringValue>("post_status", StringValue.NullString).Data;
+            item.Title = struct_.Get<StringValue>("title").Data;
+            item.UserID = struct_.Get<StringValue>("userid", StringValue.NullString).Data;
 
             item.RawData = struct_;
             return item;
@@ -176,13 +176,13 @@ namespace MetaWeblogSharp
             var item = new BlogInfo();
 
             //item.Categories 
-            item.BlogID = struct_.GetString("blogid", null).Data;
-            item.URL = struct_.GetString("url", null).Data;
-            item.BlogName = struct_.GetString("blogName", null).Data;
+            item.BlogID = struct_.Get<StringValue>("blogid", StringValue.NullString).Data;
+            item.URL = struct_.Get<StringValue>("url", StringValue.NullString).Data;
+            item.BlogName = struct_.Get<StringValue>("blogName", StringValue.NullString).Data;
             item.IsAdmin = struct_.Get<BooleanValue>("isAdmin", false).Data;
-            item.SiteName = struct_.GetString("siteName", null).Data;
-            item.Capabilities = struct_.GetString("capabilities", null).Data;
-            item.XmlRPCEndPoint = struct_.GetString("xmlrpc", null).Data;
+            item.SiteName = struct_.Get<StringValue>("siteName", StringValue.NullString).Data;
+            item.Capabilities = struct_.Get<StringValue>("capabilities", StringValue.NullString).Data;
+            item.XmlRPCEndPoint = struct_.Get<StringValue>("xmlrpc", StringValue.NullString).Data;
             item.RawData = struct_;
             return item;
         }
@@ -240,11 +240,11 @@ namespace MetaWeblogSharp
                 var struct_ = (XmlRPC.Struct)value;
 
                 var pi = new CategoryInfo();
-                pi.Title = struct_.GetString("title", null).Data;
-                pi.Description = struct_.GetString("description", null).Data;
-                pi.HTMLURL = struct_.GetString("htmlUrl", null).Data;
-                pi.RSSURL = struct_.GetString("rssUrl", null).Data;
-                pi.CategoryID = struct_.GetString("categoryid", null).Data;
+                pi.Title = struct_.Get<StringValue>("title", StringValue.NullString).Data;
+                pi.Description = struct_.Get<StringValue>("description", StringValue.NullString).Data;
+                pi.HTMLURL = struct_.Get<StringValue>("htmlUrl", StringValue.NullString).Data;
+                pi.RSSURL = struct_.Get<StringValue>("rssUrl", StringValue.NullString).Data;
+                pi.CategoryID = struct_.Get<StringValue>("categoryid", StringValue.NullString).Data;
 
                 pi.RawData = struct_;
                 items.Add(pi);
@@ -266,11 +266,11 @@ namespace MetaWeblogSharp
             var struct_ = (XmlRPC.Struct)param;
             var item = new UserInfo();
 
-            item.UserID = struct_.GetString("userid", null).Data;
-            item.Nickname = struct_.GetString("nickname", null).Data;
-            item.FirstName = struct_.GetString("firstname", null).Data;
-            item.LastName = struct_.GetString("lastname", null).Data;
-            item.URL = struct_.GetString("url", null).Data;
+            item.UserID = struct_.Get<StringValue>("userid", StringValue.NullString).Data;
+            item.Nickname = struct_.Get<StringValue>("nickname", StringValue.NullString).Data;
+            item.FirstName = struct_.Get<StringValue>("firstname", StringValue.NullString).Data;
+            item.LastName = struct_.Get<StringValue>("lastname", StringValue.NullString).Data;
+            item.URL = struct_.Get<StringValue>("url", StringValue.NullString).Data;
 
             item.RawData = struct_;
             return item;
