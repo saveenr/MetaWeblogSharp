@@ -95,6 +95,56 @@ namespace MetaWeblogSharp.XmlRPC
         }
     }
 
+    public class DoubleX
+    {
+        public double Data;
+        public DoubleX(double dt)
+        {
+            this.Data = dt;
+        }
+
+        public static string TypeString
+        {
+            get { return "double"; }
+        }
+
+        public void AddToTypeEl(XElement type_el)
+        {
+            type_el.Value = this.Data.ToString(System.Globalization.CultureInfo.InvariantCulture);
+        }
+
+        public static DoubleX TypeElToValue(XElement type_el)
+        {
+            var bv = new DoubleX(double.Parse(type_el.Value));
+            return bv;
+        }
+    }
+
+    public class StringX
+    {
+        public string Data;
+        public StringX(string dt)
+        {
+            this.Data = dt;
+        }
+
+        public static string TypeString
+        {
+            get { return "string"; }
+        }
+
+        public void AddToTypeEl(XElement type_el)
+        {
+            type_el.Value = this.Data;
+        }
+
+        public static StringX TypeElToValue(XElement type_el)
+        {
+            var bv = new StringX(type_el.Value);
+            return bv;
+        }
+    }
+
 
     public class Value
     {
@@ -127,10 +177,21 @@ namespace MetaWeblogSharp.XmlRPC
         
         public Value(double data)
         {
+            this.Data = new DoubleX(data);
+        }
+
+        public Value(DoubleX data)
+        {
             this.Data = data;
         }
 
+
         public Value(string data)
+        {
+            this.Data = new StringX(data);
+        }
+
+        public Value(StringX data)
         {
             this.Data = data;
         }
@@ -172,13 +233,15 @@ namespace MetaWeblogSharp.XmlRPC
                     var struct_ = Struct.TypeElToValue(type_el);
                     return new Value(struct_);
                 }
-                else if (typename == "string")
+                else if (typename == StringX.TypeString)
                 {
-                    return new Value(input_value);
+                    var sxx = StringX.TypeElToValue(type_el);
+                    return new Value(sxx);
                 }
-                else if (typename == "double")
+                else if (typename == DoubleX.TypeString)
                 {
-                    return new Value(double.Parse(input_value));
+                    var xxx = DoubleX.TypeElToValue(type_el);
+                    return new Value(xxx);
                 }
                 else if (typename == Base64Data.TypeString)
                 {
@@ -218,19 +281,20 @@ namespace MetaWeblogSharp.XmlRPC
             var type_el = new System.Xml.Linq.XElement(GetTypeStringFromObject(value.Data));
             value_el.Add(type_el);
 
-            if (value.Data is string)
+            if (value.Data is StringX)
             {
-                type_el.Add(value.Data);
+                var s = (StringX) value.Data;
+                type_el.Add(s.Data);
             }
             else if (value.Data is IntegerX)
             {
                 var i = (IntegerX) value.Data;
                 i.AddToTypeEl(type_el);
             }
-            else if (value.Data is double)
+            else if (value.Data is DoubleX)
             {
-                var d = (double) value.Data;
-                type_el.Add(d.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                var d = (DoubleX) value.Data;
+                d.AddToTypeEl(type_el);
             }
             else if (value.Data is BooleanX)
             {
@@ -272,9 +336,9 @@ namespace MetaWeblogSharp.XmlRPC
 
         private static string GetTypeStringFromObject(object t)
         {
-            if (t is string)
+            if (t is StringX)
             {
-                return "string";
+                return StringX.TypeString;
             }
             else if (t is IntegerX)
             {
@@ -296,9 +360,9 @@ namespace MetaWeblogSharp.XmlRPC
             {
                 return BooleanX.TypeString;
             }
-            else if (t is double)
+            else if (t is DoubleX)
             {
-                return "double";
+                return DoubleX.TypeString;
             }
             else if (t is DateTimeX)
             {

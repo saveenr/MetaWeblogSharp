@@ -15,6 +15,27 @@ namespace MetaWeblogSharp.XmlRPC
             this.dic = new Dictionary<string, Value>();
         }
 
+        public StringX GetString(string name, string defval)
+        {
+            if (this.dic.ContainsKey(name))
+            {
+                var o_ = this.dic[name];
+                var o = o_.Data;
+                var vt = o.GetType();
+                if (vt != typeof(StringX))
+                {
+                    string msg = String.Format("Expected type {0} instead got {1}", typeof(StringX).Name, vt.Name);
+                    throw new XmlRPCException(msg);
+                }
+                var v = (StringX)o;
+                return v;
+            }
+            else
+            {
+                return new StringX(defval);
+            }
+        }
+
         public T GetItem<T>(string name, T defval)
         {
             if (this.dic.ContainsKey(name))

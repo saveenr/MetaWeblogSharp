@@ -31,10 +31,10 @@ namespace MetaWeblogSharpTests
 
             Assert.IsTrue(s2.ContainsKey("val_double"));
 
-            var z0 = s2.GetItem<double>("val_double");
+            var z0 = s2.GetItem<XmlRPC.DoubleX>("val_double");
             Assert.AreEqual(
-                s2.GetItem<double>("val_double"),
-                s.GetItem<double>("val_double"));
+                s2.GetItem<XmlRPC.DoubleX>("val_double").Data,
+                s.GetItem<XmlRPC.DoubleX>("val_double").Data);
         }
 
         [TestMethod]
