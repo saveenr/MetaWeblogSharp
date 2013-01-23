@@ -5,7 +5,7 @@ using System.Xml.Linq;
 
 namespace MetaWeblogSharp.XmlRPC
 {
-    public class Array : IEnumerable<Value>
+    public class Array : XValue, IEnumerable<Value>
     {
         private List<Value> items;
 
@@ -52,7 +52,7 @@ namespace MetaWeblogSharp.XmlRPC
             get { return "array"; }
         }
 
-        internal void AddToTypeEl(XElement type_el)
+        public override void AddToTypeEl(XElement type_el)
         {
             var data_el = new XElement("data");
             type_el.Add(data_el);

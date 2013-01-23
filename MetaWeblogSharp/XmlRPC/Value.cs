@@ -4,7 +4,12 @@ using System.Xml.Linq;
 
 namespace MetaWeblogSharp.XmlRPC
 {
-    public class DateTimeX
+    public abstract class XValue
+    {
+        public abstract void AddToTypeEl(XElement type_el);
+    }
+
+    public class DateTimeX : XValue
     {
         public System.DateTime Data;
         public DateTimeX(System.DateTime dt)
@@ -17,7 +22,7 @@ namespace MetaWeblogSharp.XmlRPC
             get { return "dateTime.iso8601"; }
         }
         
-        public void AddToTypeEl(XElement type_el)
+        public override void AddToTypeEl(XElement type_el)
         {
             var s = this.Data.ToString("s", System.Globalization.CultureInfo.InvariantCulture);
             type_el.Value = s;
@@ -36,7 +41,7 @@ namespace MetaWeblogSharp.XmlRPC
         }
     }
 
-    public class BooleanX
+    public class BooleanX : XValue
     {
         public bool Data;
         public BooleanX (bool dt)
@@ -49,7 +54,7 @@ namespace MetaWeblogSharp.XmlRPC
             get { return "boolean"; }
         }
 
-        public void AddToTypeEl(XElement type_el)
+        public override void AddToTypeEl(XElement type_el)
         {
             if (this.Data)
             {
@@ -70,7 +75,7 @@ namespace MetaWeblogSharp.XmlRPC
         }
     }
 
-    public class IntegerX
+    public class IntegerX : XValue
     {
         public int Data;
         public IntegerX(int dt)
@@ -83,7 +88,7 @@ namespace MetaWeblogSharp.XmlRPC
             get { return "int"; }
         }
 
-        public void AddToTypeEl(XElement type_el)
+        public override void AddToTypeEl(XElement type_el)
         {
             type_el.Value = this.Data.ToString(System.Globalization.CultureInfo.InvariantCulture);
         }
@@ -95,7 +100,7 @@ namespace MetaWeblogSharp.XmlRPC
         }
     }
 
-    public class DoubleX
+    public class DoubleX : XValue
     {
         public double Data;
         public DoubleX(double dt)
@@ -108,7 +113,7 @@ namespace MetaWeblogSharp.XmlRPC
             get { return "double"; }
         }
 
-        public void AddToTypeEl(XElement type_el)
+        public override void AddToTypeEl(XElement type_el)
         {
             type_el.Value = this.Data.ToString(System.Globalization.CultureInfo.InvariantCulture);
         }
@@ -120,7 +125,7 @@ namespace MetaWeblogSharp.XmlRPC
         }
     }
 
-    public class StringX
+    public class StringX : XValue
     {
         public string Data;
         public StringX(string dt)
@@ -133,7 +138,7 @@ namespace MetaWeblogSharp.XmlRPC
             get { return "string"; }
         }
 
-        public void AddToTypeEl(XElement type_el)
+        public override void AddToTypeEl(XElement type_el)
         {
             type_el.Value = this.Data;
         }
@@ -278,48 +283,49 @@ namespace MetaWeblogSharp.XmlRPC
         {
             var value = this;
             var value_el = new System.Xml.Linq.XElement("value");
-            var type_el = new System.Xml.Linq.XElement(GetTypeStringFromObject(value.Data));
+            object vdata = value.Data;
+            var type_el = new System.Xml.Linq.XElement(GetTypeStringFromObject(vdata));
             value_el.Add(type_el);
 
-            if (value.Data is StringX)
+            if (vdata is StringX)
             {
-                var s = (StringX) value.Data;
+                var s = (StringX) vdata;
                 type_el.Add(s.Data);
             }
-            else if (value.Data is IntegerX)
+            else if (vdata is IntegerX)
             {
-                var i = (IntegerX) value.Data;
+                var i = (IntegerX) vdata;
                 i.AddToTypeEl(type_el);
             }
-            else if (value.Data is DoubleX)
+            else if (vdata is DoubleX)
             {
-                var d = (DoubleX) value.Data;
+                var d = (DoubleX) vdata;
                 d.AddToTypeEl(type_el);
             }
-            else if (value.Data is BooleanX)
+            else if (vdata is BooleanX)
             {
-                var bv = (BooleanX)value.Data;
+                var bv = (BooleanX)vdata;
                 bv.AddToTypeEl(type_el);
             }
-            else if (value.Data is Struct)
+            else if (vdata is Struct)
             {
-                var struct_ = (Struct)value.Data;
+                var struct_ = (Struct)vdata;
                 struct_.AddToTypeEl(type_el);
             }
-            else if (value.Data is Base64Data)
+            else if (vdata is Base64Data)
             {
-                var base64 = (Base64Data)value.Data;
+                var base64 = (Base64Data)vdata;
                 base64.AddToTypeEl(type_el);
             }
-            else if (value.Data is XmlRPC.Array)
+            else if (vdata is XmlRPC.Array)
             {
-                var array = (XmlRPC.Array)value.Data;
+                var array = (XmlRPC.Array)vdata;
 
                 array.AddToTypeEl(type_el);
             }
-            else if (value.Data is DateTimeX)
+            else if (vdata is DateTimeX)
             {
-                var dt = (DateTimeX)value.Data;
+                var dt = (DateTimeX)vdata;
 
                 dt.AddToTypeEl(type_el);
             }

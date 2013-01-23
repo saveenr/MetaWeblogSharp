@@ -6,7 +6,7 @@ using System.Xml.Linq;
 
 namespace MetaWeblogSharp.XmlRPC
 {
-    public class Struct : IEnumerable<KeyValuePair<string, Value>>
+    public class Struct : XValue, IEnumerable<KeyValuePair<string, Value>>
     {
         private Dictionary<string, Value> dic;
 
@@ -131,7 +131,7 @@ namespace MetaWeblogSharp.XmlRPC
             get { return "struct"; }
         }
 
-        public void AddToTypeEl(XElement type_el)
+        public override void AddToTypeEl(XElement type_el)
         {
             foreach (var pair in this)
             {
