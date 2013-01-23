@@ -35,6 +35,42 @@ namespace MetaWeblogSharp.XmlRPC
             return y;
         }
     }
+
+    public class BooleanX
+    {
+        public bool Data;
+        public BooleanX (bool dt)
+        {
+            this.Data = dt;
+        }
+
+        public static string TypeString
+        {
+            get { return "boolean"; }
+        }
+
+        public void AddToTypeEl(XElement type_el)
+        {
+            if (this.Data)
+            {
+                type_el.Add("1");
+            }
+            else
+            {
+                type_el.Add("0");
+            }
+        }
+
+        public static BooleanX TypeElToValue(XElement type_el)
+        {
+            var i = int.Parse(type_el.Value);
+            var b = (i != 0);
+            var bv = new BooleanX(b);
+            return bv;
+        }
+    }
+
+
     public class Value
     {
         public object Data;
@@ -45,6 +81,11 @@ namespace MetaWeblogSharp.XmlRPC
         }
 
         public Value(bool data)
+        {
+            this.Data = new BooleanX(data);
+        }
+
+        public Value(BooleanX data)
         {
             this.Data = data;
         }
@@ -119,15 +160,13 @@ namespace MetaWeblogSharp.XmlRPC
                     var dt = DateTimeX.TypeElToValue(type_el);
                     return new Value(dt);
                 }
-                else if (typename == "int" || typename == "i4")
+                else if (typename == "int")
                 {
                     return new Value(int.Parse(input_value));
                 }
-                else if (typename == "boolean")
+                else if (typename == BooleanX.TypeString )
                 {
-                    var i = int.Parse(input_value);
-                    var b = (i != 0);
-                    return new Value(b);
+                    return new Value( BooleanX.TypeElToValue(type_el));
                 }
                 else
                 {
@@ -162,17 +201,10 @@ namespace MetaWeblogSharp.XmlRPC
                 var d = (double) value.Data;
                 type_el.Add(d.ToString(System.Globalization.CultureInfo.InvariantCulture));
             }
-            else if (value.Data is bool)
+            else if (value.Data is BooleanX)
             {
-                var bv = (bool)value.Data;
-                if (bv)
-                {
-                    type_el.Add("1");
-                }
-                else
-                {
-                    type_el.Add("0");
-                }
+                var bv = (BooleanX)value.Data;
+                bv.AddToTypeEl(type_el);
             }
             else if (value.Data is Struct)
             {
@@ -229,9 +261,9 @@ namespace MetaWeblogSharp.XmlRPC
             {
                 return Base64Data.TypeString;
             }
-            else if (t is bool)
+            else if (t is BooleanX)
             {
-                return "boolean";
+                return BooleanX.TypeString;
             }
             else if (t is double)
             {

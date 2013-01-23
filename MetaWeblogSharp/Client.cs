@@ -156,9 +156,9 @@ namespace MetaWeblogSharp
 
             var response = service.Execute(method);
             var param = response.Parameters[0];
-            var success = (bool)param.Data;
+            var success = (BooleanX)param.Data;
 
-            return success;
+            return success.Data;
         }
 
         public BlogInfo GetUsersBlogs()
@@ -215,9 +215,9 @@ namespace MetaWeblogSharp
 
             var response = service.Execute(method);
             var param = response.Parameters[0];
-            var success = (bool)param.Data;
+            var success = (BooleanX)param.Data;
 
-            return success;
+            return success.Data;
         }
 
         public List<CategoryInfo> GetCategories()
