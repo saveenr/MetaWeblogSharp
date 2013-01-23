@@ -70,6 +70,31 @@ namespace MetaWeblogSharp.XmlRPC
         }
     }
 
+    public class IntegerX
+    {
+        public int Data;
+        public IntegerX(int dt)
+        {
+            this.Data = dt;
+        }
+
+        public static string TypeString
+        {
+            get { return "int"; }
+        }
+
+        public void AddToTypeEl(XElement type_el)
+        {
+            type_el.Value = this.Data.ToString(System.Globalization.CultureInfo.InvariantCulture);
+        }
+
+        public static IntegerX TypeElToValue(XElement type_el)
+        {
+            var bv = new IntegerX(int.Parse(type_el.Value));
+            return bv;
+        }
+    }
+
 
     public class Value
     {
@@ -92,9 +117,14 @@ namespace MetaWeblogSharp.XmlRPC
 
         public Value(int data)
         {
-            this.Data = data;
+            this.Data = new IntegerX(data);
         }
 
+        public Value(IntegerX data)
+        {
+            this.Data = data;
+        }
+        
         public Value(double data)
         {
             this.Data = data;
@@ -160,9 +190,9 @@ namespace MetaWeblogSharp.XmlRPC
                     var dt = DateTimeX.TypeElToValue(type_el);
                     return new Value(dt);
                 }
-                else if (typename == "int")
+                else if (typename == IntegerX.TypeString)
                 {
-                    return new Value(int.Parse(input_value));
+                    return new Value(IntegerX.TypeElToValue(type_el));
                 }
                 else if (typename == BooleanX.TypeString )
                 {
@@ -192,9 +222,10 @@ namespace MetaWeblogSharp.XmlRPC
             {
                 type_el.Add(value.Data);
             }
-            else if (value.Data is int)
+            else if (value.Data is IntegerX)
             {
-                type_el.Add(value.Data.ToString());
+                var i = (IntegerX) value.Data;
+                i.AddToTypeEl(type_el);
             }
             else if (value.Data is double)
             {
@@ -245,9 +276,9 @@ namespace MetaWeblogSharp.XmlRPC
             {
                 return "string";
             }
-            else if (t is int)
+            else if (t is IntegerX)
             {
-                return "int";
+                return IntegerX.TypeString;
             }
             else if (t is XmlRPC.Struct)
             {

@@ -42,7 +42,7 @@ namespace MetaWeblogSharp
                 pi.Link = struct_.GetItem<string>("link",null);
                 pi.PostID = struct_.GetItem<string>("postid", null);
                 pi.UserID = struct_.GetItem<string>("userid", null);
-                pi.CommentCount = struct_.GetItem<int>("commentCount",0);
+                pi.CommentCount = struct_.GetItem<IntegerX>("commentCount").Data;
                 pi.PostStatus = struct_.GetItem<string>("post_status",null);
                 pi.PermaLink = struct_.GetItem<string>("permaLink",null);
                 pi.Description = struct_.GetItem<string>("description", null);
