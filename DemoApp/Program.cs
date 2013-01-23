@@ -32,15 +32,12 @@ namespace DemoApp
 
             var blogs = service.GetUsersBlogs();
 
-            var title1 = "test" + System.DateTime.Now.ToString();
-            var description1 = string.Format("<p>HI {0}</p>", System.DateTime.Now);
+            var title1 = string.Format("Test {0}" , System.DateTime.Now.ToString());
+            var description1 = string.Format("<p>Hello World</p>\n<p>{0}</p>", System.DateTime.Now);
             var new_post_id = service.NewPost(title1, description1, categories1, false);
             var new_post_info = service.GetPost(new_post_id);
-
-            var successedit1 = service.EditPost(new_post_info.PostID, title1 + "XXX", description1 + "XXX", categories1, false);
-
+            var successedit1 = service.EditPost(new_post_info.PostID, title1, description1, categories1, false);
             var new_post_info2 = service.GetPost(new_post_id);
-
             var success_delete = service.DeletePost(new_post_id);
 
             try
