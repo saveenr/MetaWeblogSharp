@@ -15,24 +15,24 @@ namespace MetaWeblogSharp.XmlRPC
             this.dic = new Dictionary<string, Value>();
         }
 
-        public StringX GetString(string name, string defval)
+        public StringValue GetString(string name, string defval)
         {
             if (this.dic.ContainsKey(name))
             {
                 var o_ = this.dic[name];
                 var o = o_;
                 var vt = o.GetType();
-                if (vt != typeof(StringX))
+                if (vt != typeof(StringValue))
                 {
-                    string msg = String.Format("Expected type {0} instead got {1}", typeof(StringX).Name, vt.Name);
+                    string msg = String.Format("Expected type {0} instead got {1}", typeof(StringValue).Name, vt.Name);
                     throw new XmlRPCException(msg);
                 }
-                var v = (StringX)o;
+                var v = (StringValue)o;
                 return v;
             }
             else
             {
-                return new StringX(defval);
+                return new StringValue(defval);
             }
         }
 

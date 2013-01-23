@@ -18,7 +18,7 @@ namespace MetaWeblogSharpTests
         public void RoundTrip_Double()
         {
             var s = new XmlRPC.Struct();
-            var svm = new XmlRPC.DoubleX(5.10);
+            var svm = new XmlRPC.DoubleValue(5.10);
             s["val_double"] = svm;
 
 
@@ -29,10 +29,10 @@ namespace MetaWeblogSharpTests
 
             Assert.IsTrue(s2.ContainsKey("val_double"));
 
-            var z0 = s2.GetItem<XmlRPC.DoubleX>("val_double");
+            var z0 = s2.GetItem<XmlRPC.DoubleValue>("val_double");
             Assert.AreEqual(
-                s2.GetItem<XmlRPC.DoubleX>("val_double").Data,
-                s.GetItem<XmlRPC.DoubleX>("val_double").Data);
+                s2.GetItem<XmlRPC.DoubleValue>("val_double").Data,
+                s.GetItem<XmlRPC.DoubleValue>("val_double").Data);
         }
 
         [TestMethod]

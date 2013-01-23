@@ -17,22 +17,22 @@ namespace MetaWeblogSharp.XmlRPC
 
         public void AddParameter(int value)
         {
-            this.Parameters.Add(new IntegerX(value));
+            this.Parameters.Add(new IntegerValue(value));
         }
 
         public void AddParameter(bool value)
         {
-            this.Parameters.Add(new BooleanX(value));
+            this.Parameters.Add(new BooleanValue(value));
         }
 
         public void AddParameter(System.DateTime value)
         {
-            this.Parameters.Add(new DateTimeX(value));
+            this.Parameters.Add(new DateTimeValue(value));
         }
 
         public void AddParameter(double value)
         {
-            this.Parameters.Add(new DoubleX(value));
+            this.Parameters.Add(new DoubleValue(value));
         }
 
         public void AddParameter(Array value)
@@ -52,7 +52,7 @@ namespace MetaWeblogSharp.XmlRPC
 
         public void AddParameter(string value)
         {
-            this.Parameters.Add(new StringX(value));
+            this.Parameters.Add(new StringValue(value));
         }
 
         public System.Xml.Linq.XDocument CreateDocument()

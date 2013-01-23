@@ -50,10 +50,15 @@
     <Compile Include="UserInfo.cs" />
     <Compile Include="XmlRPC\Array.cs" />
     <Compile Include="XmlRPC\BinaryData.cs" />
+    <Compile Include="XmlRPC\BooleanValue.cs" />
+    <Compile Include="XmlRPC\DateTimeValue.cs" />
+    <Compile Include="XmlRPC\DoubleValue.cs" />
     <Compile Include="XmlRPC\Fault.cs" />
+    <Compile Include="XmlRPC\IntegerValue.cs" />
     <Compile Include="XmlRPC\MethodCall.cs" />
     <Compile Include="XmlRPC\MethodResponse.cs" />
     <Compile Include="XmlRPC\Service.cs" />
+    <Compile Include="XmlRPC\StringValue.cs" />
     <Compile Include="XmlRPC\Struct.cs" />
     <Compile Include="XmlRPC\Value.cs" />
     <Compile Include="XmlRPC\XmlRPCException.cs" />
