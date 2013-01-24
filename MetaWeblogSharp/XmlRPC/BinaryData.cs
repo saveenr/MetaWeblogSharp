@@ -22,7 +22,7 @@ namespace MetaWeblogSharp.XmlRPC
             parent.Add(Convert.ToBase64String(Bytes));
         }
 
-        internal static Base64Data TypeElToValue(XElement type_el)
+        internal static Base64Data XmlToValue(XElement type_el)
         {
             var bytes = Convert.FromBase64String(type_el.Value);
             var b = new Base64Data(bytes);

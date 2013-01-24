@@ -24,35 +24,35 @@ namespace MetaWeblogSharp.XmlRPC
                 string typename = type_el.Name.ToString();
                 if (typename == Array.TypeString)
                 {
-                    return Array.TypeElToValue(type_el);
+                    return Array.XmlToValue(type_el);
                 }
                 else if (typename == Struct.TypeString)
                 {
-                    return Struct.TypeElToValue(type_el);
+                    return Struct.XmlToValue(type_el);
                 }
                 else if (typename == StringValue.TypeString)
                 {
-                    return StringValue.TypeElToValue(type_el);
+                    return StringValue.XmlToValue(type_el);
                 }
                 else if (typename == DoubleValue.TypeString)
                 {
-                    return DoubleValue.TypeElToValue(type_el);
+                    return DoubleValue.XmlToValue(type_el);
                 }
                 else if (typename == Base64Data.TypeString)
                 {
-                    return Base64Data.TypeElToValue(type_el);
+                    return Base64Data.XmlToValue(type_el);
                 }
                 else if (typename == DateTimeValue.TypeString)
                 {
-                    return DateTimeValue.TypeElToValue(type_el);
+                    return DateTimeValue.XmlToValue(type_el);
                 }
                 else if (typename == IntegerValue.TypeString || typename == IntegerValue.AlternateTypeString)
                 {
-                    return IntegerValue.TypeElToValue(type_el);
+                    return IntegerValue.XmlToValue(type_el);
                 }
                 else if (typename == BooleanValue.TypeString )
                 {
-                    return BooleanValue.TypeElToValue(type_el);
+                    return BooleanValue.XmlToValue(type_el);
                 }
                 else
                 {

@@ -22,7 +22,7 @@ namespace MetaWeblogSharp.XmlRPC
             parent.Value = s;
         }
 
-        public static DateTimeValue TypeElToValue(XElement parent)
+        public static DateTimeValue XmlToValue(XElement parent)
         {
             System.DateTime dt = System.DateTime.Now;
             if (System.DateTime.TryParse(parent.Value, out dt))

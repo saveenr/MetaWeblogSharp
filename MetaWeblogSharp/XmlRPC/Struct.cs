@@ -129,7 +129,7 @@ namespace MetaWeblogSharp.XmlRPC
             }
         }
 
-        public static Struct TypeElToValue(XElement type_el)
+        public static Struct XmlToValue(XElement type_el)
         {
             var member_els = type_el.Elements("member").ToList();
             var struct_ = new Struct();

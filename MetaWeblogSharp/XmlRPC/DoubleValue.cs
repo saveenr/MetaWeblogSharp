@@ -20,7 +20,7 @@ namespace MetaWeblogSharp.XmlRPC
             parent.Value = this.Data.ToString(System.Globalization.CultureInfo.InvariantCulture);
         }
 
-        public static DoubleValue TypeElToValue(XElement parent)
+        public static DoubleValue XmlToValue(XElement parent)
         {
             var bv = new DoubleValue(double.Parse(parent.Value));
             return bv;

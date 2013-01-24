@@ -28,7 +28,7 @@ namespace MetaWeblogSharp.XmlRPC
             }
         }
 
-        public static BooleanValue TypeElToValue(XElement type_el)
+        public static BooleanValue XmlToValue(XElement type_el)
         {
             var i = int.Parse(type_el.Value);
             var b = (i != 0);

@@ -87,7 +87,7 @@ namespace MetaWeblogSharp.XmlRPC
             }
         }
 
-        internal static Array TypeElToValue(XElement type_el)
+        internal static Array XmlToValue(XElement type_el)
         {
             var data_el = type_el.Element("data");
 

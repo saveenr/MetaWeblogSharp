@@ -21,7 +21,7 @@ namespace MetaWeblogSharp.XmlRPC
             parent.Value = this.Data;
         }
 
-        public static StringValue TypeElToValue(XElement parent)
+        public static StringValue XmlToValue(XElement parent)
         {
             var bv = new StringValue(parent.Value);
             return bv;
