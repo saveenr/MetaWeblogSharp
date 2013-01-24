@@ -18,12 +18,12 @@
                 if (fault_code_val is StringValue)
                 {
                     var s = (StringValue)fault_code_val;
-                    fault_code = int.Parse(s.Data);
+                    fault_code = int.Parse(s.String);
                 }
                 else if (fault_code_val is IntegerValue)
                 {
                     var i = (IntegerValue)fault_code_val;
-                    fault_code = i.Data;
+                    fault_code = i.Integer;
                 }
                 else
                 {
@@ -32,7 +32,7 @@
                 }
             }
 
-            string fault_string = fault_value.Get<StringValue>("faultString").Data;
+            string fault_string = fault_value.Get<StringValue>("faultString").String;
 
             var f = new Fault();
             f.FaultCode = fault_code;

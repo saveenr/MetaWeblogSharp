@@ -4,10 +4,11 @@ namespace MetaWeblogSharp.XmlRPC
 {
     public class DoubleValue : Value
     {
-        public readonly double Data;
-        public DoubleValue(double dt)
+        public readonly double Double;
+
+        public DoubleValue(double d)
         {
-            this.Data = dt;
+            this.Double = d;
         }
 
         public static string TypeString
@@ -17,7 +18,7 @@ namespace MetaWeblogSharp.XmlRPC
 
         protected override void AddToTypeEl(XElement parent)
         {
-            parent.Value = this.Data.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            parent.Value = this.Double.ToString(System.Globalization.CultureInfo.InvariantCulture);
         }
 
         public static DoubleValue XmlToValue(XElement parent)
@@ -45,12 +46,12 @@ namespace MetaWeblogSharp.XmlRPC
             }
 
             // Return true if the fields match:
-            return (this.Data == p.Data);
+            return (this.Double == p.Double);
         }
 
         public override int GetHashCode()
         {
-            return this.Data.GetHashCode();
+            return this.Double.GetHashCode();
         }
     }
 }

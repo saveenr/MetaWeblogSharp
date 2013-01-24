@@ -4,11 +4,11 @@ namespace MetaWeblogSharp.XmlRPC
 {
     public class BooleanValue : Value
     {
-        public readonly bool Data;
+        public readonly bool Boolean;
         
         public BooleanValue (bool value)
         {
-            this.Data = value;
+            this.Boolean = value;
         }
 
         public static string TypeString
@@ -18,7 +18,7 @@ namespace MetaWeblogSharp.XmlRPC
 
         protected override void AddToTypeEl(XElement parent)
         {
-            if (this.Data)
+            if (this.Boolean)
             {
                 parent.Add("1");
             }
@@ -55,12 +55,12 @@ namespace MetaWeblogSharp.XmlRPC
             }
 
             // Return true if the fields match:
-            return (this.Data == p.Data);
+            return (this.Boolean == p.Boolean);
         }
 
         public override int GetHashCode()
         {
-            return this.Data.GetHashCode();
+            return this.Boolean.GetHashCode();
         }
     }
 }

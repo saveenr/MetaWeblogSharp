@@ -5,7 +5,7 @@ namespace MetaWeblogSharp.XmlRPC
 {
     public class Base64Data : Value
     {
-        public readonly byte[] Bytes;
+        public byte[] Bytes { get; private set; }
 
         public Base64Data(byte[] bytes)
         {

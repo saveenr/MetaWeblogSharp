@@ -90,7 +90,7 @@ namespace MetaWeblogSharpTests
         {
             var src = new IntegerValue(7);
             var dest = RoundTrip(src);
-            Assert.AreEqual(src.Data,dest.Data);
+            Assert.AreEqual(src.Integer,dest.Integer);
         }
 
         [TestMethod]
@@ -98,7 +98,7 @@ namespace MetaWeblogSharpTests
         {
             var src = new DoubleValue(6.02);
             var dest = RoundTrip(src);
-            Assert.AreEqual(src.Data, dest.Data);
+            Assert.AreEqual(src.Double, dest.Double);
         }
 
         [TestMethod]
@@ -106,7 +106,7 @@ namespace MetaWeblogSharpTests
         {
             var src = new BooleanValue(true);
             var dest = RoundTrip(src);
-            Assert.AreEqual(src.Data, dest.Data);
+            Assert.AreEqual(src.Boolean, dest.Boolean);
         }
 
         [TestMethod]
@@ -114,7 +114,7 @@ namespace MetaWeblogSharpTests
         {
             var src = new BooleanValue(false);
             var dest = RoundTrip(src);
-            Assert.AreEqual(src.Data, dest.Data);
+            Assert.AreEqual(src.Boolean, dest.Boolean);
         }
 
         public T RoundTrip<T>(T src_value) where T : MetaWeblogSharp.XmlRPC.Value

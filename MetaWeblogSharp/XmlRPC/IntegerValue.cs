@@ -4,10 +4,11 @@ namespace MetaWeblogSharp.XmlRPC
 {
     public class IntegerValue : Value
     {
-        public readonly int Data;
-        public IntegerValue(int dt)
+        public readonly int Integer;
+
+        public IntegerValue(int i)
         {
-            this.Data = dt;
+            this.Integer = i;
         }
 
         public static string TypeString
@@ -17,7 +18,7 @@ namespace MetaWeblogSharp.XmlRPC
 
         protected override void AddToTypeEl(XElement parent)
         {
-            parent.Value = this.Data.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            parent.Value = this.Integer.ToString(System.Globalization.CultureInfo.InvariantCulture);
         }
 
         public static IntegerValue XmlToValue(XElement parent)
@@ -50,12 +51,12 @@ namespace MetaWeblogSharp.XmlRPC
             }
 
             // Return true if the fields match:
-            return (this.Data== p.Data);
+            return (this.Integer== p.Integer);
         }
 
         public override int GetHashCode()
         {
-            return this.Data.GetHashCode();
+            return this.Integer.GetHashCode();
         }
     }
 }

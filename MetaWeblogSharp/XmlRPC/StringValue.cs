@@ -4,11 +4,11 @@ namespace MetaWeblogSharp.XmlRPC
 {
     public class StringValue : Value
     {
-        public string Data;
+        public string String;
 
-        public StringValue(string dt)
+        public StringValue(string s)
         {
-            this.Data = dt;
+            this.String = s;
         }
 
         public static string TypeString
@@ -18,7 +18,7 @@ namespace MetaWeblogSharp.XmlRPC
 
         protected override void AddToTypeEl(XElement parent)
         {
-            parent.Value = this.Data;
+            parent.Value = this.String;
         }
 
         public static StringValue XmlToValue(XElement parent)
