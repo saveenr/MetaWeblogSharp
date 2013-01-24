@@ -116,8 +116,8 @@ namespace MetaWeblogSharp.XmlRPC
             }
             else
             {
-                string msg = string.Format("Unsupported type {0}", GetType().Name);
-                throw new System.ArgumentException(msg);
+                string msg = string.Format("Cannoy get type string for unsupported type {0}", this.GetType().Name);
+                throw new XmlRPCException(msg);
             }
         }
 

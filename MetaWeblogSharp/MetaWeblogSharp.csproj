@@ -44,6 +44,7 @@
     <Compile Include="BlogInfo.cs" />
     <Compile Include="CategoryInfo.cs" />
     <Compile Include="MediaObjectInfo.cs" />
+    <Compile Include="MetaWebLogException.cs" />
     <Compile Include="PostInfo.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

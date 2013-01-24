@@ -28,7 +28,7 @@
                 else
                 {
                     string msg = string.Format("Fault Code value is not int or string {0}", value_el.ToString());
-                    throw new XmlRPCException(msg);
+                    throw new MetaWeblogException(msg);
                 }
             }
 

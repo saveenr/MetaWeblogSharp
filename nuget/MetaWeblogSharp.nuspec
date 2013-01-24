@@ -1,17 +1,19 @@
 <package >
   <metadata>
     <id>MetaWeblogSharp</id>
-    <version>1.0.19</version>
+    <version>1.0.20</version>
     <authors>saveenr</authors>
     <owners>saveenr</owners>
     <licenseUrl>http://metaweblogsharp.codeplex.com</licenseUrl>
     <projectUrl>http://metaweblogsharp.codeplex.com</projectUrl>
     <iconUrl>about:blank</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>MetaWeblogSharp is a simple MetWeblog client. It has no dependencies on other libraries. 
+    <description>MetaWeblogSharp is a simple MetaWeblog client. It has no dependencies on other libraries. 
 </description>
     <releaseNotes>
-Made XMLRPC fault handling more robust
+Added MetaWeblogException
+Improves Exception error messages
+fixed NuGet package metadata (misspelling)
 </releaseNotes>
     <copyright>Copyright 2013</copyright>
     <tags>Visio</tags>
