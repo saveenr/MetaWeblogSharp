@@ -38,5 +38,23 @@ namespace MetaWeblogSharp.XmlRPC
         {
             return new DateTimeValue(v);
         }
+
+        public override bool Equals(System.Object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            var p = obj as DateTimeValue;
+            if (p == null)
+            {
+                return false;
+            }
+
+            // Return true if the fields match:
+            return (this.Data.Day == p.Data.Day && this.Data.Month == p.Data.Month && this.Data.Year == p.Data.Year) &&
+                (this.Data.Hour == p.Data.Hour&& this.Data.Minute== p.Data.Minute&& this.Data.Second== p.Data.Second);
+        }
     }
 }

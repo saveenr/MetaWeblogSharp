@@ -33,5 +33,39 @@ namespace MetaWeblogSharp.XmlRPC
         {
             return new Base64Data(v);
         }
+
+        public override bool Equals(System.Object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            var p = obj as Base64Data;
+            if (p == null)
+            {
+                return false;
+            }
+
+            // Return true if the fields match:
+            if (this.Bytes != p.Bytes)
+            {
+                if (this.Bytes.Length != p.Bytes.Length)
+                {
+                    return false;
+                }
+
+                for (int i = 0; i < this.Bytes.Length; i++)
+                {
+                    if (this.Bytes[i] != p.Bytes[i])
+                    {
+                        return false;
+                    }
+                } 
+                
+                return true;
+            }
+            return true;
+        }
     }
 }

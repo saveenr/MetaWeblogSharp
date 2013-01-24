@@ -100,5 +100,39 @@ namespace MetaWeblogSharp.XmlRPC
             }
             return list;
         }
+
+        public override bool Equals(System.Object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            var p = obj as Array;
+            if (p == null)
+            {
+                return false;
+            }
+
+            // Return true if the fields match:
+            if (this.items != p.items)
+            {
+                if (this.items.Count!= p.items.Count)
+                {
+                    return false;
+                }
+
+                for (int i = 0; i < this.items.Count; i++)
+                {
+                    if (!(this.items[i].Equals(p[i])))
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+            return true;
+        }
     }
 }

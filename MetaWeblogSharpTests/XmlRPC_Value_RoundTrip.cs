@@ -6,7 +6,7 @@ using X=MetaWeblogSharp.XmlRPC;
 namespace MetaWeblogSharpTests
 {
     [TestClass]
-    public class UnitTest1
+    public class XmlRPC_Value_RoundTrip
     {
         [TestMethod]
         public void TestMethod1()
@@ -15,8 +15,39 @@ namespace MetaWeblogSharpTests
         }
 
         [TestMethod]
+        public void RoundTrip_Struct()
+        {
+            // In this test, we'll simply make sure that
+            // an array can handle all the supported types
+
+            var src = new X.Struct();
+            src["a"] = (IntegerValue)0;
+            src["b"] = (IntegerValue)18;
+            src["c"] = (IntegerValue)(-18);
+            src["d"] = (DoubleValue)1.0893;
+            src["e"] = (DoubleValue)(-1.0893);
+            src["f"] = (BooleanValue)true;
+            src["g"] = (BooleanValue)false;
+            src["h"] = (DateTimeValue)System.DateTime.Now;
+            src["i"] = new Base64Data(new byte[] { 0, 1, 2, 3 });
+            src["j"] = new Struct();
+            src["k"] = new X.Array();
+
+            var dest = RoundTrip(src);
+
+            Assert.AreEqual(src.Count,dest.Count);
+            foreach (var src_pair in src)
+            {
+                Assert.IsTrue(dest.ContainsKey(src_pair.Key));
+                Assert.AreEqual(src[src_pair.Key],dest[src_pair.Key]);
+            }
+        }
+        [TestMethod]
         public void RoundTrip_Array()
         {
+            // In this test, we'll simply make sure that
+            // an array can handle all the supported types
+
             var src = new X.Array();
             src.Add(0);
             src.Add(18);
@@ -38,6 +69,7 @@ namespace MetaWeblogSharpTests
                 var d = dest[i];
 
                 Assert.AreEqual(src.GetType(),dest.GetType());
+                Assert.AreEqual(src,dest);
             }
         }
 

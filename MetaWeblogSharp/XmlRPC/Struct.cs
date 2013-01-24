@@ -84,11 +84,8 @@ namespace MetaWeblogSharp.XmlRPC
 
         public Value this[string index]
         {
-            //get {  /* return the specified index here */ }
-            set
-            {
-                this.dic[index] = value;
-            }
+            get { return this.Get(index); }
+            set { this.dic[index] = value; }
         }
         
         public int Count
@@ -147,6 +144,49 @@ namespace MetaWeblogSharp.XmlRPC
                 struct_[name] = o;
             }
             return struct_;
+        }
+
+        public override bool Equals(System.Object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            var p = obj as Struct;
+            if (p == null)
+            {
+                return false;
+            }
+
+            // Return true if the fields match:
+            if (this.dic != p.dic)
+            {
+                if (this.dic.Count != p.dic.Count)
+                {
+                    return false;
+                }
+
+                foreach (var src_pair in this)
+                {
+
+                    Value des_val = null;
+                    var b = p.TryGetValue(src_pair.Key, out des_val);
+
+                    if (b == false)
+                    {
+                        return false;
+                    }
+
+                    if (!(src_pair.Value.Equals(des_val)))
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+            return true;
         }
     }
 }
