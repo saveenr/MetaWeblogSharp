@@ -4,7 +4,7 @@ namespace MetaWeblogSharp.XmlRPC
 {
     public class DateTimeValue : Value
     {
-        public System.DateTime Data;
+        public readonly System.DateTime Data;
 
         public DateTimeValue(System.DateTime value)
         {
@@ -55,6 +55,11 @@ namespace MetaWeblogSharp.XmlRPC
             // Return true if the fields match:
             return (this.Data.Day == p.Data.Day && this.Data.Month == p.Data.Month && this.Data.Year == p.Data.Year) &&
                 (this.Data.Hour == p.Data.Hour&& this.Data.Minute== p.Data.Minute&& this.Data.Second== p.Data.Second);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Data.GetHashCode();
         }
     }
 }

@@ -45,7 +45,7 @@ namespace DemoApp
                 // this will raise an exception if the post does not exist
                 var x = service.GetPost(new_post_id);
             }
-            catch (MetaWeblogSharp.XmlRPC.XmlRPCException exc)
+            catch (MetaWeblogSharp.XmlRPC.XmlRPCException)
             {
                 // do nothing
             }

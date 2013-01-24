@@ -4,7 +4,7 @@ namespace MetaWeblogSharp.XmlRPC
 {
     public class BooleanValue : Value
     {
-        public bool Data;
+        public readonly bool Data;
         
         public BooleanValue (bool value)
         {
@@ -56,6 +56,11 @@ namespace MetaWeblogSharp.XmlRPC
 
             // Return true if the fields match:
             return (this.Data == p.Data);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Data.GetHashCode();
         }
     }
 }

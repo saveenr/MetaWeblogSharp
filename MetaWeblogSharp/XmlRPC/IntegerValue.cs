@@ -4,7 +4,7 @@ namespace MetaWeblogSharp.XmlRPC
 {
     public class IntegerValue : Value
     {
-        public int Data;
+        public readonly int Data;
         public IntegerValue(int dt)
         {
             this.Data = dt;
@@ -51,6 +51,11 @@ namespace MetaWeblogSharp.XmlRPC
 
             // Return true if the fields match:
             return (this.Data== p.Data);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Data.GetHashCode();
         }
     }
 }

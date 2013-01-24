@@ -5,7 +5,7 @@ namespace MetaWeblogSharp.XmlRPC
 {
     public class Base64Data : Value
     {
-        public byte[] Bytes;
+        public readonly byte[] Bytes;
 
         public Base64Data(byte[] bytes)
         {
@@ -66,6 +66,11 @@ namespace MetaWeblogSharp.XmlRPC
                 return true;
             }
             return true;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Bytes.GetHashCode();
         }
     }
 }

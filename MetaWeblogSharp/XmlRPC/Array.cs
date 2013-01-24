@@ -7,7 +7,7 @@ namespace MetaWeblogSharp.XmlRPC
 {
     public class Array : Value, IEnumerable<Value>
     {
-        private List<Value> items;
+        private readonly List<Value> items;
 
         public Array()
         {
@@ -133,6 +133,11 @@ namespace MetaWeblogSharp.XmlRPC
                 return true;
             }
             return true;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.items.GetHashCode();
         }
     }
 }

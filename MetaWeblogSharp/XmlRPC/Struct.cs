@@ -8,19 +8,19 @@ namespace MetaWeblogSharp.XmlRPC
 {
     public class Struct : Value, IEnumerable<KeyValuePair<string, Value>>
     {
-        private Dictionary<string, Value> dic;
+        private readonly Dictionary<string, Value> dic;
 
         public Struct()
         {
             this.dic = new Dictionary<string, Value>();
         }
 
-        internal bool TryGetValue(string name, out Value v)
+        private bool TryGet(string name, out Value v)
         {
             return this.dic.TryGetValue(name, out v);
         }
 
-        internal Value TryGetValue(string name)
+        public Value TryGet(string name)
         {
             Value v=null;
             var b = this.dic.TryGetValue(name, out v);
@@ -40,7 +40,7 @@ namespace MetaWeblogSharp.XmlRPC
 
         public T TryGet<T>(string name) where T:Value
         {
-            var v = this.TryGetValue(name);
+            var v = this.TryGet(name);
             if (v == null)
             {
                 return null;
@@ -53,7 +53,7 @@ namespace MetaWeblogSharp.XmlRPC
 
         public T Get<T>(string name, T defval) where T : Value
         {
-            var v = this.TryGetValue(name);
+            var v = this.TryGet(name);
             if (v == null)
             {
                 return defval;
@@ -66,7 +66,7 @@ namespace MetaWeblogSharp.XmlRPC
 
         public Value Get(string name)
         {
-            var v = this.TryGetValue(name);
+            var v = this.TryGet(name);
             if (v == null)
             {
                 string msg = String.Format("Struct does not contains {0}", name);
@@ -171,7 +171,7 @@ namespace MetaWeblogSharp.XmlRPC
                 {
 
                     Value des_val = null;
-                    var b = p.TryGetValue(src_pair.Key, out des_val);
+                    var b = p.TryGet(src_pair.Key, out des_val);
 
                     if (b == false)
                     {
@@ -187,6 +187,11 @@ namespace MetaWeblogSharp.XmlRPC
                 return true;
             }
             return true;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.dic.GetHashCode();
         }
     }
 }

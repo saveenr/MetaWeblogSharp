@@ -4,7 +4,7 @@ namespace MetaWeblogSharp.XmlRPC
 {
     public class DoubleValue : Value
     {
-        public double Data;
+        public readonly double Data;
         public DoubleValue(double dt)
         {
             this.Data = dt;
@@ -46,6 +46,11 @@ namespace MetaWeblogSharp.XmlRPC
 
             // Return true if the fields match:
             return (this.Data == p.Data);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Data.GetHashCode();
         }
     }
 }
