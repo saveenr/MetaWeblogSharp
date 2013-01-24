@@ -18,6 +18,7 @@ namespace MetaWeblogSharp.XmlRPC
             var doc = methodcall.CreateDocument();
             var request = System.Net.WebRequest.Create(this.URL);
             request.Method = "POST";
+
             var content = doc.ToString();
             var byteArray = Encoding.UTF8.GetBytes(content);
             request.ContentType = "text/xml";
