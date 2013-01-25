@@ -89,7 +89,7 @@ namespace MetaWeblogSharp.XmlRPC
 
         internal static Array XmlToValue(XElement type_el)
         {
-            var data_el = type_el.Element("data");
+            var data_el = type_el.GetElement("data");
 
             var value_els = data_el.Elements("value").ToList();
             var list = new XmlRPC.Array();

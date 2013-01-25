@@ -8,7 +8,7 @@
 
         public static Fault ParseXml(System.Xml.Linq.XElement fault_el)
         {
-            var value_el = fault_el.Element("value");
+            var value_el = fault_el.GetElement("value");
             var fault_value = (Struct)XmlRPC.Value.ParseXml(value_el);
 
             int fault_code = -1;

@@ -28,12 +28,12 @@ namespace MetaWeblogSharp.XmlRPC
                 throw exc;
             }
 
-            var params_el = root.Element("params");
+            var params_el = root.GetElement("params");
             var param_els = params_el.Elements("param").ToList();
 
             foreach (var param_el in param_els)
             {
-                var value_el = param_el.Element("value");
+                var value_el = param_el.GetElement("value");
 
                 var val = XmlRPC.Value.ParseXml(value_el);
                 this.Parameters.Add( val );

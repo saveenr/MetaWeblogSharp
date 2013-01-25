@@ -49,6 +49,7 @@
     <Compile Include="Client.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserInfo.cs" />
+    <Compile Include="XmlExtensions.cs" />
     <Compile Include="XmlRPC\Array.cs" />
     <Compile Include="XmlRPC\BinaryData.cs" />
     <Compile Include="XmlRPC\BooleanValue.cs" />

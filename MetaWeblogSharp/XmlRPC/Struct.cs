@@ -135,10 +135,10 @@ namespace MetaWeblogSharp.XmlRPC
             var struct_ = new Struct();
             foreach (var member_el in member_els)
             {
-                var name_el = member_el.Element("name");
+                var name_el = member_el.GetElement("name");
                 string name = name_el.Value;
 
-                var value_el2 = member_el.Element("value");
+                var value_el2 = member_el.GetElement("value");
                 var o = Value.ParseXml(value_el2);
 
                 struct_[name] = o;

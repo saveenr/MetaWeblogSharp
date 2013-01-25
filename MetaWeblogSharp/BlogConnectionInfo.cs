@@ -12,10 +12,10 @@
             var doc = System.Xml.Linq.XDocument.Load(filename);
             var root = doc.Root;
 
-            string blogId = get_element_string(root,"blogid");
-            string metaWeblogUrl = get_element_string(root,"metaweblog_url");
-            string username = get_element_string(root,"username");
-            string password = get_element_string(root,"password");
+            string blogId = root.GetElementString("blogid");
+            string metaWeblogUrl = root.GetElementString("metaweblog_url");
+            string username = root.GetElementString("username");
+            string password = root.GetElementString("password");
 
             var coninfo = new BlogConnectionInfo(metaWeblogUrl, blogId, username, password);
 
@@ -28,19 +28,6 @@
             this.MetaWeblogURL = metaweblogurl;
             this.Username = username;
             this.Password = password;
-        }
-
-        private static string get_element_string(System.Xml.Linq.XElement parent, string name)
-        {
-            var child_el = parent.Element(name);
-            if (child_el == null)
-            {
-                string msg = string.Format("Error while while loading {0} class. Xml is missing {0} element",
-                                           typeof (BlogConnectionInfo).Name, name);
-                throw new MetaWeblogException(msg);
-            }
-
-            return child_el.Value;
         }
     }
 }
