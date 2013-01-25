@@ -53,5 +53,10 @@ namespace MetaWeblogSharp.XmlRPC
         {
             return this.Double.GetHashCode();
         }
+
+        protected override string GetTypeStringX()
+        {
+            return DoubleValue.TypeString;
+        }
     }
 }

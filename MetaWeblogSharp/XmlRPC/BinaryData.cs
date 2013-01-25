@@ -68,6 +68,11 @@ namespace MetaWeblogSharp.XmlRPC
             return true;
         }
 
+        protected override string GetTypeStringX()
+        {
+            return Base64Data.TypeString;
+        }
+
         public override int GetHashCode()
         {
             return this.Bytes.GetHashCode();

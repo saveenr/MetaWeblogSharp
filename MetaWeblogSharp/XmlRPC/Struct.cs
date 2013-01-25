@@ -189,6 +189,11 @@ namespace MetaWeblogSharp.XmlRPC
             return true;
         }
 
+        protected override string GetTypeStringX()
+        {
+            return Struct.TypeString;
+        }
+
         public override int GetHashCode()
         {
             return this.dic.GetHashCode();

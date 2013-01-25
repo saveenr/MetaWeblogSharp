@@ -58,5 +58,10 @@ namespace MetaWeblogSharp.XmlRPC
                 return es;
             }
         }
+
+        protected override string GetTypeStringX()
+        {
+            return StringValue.TypeString;
+        }
     }
 }

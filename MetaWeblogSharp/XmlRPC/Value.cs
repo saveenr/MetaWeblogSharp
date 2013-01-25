@@ -7,6 +7,7 @@ namespace MetaWeblogSharp.XmlRPC
     public abstract class Value
     {
         protected abstract void AddToTypeEl(XElement parent);
+        protected abstract string GetTypeStringX();
 
         public static XmlRPC.Value ParseXml(System.Xml.Linq.XElement value_el)
         {
@@ -70,7 +71,7 @@ namespace MetaWeblogSharp.XmlRPC
         public System.Xml.Linq.XElement AddXmlElement(System.Xml.Linq.XElement parent)
         {
             var value_el = new System.Xml.Linq.XElement("value");
-            var type_el = new System.Xml.Linq.XElement(GetTypeString());
+            var type_el = new System.Xml.Linq.XElement(this.GetTypeStringX());
             value_el.Add(type_el);
 
             this.AddToTypeEl(type_el);
@@ -78,48 +79,7 @@ namespace MetaWeblogSharp.XmlRPC
             parent.Add(value_el);
 
             return value_el;
-        }
 
-        private string GetTypeString()
-        {
-            if (this is StringValue)
-            {
-                return StringValue.TypeString;
-            }
-            else if (this is IntegerValue)
-            {
-                return IntegerValue.TypeString;
-            }
-            else if (this is XmlRPC.Struct)
-            {
-                return Struct.TypeString;
-            }
-            else if (this is XmlRPC.Array)
-            {
-                return Array.TypeString;
-            }
-            else if (this is Base64Data)
-            {
-                return Base64Data.TypeString;
-            }
-            else if (this is BooleanValue)
-            {
-                return BooleanValue.TypeString;
-            }
-            else if (this is DoubleValue)
-            {
-                return DoubleValue.TypeString;
-            }
-            else if (this is DateTimeValue)
-            {
-                return DateTimeValue.TypeString;
-            }
-            else
-            {
-                string msg = string.Format("Cannoy get type string for unsupported type {0}", this.GetType().Name);
-                throw new XmlRPCException(msg);
-            }
         }
-
     }
 }

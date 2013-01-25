@@ -135,6 +135,11 @@ namespace MetaWeblogSharp.XmlRPC
             return true;
         }
 
+        protected override string GetTypeStringX()
+        {
+            return Array.TypeString;
+        }
+
         public override int GetHashCode()
         {
             return this.items.GetHashCode();
