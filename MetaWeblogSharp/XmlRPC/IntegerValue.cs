@@ -59,7 +59,7 @@ namespace MetaWeblogSharp.XmlRPC
             return this.Integer.GetHashCode();
         }
 
-        protected override string GetTypeStringX()
+        protected override string GetTypeString()
         {
             return IntegerValue.TypeString;
         }

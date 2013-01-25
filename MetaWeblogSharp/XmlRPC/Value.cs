@@ -7,7 +7,7 @@ namespace MetaWeblogSharp.XmlRPC
     public abstract class Value
     {
         protected abstract void AddToTypeEl(XElement parent);
-        protected abstract string GetTypeStringX();
+        protected abstract string GetTypeString();
 
         public static XmlRPC.Value ParseXml(System.Xml.Linq.XElement value_el)
         {
@@ -71,7 +71,7 @@ namespace MetaWeblogSharp.XmlRPC
         public System.Xml.Linq.XElement AddXmlElement(System.Xml.Linq.XElement parent)
         {
             var value_el = new System.Xml.Linq.XElement("value");
-            var type_el = new System.Xml.Linq.XElement(this.GetTypeStringX());
+            var type_el = new System.Xml.Linq.XElement(this.GetTypeString());
             value_el.Add(type_el);
 
             this.AddToTypeEl(type_el);

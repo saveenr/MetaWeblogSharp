@@ -189,7 +189,7 @@ namespace MetaWeblogSharp.XmlRPC
             return true;
         }
 
-        protected override string GetTypeStringX()
+        protected override string GetTypeString()
         {
             return Struct.TypeString;
         }

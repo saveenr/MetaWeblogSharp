@@ -63,7 +63,7 @@ namespace MetaWeblogSharp.XmlRPC
             return this.Boolean.GetHashCode();
         }
 
-        protected override string GetTypeStringX()
+        protected override string GetTypeString()
         {
             return BooleanValue.TypeString;
         }

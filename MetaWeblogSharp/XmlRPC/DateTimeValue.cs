@@ -62,7 +62,7 @@ namespace MetaWeblogSharp.XmlRPC
             return this.Data.GetHashCode();
         }
 
-        protected override string GetTypeStringX()
+        protected override string GetTypeString()
         {           
             return DateTimeValue.TypeString;
         }
