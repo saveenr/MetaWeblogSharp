@@ -6,11 +6,11 @@ namespace MetaWeblogSharp.XmlRPC
 {
     public class MethodResponse
     {
-        public List<Value> Parameters { get; private set; }
+        public ParameterList Parameters { get; private set; }
         
         public MethodResponse(string content)
         {
-            this.Parameters = new List<Value>();
+            this.Parameters = new ParameterList();
 
             var doc = System.Xml.Linq.XDocument.Parse(content);
             var root = doc.Root;
@@ -34,7 +34,7 @@ namespace MetaWeblogSharp.XmlRPC
                 var value_el = param_el.GetElement("value");
 
                 var val = XmlRPC.Value.ParseXml(value_el);
-                this.Parameters.Add( val );
+                this.Parameters.AddParameter( val );
             }
         }
     }

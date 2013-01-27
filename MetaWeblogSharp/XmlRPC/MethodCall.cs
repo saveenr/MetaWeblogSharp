@@ -1,18 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Xml.Linq;
 
 namespace MetaWeblogSharp.XmlRPC
 {
-    public class MethodCall
+
+    public class ParameterList: IEnumerable<Value>
     {
         private List<Value> Parameters;
-        public string Name { get; private set; }
-
-        public MethodCall(string name)
+        
+        public ParameterList()
         {
-            this.Name = name;
             this.Parameters = new List<Value>();
+        }
+
+        public void AddParameter(Value value)
+        {
+            this.Parameters.Add(value);
         }
 
         public void AddParameter(int value)
@@ -53,6 +58,32 @@ namespace MetaWeblogSharp.XmlRPC
         public void AddParameter(string value)
         {
             this.Parameters.Add(new StringValue(value));
+        }
+
+        public IEnumerator<Value> GetEnumerator()
+        {
+            return this.Parameters.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public Value this[int index]
+        {
+            get { return this.Parameters[index]; }
+        }
+    }
+    public class MethodCall
+    {
+        public ParameterList Parameters { get; private set; }
+        public string Name { get; private set; }
+
+        public MethodCall(string name)
+        {
+            this.Name = name;
+            this.Parameters = new ParameterList();
         }
 
         public System.Xml.Linq.XDocument CreateDocument()
