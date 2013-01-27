@@ -6,15 +6,13 @@ namespace MetaWeblogSharp.XmlRPC
 {
     public class MethodResponse
     {
-        public string RawData { get; private set; }
         public List<Value> Parameters { get; private set; }
         
         public MethodResponse(string content)
         {
             this.Parameters = new List<Value>();
-            this.RawData = content;
 
-            var doc = System.Xml.Linq.XDocument.Parse(this.RawData);
+            var doc = System.Xml.Linq.XDocument.Parse(content);
             var root = doc.Root;
             var fault_el = root.Element("fault");
             if (fault_el != null)
