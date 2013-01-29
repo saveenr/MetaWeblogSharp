@@ -59,6 +59,7 @@
     <Compile Include="XmlRPC\IntegerValue.cs" />
     <Compile Include="XmlRPC\MethodCall.cs" />
     <Compile Include="XmlRPC\MethodResponse.cs" />
+    <Compile Include="XmlRPC\ParameterList.cs" />
     <Compile Include="XmlRPC\Service.cs" />
     <Compile Include="XmlRPC\StringValue.cs" />
     <Compile Include="XmlRPC\Struct.cs" />

@@ -9,6 +9,10 @@ namespace MetaWeblogSharp.XmlRPC
 
         public Base64Data(byte[] bytes)
         {
+            if (bytes == null)
+            {
+                throw new ArgumentNullException("bytes");
+            }
             this.Bytes = bytes;
         }
 

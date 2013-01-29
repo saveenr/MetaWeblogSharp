@@ -34,7 +34,7 @@ namespace MetaWeblogSharp.XmlRPC
                 var value_el = param_el.GetElement("value");
 
                 var val = XmlRPC.Value.ParseXml(value_el);
-                this.Parameters.AddParameter( val );
+                this.Parameters.Add( val );
             }
         }
     }

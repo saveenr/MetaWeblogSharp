@@ -1,7 +1,7 @@
 <package >
   <metadata>
     <id>MetaWeblogSharp</id>
-    <version>1.0.21</version>
+    <version>1.0.22</version>
     <authors>saveenr</authors>
     <owners>saveenr</owners>
     <licenseUrl>http://metaweblogsharp.codeplex.com</licenseUrl>
@@ -14,6 +14,7 @@
 <releaseNotes>
 Fixed NuGet package metadata
 Internal improvements to XMLRPC library
+Fixed build issue from 1.0.21
 </releaseNotes>
     <copyright>Copyright 2013</copyright>
     <tags>MetaWeblog</tags>

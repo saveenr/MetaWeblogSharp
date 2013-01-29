@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace MetaWeblogSharp.XmlRPC
@@ -14,47 +15,51 @@ namespace MetaWeblogSharp.XmlRPC
 
         public void Add(Value value)
         {
+            if (value == null)
+            {
+                throw new ArgumentNullException("value");
+            }
             this.Parameters.Add(value);
         }
 
         public void Add(int value)
         {
-            this.Parameters.Add(new IntegerValue(value));
+            this.Add(new IntegerValue(value));
         }
 
         public void Add(bool value)
         {
-            this.Parameters.Add(new BooleanValue(value));
+            this.Add(new BooleanValue(value));
         }
 
         public void Add(System.DateTime value)
         {
-            this.Parameters.Add(new DateTimeValue(value));
+            this.Add(new DateTimeValue(value));
         }
 
         public void Add(double value)
         {
-            this.Parameters.Add(new DoubleValue(value));
+            this.Add(new DoubleValue(value));
         }
 
         public void Add(Array value)
         {
-            this.Parameters.Add(value);
+            this.Add(value);
         }
 
         public void Add(Struct value)
         {
-            this.Parameters.Add(value);
+            this.Add(value);
         }
 
         public void Add(Base64Data value)
         {
-            this.Parameters.Add(value);
+            this.Add(value);
         }
 
         public void Add(string value)
         {
-            this.Parameters.Add(new StringValue(value));
+            this.Add(new StringValue(value));
         }
 
         public IEnumerator<Value> GetEnumerator()
