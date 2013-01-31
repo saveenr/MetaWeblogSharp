@@ -1,4 +1,4 @@
-﻿using System.Xml.Linq;
+﻿using SXL=System.Xml.Linq;
 
 namespace MetaWeblogSharp.XmlRPC
 {
@@ -16,13 +16,13 @@ namespace MetaWeblogSharp.XmlRPC
             get { return "dateTime.iso8601"; }
         }
 
-        protected override void AddToTypeEl(XElement parent)
+        protected override void AddToTypeEl(SXL.XElement parent)
         {
             var s = this.Data.ToString("s", System.Globalization.CultureInfo.InvariantCulture);
             parent.Value = s;
         }
 
-        public static DateTimeValue XmlToValue(XElement parent)
+        public static DateTimeValue XmlToValue(SXL.XElement parent)
         {
             System.DateTime dt = System.DateTime.Now;
             if (System.DateTime.TryParse(parent.Value, out dt))

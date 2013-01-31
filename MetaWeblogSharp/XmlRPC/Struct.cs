@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
+using SXL=System.Xml.Linq;
 
 namespace MetaWeblogSharp.XmlRPC
 {
@@ -114,14 +114,14 @@ namespace MetaWeblogSharp.XmlRPC
             get { return "struct"; }
         }
 
-        protected override void AddToTypeEl(XElement parent)
+        protected override void AddToTypeEl(SXL.XElement parent)
         {
             foreach (var pair in this)
             {
-                var member_el = new XElement("member");
+                var member_el = new SXL.XElement("member");
                 parent.Add(member_el);
 
-                var name_el = new XElement("name");
+                var name_el = new SXL.XElement("name");
                 member_el.Add(name_el);
                 name_el.Value = pair.Key;
 
@@ -129,7 +129,7 @@ namespace MetaWeblogSharp.XmlRPC
             }
         }
 
-        public static Struct XmlToValue(XElement type_el)
+        public static Struct XmlToValue(SXL.XElement type_el)
         {
             var member_els = type_el.Elements("member").ToList();
             var struct_ = new Struct();

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Xml.Linq;
+using SXL=System.Xml.Linq;
 
 namespace MetaWeblogSharp.XmlRPC
 {
@@ -21,12 +21,12 @@ namespace MetaWeblogSharp.XmlRPC
             get { return "base64"; }
         }
 
-        protected override void AddToTypeEl(XElement parent)
+        protected override void AddToTypeEl(SXL.XElement parent)
         {
             parent.Add(Convert.ToBase64String(Bytes));
         }
 
-        internal static Base64Data XmlToValue(XElement type_el)
+        internal static Base64Data XmlToValue(SXL.XElement type_el)
         {
             var bytes = Convert.FromBase64String(type_el.Value);
             var b = new Base64Data(bytes);

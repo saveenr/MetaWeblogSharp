@@ -1,4 +1,4 @@
-﻿using System.Xml.Linq;
+﻿using SXL=System.Xml.Linq;
 
 namespace MetaWeblogSharp.XmlRPC
 {
@@ -16,12 +16,12 @@ namespace MetaWeblogSharp.XmlRPC
             get { return "string"; }
         }
 
-        protected override void AddToTypeEl(XElement parent)
+        protected override void AddToTypeEl(SXL.XElement parent)
         {
             parent.Value = this.String;
         }
 
-        public static StringValue XmlToValue(XElement parent)
+        public static StringValue XmlToValue(SXL.XElement parent)
         {
             var bv = new StringValue(parent.Value);
             return bv;

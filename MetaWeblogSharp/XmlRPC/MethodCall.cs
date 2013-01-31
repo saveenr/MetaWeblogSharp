@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-using System.Xml.Linq;
+using SXL=System.Xml.Linq;
 
 namespace MetaWeblogSharp.XmlRPC
 {
@@ -14,24 +14,24 @@ namespace MetaWeblogSharp.XmlRPC
             this.Parameters = new ParameterList();
         }
 
-        public System.Xml.Linq.XDocument CreateDocument()
+        public SXL.XDocument CreateDocument()
         {
-            var doc = new System.Xml.Linq.XDocument();
-            var root = new System.Xml.Linq.XElement("methodCall");
+            var doc = new SXL.XDocument();
+            var root = new SXL.XElement("methodCall");
 
             doc.Add(root);
 
-            var method = new System.Xml.Linq.XElement("methodName");
+            var method = new SXL.XElement("methodName");
             root.Add(method);
 
             method.Add(this.Name);
 
-            var params_el = new System.Xml.Linq.XElement("params");
+            var params_el = new SXL.XElement("params");
             root.Add(params_el);
 
             foreach (var p in this.Parameters)
             {
-                var param_el = new System.Xml.Linq.XElement("param");
+                var param_el = new SXL.XElement("param");
                 params_el.Add(param_el);
 
                 p.AddXmlElement(param_el);
@@ -39,6 +39,5 @@ namespace MetaWeblogSharp.XmlRPC
 
             return doc;
         }
-
     }
 }

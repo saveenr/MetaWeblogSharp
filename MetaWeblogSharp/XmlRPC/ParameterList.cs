@@ -44,17 +44,17 @@ namespace MetaWeblogSharp.XmlRPC
 
         public void Add(Array value)
         {
-            this.Add(value);
+            this.Parameters.Add(value);
         }
 
         public void Add(Struct value)
         {
-            this.Add(value);
+            this.Parameters.Add(value);
         }
 
         public void Add(Base64Data value)
         {
-            this.Add(value);
+            this.Parameters.Add(value);
         }
 
         public void Add(string value)
@@ -75,6 +75,11 @@ namespace MetaWeblogSharp.XmlRPC
         public Value this[int index]
         {
             get { return this.Parameters[index]; }
+        }
+
+        public int Count
+        {
+            get { return this.Parameters.Count; }
         }
     }
 }

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
-using System.Xml.Linq;
+using SXL=System.Xml.Linq;
 
 namespace MetaWeblogSharp.XmlRPC
 {
     public abstract class Value
     {
-        protected abstract void AddToTypeEl(XElement parent);
+        protected abstract void AddToTypeEl(SXL.XElement parent);
         protected abstract string GetTypeString();
 
         public static XmlRPC.Value ParseXml(System.Xml.Linq.XElement value_el)

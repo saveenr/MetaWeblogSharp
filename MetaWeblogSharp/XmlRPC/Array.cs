@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
+using SXL = System.Xml.Linq;
 
 namespace MetaWeblogSharp.XmlRPC
 {
@@ -77,9 +77,9 @@ namespace MetaWeblogSharp.XmlRPC
             get { return this.items.Count; }
         }
 
-        protected override void AddToTypeEl(XElement parent)
+        protected override void AddToTypeEl(SXL.XElement parent)
         {
-            var data_el = new XElement("data");
+            var data_el = new SXL.XElement("data");
             parent.Add(data_el);
             foreach (Value item in this)
             {
@@ -87,7 +87,7 @@ namespace MetaWeblogSharp.XmlRPC
             }
         }
 
-        internal static Array XmlToValue(XElement type_el)
+        internal static Array XmlToValue(SXL.XElement type_el)
         {
             var data_el = type_el.GetElement("data");
 

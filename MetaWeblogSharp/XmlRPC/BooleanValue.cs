@@ -1,4 +1,4 @@
-﻿using System.Xml.Linq;
+﻿using SXL=System.Xml.Linq;
 
 namespace MetaWeblogSharp.XmlRPC
 {
@@ -16,7 +16,7 @@ namespace MetaWeblogSharp.XmlRPC
             get { return "boolean"; }
         }
 
-        protected override void AddToTypeEl(XElement parent)
+        protected override void AddToTypeEl(SXL.XElement parent)
         {
             if (this.Boolean)
             {
@@ -28,7 +28,7 @@ namespace MetaWeblogSharp.XmlRPC
             }
         }
 
-        public static BooleanValue XmlToValue(XElement type_el)
+        public static BooleanValue XmlToValue(SXL.XElement type_el)
         {
             var i = int.Parse(type_el.Value);
             var b = (i != 0);

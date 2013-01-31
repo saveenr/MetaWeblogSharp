@@ -1,4 +1,4 @@
-﻿using System.Xml.Linq;
+﻿using SXL=System.Xml.Linq;
 
 namespace MetaWeblogSharp.XmlRPC
 {
@@ -16,12 +16,12 @@ namespace MetaWeblogSharp.XmlRPC
             get { return "double"; }
         }
 
-        protected override void AddToTypeEl(XElement parent)
+        protected override void AddToTypeEl(SXL.XElement parent)
         {
             parent.Value = this.Double.ToString(System.Globalization.CultureInfo.InvariantCulture);
         }
 
-        public static DoubleValue XmlToValue(XElement parent)
+        public static DoubleValue XmlToValue(SXL.XElement parent)
         {
             var bv = new DoubleValue(double.Parse(parent.Value));
             return bv;
