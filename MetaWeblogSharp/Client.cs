@@ -108,7 +108,7 @@ namespace MetaWeblogSharp
             return postinfo;
         }
 
-        public string NewPost(string title, string description, IList<string> categories, bool publish)
+        public string NewPost(string title, string description, IList<string> categories, bool publish, System.DateTime? date_created)
         {
             XmlRPC.Array cats=null;
 
@@ -128,7 +128,12 @@ namespace MetaWeblogSharp
             struct_["title"] = new StringValue(title);
             struct_["description"] = new StringValue(description);
             struct_["categories"] = cats;
-
+            if (date_created.HasValue)
+            {
+                struct_["dateCreated"] = new DateTimeValue(date_created.Value);
+                struct_["date_created_gmt"] = new DateTimeValue(date_created.Value.ToUniversalTime());
+                
+            }
             var method = new XmlRPC.MethodCall("metaWeblog.newPost");
             method.Parameters.Add(this.BlogConnectionInfo.BlogID);
             method.Parameters.Add(this.BlogConnectionInfo.Username);
