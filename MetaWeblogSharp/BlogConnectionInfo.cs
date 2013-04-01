@@ -21,6 +21,17 @@
 
             return coninfo;
         }
+
+        public void Save(string filename)
+        {
+            var doc = new System.Xml.Linq.XDocument();
+            var root = new System.Xml.Linq.XElement("blogconnectioninfo");
+            root.Add(new System.Xml.Linq.XElement("blogid",this.BlogID));
+            root.Add(new System.Xml.Linq.XElement("metaweblog_url", this.MetaWeblogURL));
+            root.Add(new System.Xml.Linq.XElement("username", this.Username));
+            root.Add(new System.Xml.Linq.XElement("password", this.Password));
+            doc.Save(filename);
+        }
         
         public BlogConnectionInfo(string metaweblogurl, string blogid, string username, string password)
         {

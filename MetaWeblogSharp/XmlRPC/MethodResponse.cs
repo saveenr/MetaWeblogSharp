@@ -12,7 +12,9 @@ namespace MetaWeblogSharp.XmlRPC
         {
             this.Parameters = new ParameterList();
 
-            var doc = System.Xml.Linq.XDocument.Parse(content);
+            var lo = new System.Xml.Linq.LoadOptions();
+
+            var doc = System.Xml.Linq.XDocument.Parse(content,lo);
             var root = doc.Root;
             var fault_el = root.Element("fault");
             if (fault_el != null)
