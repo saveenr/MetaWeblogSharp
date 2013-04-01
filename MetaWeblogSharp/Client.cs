@@ -42,7 +42,7 @@ namespace MetaWeblogSharp
                 postinfo.Link = struct_.Get<StringValue>("link", StringValue.NullString).String;
                 postinfo.PostID = struct_.Get<StringValue>("postid", StringValue.NullString).String;
                 postinfo.UserID = struct_.Get<StringValue>("userid", StringValue.NullString).String;
-                postinfo.CommentCount = struct_.Get<IntegerValue>("commentCount").Integer;
+                postinfo.CommentCount = struct_.Get<IntegerValue>("commentCount",0).Integer;
                 postinfo.PostStatus = struct_.Get<StringValue>("post_status", StringValue.NullString).String;
                 postinfo.PermaLink = struct_.Get<StringValue>("permaLink", StringValue.NullString).String;
                 postinfo.Description = struct_.Get<StringValue>("description", StringValue.NullString).String;
