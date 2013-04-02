@@ -25,11 +25,12 @@
         public void Save(string filename)
         {
             var doc = new System.Xml.Linq.XDocument();
-            var root = new System.Xml.Linq.XElement("blogconnectioninfo");
-            root.Add(new System.Xml.Linq.XElement("blogid",this.BlogID));
-            root.Add(new System.Xml.Linq.XElement("metaweblog_url", this.MetaWeblogURL));
-            root.Add(new System.Xml.Linq.XElement("username", this.Username));
-            root.Add(new System.Xml.Linq.XElement("password", this.Password));
+            var p = new System.Xml.Linq.XElement("blogconnectioninfo");
+            doc.Add(p);
+            p.Add(new System.Xml.Linq.XElement("blogid",this.BlogID));
+            p.Add(new System.Xml.Linq.XElement("metaweblog_url", this.MetaWeblogURL));
+            p.Add(new System.Xml.Linq.XElement("username", this.Username));
+            p.Add(new System.Xml.Linq.XElement("password", this.Password));
             doc.Save(filename);
         }
         

@@ -34,7 +34,7 @@ namespace DemoApp
 
             var title1 = string.Format("Test {0}" , System.DateTime.Now.ToString());
             var description1 = string.Format("<p>Hello World</p>\n<p>{0}</p>", System.DateTime.Now);
-            var new_post_id = client.NewPost(title1, description1, categories1, false);
+            var new_post_id = client.NewPost(title1, description1, categories1, false, null);
             var new_post_info = client.GetPost(new_post_id);
             var successedit1 = client.EditPost(new_post_info.PostID, title1, description1, categories1, false);
             var new_post_info2 = client.GetPost(new_post_id);

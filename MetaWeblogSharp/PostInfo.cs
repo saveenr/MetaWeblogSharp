@@ -4,7 +4,7 @@
     {
         public string Title { get; set; }
         public string Link { get; set; }
-        public System.DateTime DateCreated { get; set; }
+        public System.DateTime? DateCreated { get; set; }
         public string PostID { get; set; }
         public string UserID { get; set; }
         public int CommentCount { get; set; }

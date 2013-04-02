@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApp", "DemoApp\DemoApp.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaWeblogSharpTests", "MetaWeblogSharpTests\MetaWeblogSharpTests.csproj", "{2B58803A-044F-4011-A3C2-3DE6F0E99D44}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaWeblogPS", "MetaWeblogPS\MetaWeblogPS.csproj", "{AD4E69BD-96D6-464B-9A20-FD07EC4797DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{2B58803A-044F-4011-A3C2-3DE6F0E99D44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B58803A-044F-4011-A3C2-3DE6F0E99D44}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B58803A-044F-4011-A3C2-3DE6F0E99D44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD4E69BD-96D6-464B-9A20-FD07EC4797DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD4E69BD-96D6-464B-9A20-FD07EC4797DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD4E69BD-96D6-464B-9A20-FD07EC4797DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD4E69BD-96D6-464B-9A20-FD07EC4797DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

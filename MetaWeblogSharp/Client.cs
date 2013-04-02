@@ -108,6 +108,11 @@ namespace MetaWeblogSharp
             return postinfo;
         }
 
+        public string NewPost(PostInfo pi,IList<string> categories, bool publish)
+        {
+            return NewPost(pi.Title, pi.Description, categories, publish, pi.DateCreated);
+        }
+
         public string NewPost(string title, string description, IList<string> categories, bool publish, System.DateTime? date_created)
         {
             XmlRPC.Array cats=null;

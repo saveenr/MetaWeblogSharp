@@ -135,7 +135,7 @@ namespace MetaWeblogSharpTests
         [TestMethod]
         public void GetPosts1()
         {
-            var bci = new MetaWeblogSharp.BlogConnectionInfo("http://localhost:14882/metaweblog.axd", "ABC", "admin", "admin");
+            var bci = MetaWeblogSharp.BlogConnectionInfo.Load("d:\\msdn.xml");
             var client = new MetaWeblogSharp.Client(bci);
             var blogs = client.GetUsersBlogs();
 
@@ -154,7 +154,7 @@ namespace MetaWeblogSharpTests
             Assert.AreEqual(0,posts.Count);
 
             // create and verify a normal post
-            string postid = client.NewPost("P1", "P1Content", null, true, null);
+            string postid = client.NewPost("P1", "P1Content", null, false, null);
             posts = client.GetRecentPosts(10000);
             Assert.AreEqual(1,posts.Count);
             Assert.AreEqual(postid, posts[0].PostID);
@@ -167,7 +167,6 @@ namespace MetaWeblogSharpTests
             Assert.AreEqual(postid2, posts[0].PostID);
             Assert.AreEqual(postid, posts[1].PostID);
             Assert.AreEqual(null, posts[0].PostStatus);
-            Assert.AreEqual("published", posts[1].PostStatus);
             
 
 
