@@ -319,4 +319,73 @@ namespace MetaWeblogPS
            
         }
     }
+
+    public class BlogSession
+    {
+        private MetaWeblogSharp.Client Client;
+        public BlogSession( MetaWeblogSharp.Client client )
+        {
+        
+        }
+
+        public virtual void WriteHost(string s)
+        {
+        }
+
+        public virtual void WriteHost(string fmt, params object[] items)
+        {
+            string s = string.Format(fmt, items);
+            this.WriteHost(s);
+        }
+
+        public virtual void WriteDebug(string s)
+        {
+        }
+
+        public virtual void WriteDebug(string fmt, params object[] items)
+        {
+            string s = string.Format(fmt, items);
+            this.WriteHost(s);
+        }
+
+        public virtual void WriteVerbose(string s)
+        {
+        }
+
+        public virtual void WriteVerbose(string fmt, params object[] items)
+        {
+            string s = string.Format(fmt, items);
+            this.WriteHost(s);
+        }
+    }
+
+    public class PSBlogSession : BlogSession
+    {
+        private SMA.Cmdlet cmdlet;
+
+        public PSBlogSession(MetaWeblogSharp.Client client, SMA.Cmdlet cmdlet) :
+            base(client)
+        {
+            this.cmdlet = cmdlet;
+        }
+
+        public override void WriteDebug(string s)
+        {
+            this.cmdlet.WriteDebug(s);
+        }
+
+        public override void WriteHost(string s)
+        {
+            this.cmdlet.WriteVerbose(s);
+        }
+
+
+        public override void WriteVerbose(string s)
+        {
+            this.cmdlet.WriteVerbose(s);
+        }
+
+
+    }
+
 }
