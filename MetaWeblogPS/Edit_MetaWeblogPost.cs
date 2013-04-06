@@ -11,11 +11,11 @@ namespace MetaWeblogPS
         [System.Management.Automation.Parameter(Mandatory = true, Position = 2)] public string Title;
         [System.Management.Automation.Parameter(Mandatory = true, Position = 3)] public string Description;
         [System.Management.Automation.Parameter(Mandatory = false)] public List<string> Categories;
-        [System.Management.Automation.Parameter(Mandatory = false)] public System.Management.Automation.SwitchParameter Publish = true;
-
+        [System.Management.Automation.Parameter(Mandatory = false)]
+        public System.Management.Automation.SwitchParameter Draft = false;
         protected override void ProcessRecord()
         {
-            var success = this.Client.EditPost(this.PostID, this.Title, this.Description, this.Categories, this.Publish);
+            var success = this.Client.EditPost(this.PostID, this.Title, this.Description, this.Categories, !this.Draft);
             this.WriteObject(success);
         }
     }

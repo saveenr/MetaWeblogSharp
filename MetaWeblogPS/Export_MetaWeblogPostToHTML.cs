@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Management.Automation;
+using System.Net;
+using HtmlAgilityPack;
 
 namespace MetaWeblogPS
 {
@@ -67,68 +70,30 @@ namespace MetaWeblogPS
             {
                 // first handle the img links
                 var ba = new BodyAnalysis(new_doc);
+
+                var wc = new System.Net.WebClient();
+
                 foreach (var img_node in ba.ImgElements)
                 {
                     var src = img_node.Attributes["src"];
                     var url = src.Value.Trim();
-                    this.WriteVerbose("Downloading URL: " + url);
+                    var local_image_fname = DownLoadImage(url, wc);
+                    src.Value = local_image_fname;
 
-                    var bits = DownloadURLAsBytes(url);
-
-                    var uri = new System.Uri(url);
-
-                    var a = System.IO.Path.GetFileName(uri.LocalPath);
-                    this.WriteVerbose("A: " + a);
-                    var files_folder = this.Filename + "_files";
-                    this.WriteVerbose("Files Folder: " + files_folder);
-                    if (!System.IO.Directory.Exists(files_folder))
-                    {
-                        this.WriteVerbose("CREATED: " + files_folder);
-                        System.IO.Directory.CreateDirectory(files_folder);
-                    }
-
-                   
-                    var local_img_fname = System.IO.Path.Combine(files_folder, a);
-                    this.WriteVerbose("local fname : " + local_img_fname);
-                    System.IO.File.WriteAllBytes(local_img_fname, bits);
-
-                    src.Value = local_img_fname;
                 }
 
                 // no handle a a href that are images
                 foreach (var a_node in ba.AHrefElements)
                 {
-                    var src = a_node.Attributes["href"];
-                    var url = src.Value.Trim();
-                    this.WriteVerbose("Downloading URL: " + url);
+                    var href = a_node.Attributes["href"];
+                    var url = href.Value.Trim();
 
-                    var url_lc = url.ToLower();
-                    var uri_lc = new System.Uri(url_lc);
-                    if (uri_lc.LocalPath.EndsWith(".png") || uri_lc.LocalPath.EndsWith(".jpg"))
+                    var ext = System.IO.Path.GetExtension(url).ToLower();
+                    if (ext == ".jpg" || ext == ".png")
                     {
-                        var bits = DownloadURLAsBytes(url);
-
-                        var uri = new System.Uri(url);
-
-                        var a = System.IO.Path.GetFileName(uri.LocalPath);
-                        this.WriteVerbose("A: " + a);
-                        var files_folder = this.Filename + "_files";
-                        this.WriteVerbose("Files Folder: " + files_folder);
-                        if (!System.IO.Directory.Exists(files_folder))
-                        {
-                            this.WriteVerbose("CREATED: " + files_folder);
-                            System.IO.Directory.CreateDirectory(files_folder);
-                        }
-
-
-                        var local_img_fname = System.IO.Path.Combine(files_folder, a);
-                        this.WriteVerbose("local fname : " + local_img_fname);
-                        System.IO.File.WriteAllBytes(local_img_fname, bits);
-
-                        src.Value = local_img_fname;
-
+                        var local_image_fname = DownLoadImage(url, wc);
+                        href.Value = local_image_fname;
                     }
-
                 }
 
             }
@@ -140,13 +105,27 @@ namespace MetaWeblogPS
             w.Close();
         }
 
-        private static byte[] DownloadURLAsBytes(string url)
+        private string DownLoadImage(string url, WebClient wc)
         {
-            var wc = new System.Net.WebClient();
-            var bits = wc.DownloadData(url);
-            return bits;
+            var url_lc = url.ToLower();
+            var uri_lc = new System.Uri(url_lc);
+            var uri = new System.Uri(url);
+
+            var a = System.IO.Path.GetFileName(uri.LocalPath);
+            this.WriteVerbose("A: " + a);
+            var files_folder = this.Filename + "_files";
+            this.WriteVerbose("Files Folder: " + files_folder);
+            if (!System.IO.Directory.Exists(files_folder))
+            {
+                this.WriteVerbose("CREATED: " + files_folder);
+                System.IO.Directory.CreateDirectory(files_folder);
+            }
+
+
+            var local_img_fname = System.IO.Path.Combine(files_folder, a);
+            this.WriteVerbose("local fname : " + local_img_fname);
+            wc.DownloadFile(url, local_img_fname);
+            return local_img_fname;
         }
-
-
     }
 }
