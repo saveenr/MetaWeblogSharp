@@ -48,8 +48,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="BodyAnalysis.cs" />
+    <Compile Include="Edit_MetaWeblogPost.cs" />
+    <Compile Include="Export_MetaWeblogPostToHTML.cs" />
+    <Compile Include="Get_MetaWeblogPost.cs" />
+    <Compile Include="Import_MetaWeblogClient.cs" />
+    <Compile Include="New-MetaWebogClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Publish_MetaWeblogMediaObject.cs" />
+    <Compile Include="Publish_MetaWeblogPost.cs" />
+    <Compile Include="Remove_MetaWeblogPost.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MetaWeblogSharp\MetaWeblogSharp.csproj">
