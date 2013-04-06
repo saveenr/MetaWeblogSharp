@@ -77,7 +77,6 @@ namespace MetaWeblogPS
         [SMA.Parameter(Mandatory = true, Position = 0)] 
         public MetaWeblogSharp.Client Client;
 
-
         [SMA.Parameter(ParameterSetName="props",Mandatory = true, Position = 1)] 
         public string Title;
         
@@ -102,20 +101,8 @@ namespace MetaWeblogPS
                 this.WriteVerbose("using date created");
                 dt = this.DateCreated;
             }
-            else
-            {
-            }
-
-            if (false)//this.Post != null)
-            {
-                //var postid = this.Client.NewPost(this.Post,this.Categories, !this.Draft);
-                //this.WriteObject(postid);                                
-            }
-            else
-            {
-                var postid = this.Client.NewPost(this.Title, this.Description, this.Categories, !this.Draft, dt);
-                this.WriteObject(postid);                
-            }
+            var postid = this.Client.NewPost(this.Title, this.Description, this.Categories, !this.Draft, dt);
+            this.WriteObject(postid);                
         }
     }
 
