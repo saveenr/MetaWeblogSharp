@@ -77,8 +77,6 @@ namespace MetaWeblogPS
         [SMA.Parameter(Mandatory = true, Position = 0)] 
         public MetaWeblogSharp.Client Client;
 
-        [SMA.Parameter(ParameterSetName = "post", Mandatory = true, Position = 1)]
-        public MetaWeblogSharp.PostInfo Post;
 
         [SMA.Parameter(ParameterSetName="props",Mandatory = true, Position = 1)] 
         public string Title;
@@ -101,13 +99,17 @@ namespace MetaWeblogPS
 
             if (DateCreated.Year != 9999)
             {
+                this.WriteVerbose("using date created");
                 dt = this.DateCreated;
             }
-
-            if (this.Post != null)
+            else
             {
-                var postid = this.Client.NewPost(this.Post,this.Categories, !this.Draft);
-                this.WriteObject(postid);                                
+            }
+
+            if (false)//this.Post != null)
+            {
+                //var postid = this.Client.NewPost(this.Post,this.Categories, !this.Draft);
+                //this.WriteObject(postid);                                
             }
             else
             {
@@ -319,73 +321,4 @@ namespace MetaWeblogPS
            
         }
     }
-
-    public class BlogSession
-    {
-        private MetaWeblogSharp.Client Client;
-        public BlogSession( MetaWeblogSharp.Client client )
-        {
-        
-        }
-
-        public virtual void WriteHost(string s)
-        {
-        }
-
-        public virtual void WriteHost(string fmt, params object[] items)
-        {
-            string s = string.Format(fmt, items);
-            this.WriteHost(s);
-        }
-
-        public virtual void WriteDebug(string s)
-        {
-        }
-
-        public virtual void WriteDebug(string fmt, params object[] items)
-        {
-            string s = string.Format(fmt, items);
-            this.WriteHost(s);
-        }
-
-        public virtual void WriteVerbose(string s)
-        {
-        }
-
-        public virtual void WriteVerbose(string fmt, params object[] items)
-        {
-            string s = string.Format(fmt, items);
-            this.WriteHost(s);
-        }
-    }
-
-    public class PSBlogSession : BlogSession
-    {
-        private SMA.Cmdlet cmdlet;
-
-        public PSBlogSession(MetaWeblogSharp.Client client, SMA.Cmdlet cmdlet) :
-            base(client)
-        {
-            this.cmdlet = cmdlet;
-        }
-
-        public override void WriteDebug(string s)
-        {
-            this.cmdlet.WriteDebug(s);
-        }
-
-        public override void WriteHost(string s)
-        {
-            this.cmdlet.WriteVerbose(s);
-        }
-
-
-        public override void WriteVerbose(string s)
-        {
-            this.cmdlet.WriteVerbose(s);
-        }
-
-
-    }
-
 }

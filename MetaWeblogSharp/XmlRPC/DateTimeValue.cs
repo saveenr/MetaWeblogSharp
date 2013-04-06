@@ -19,6 +19,7 @@ namespace MetaWeblogSharp.XmlRPC
         protected override void AddToTypeEl(SXL.XElement parent)
         {
             var s = this.Data.ToString("s", System.Globalization.CultureInfo.InvariantCulture);
+            s = s.Replace("-","");
             parent.Value = s;
         }
 
