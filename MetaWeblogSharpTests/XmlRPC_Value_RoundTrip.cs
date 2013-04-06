@@ -135,19 +135,13 @@ namespace MetaWeblogSharpTests
         [TestMethod]
         public void GetPosts1()
         {
-            var bci = MetaWeblogSharp.BlogConnectionInfo.Load("d:\\msdn.xml");
+            var bci = MetaWeblogSharp.BlogConnectionInfo.Load("d:\\saveenr\\skydrive\\blogscripts\\viziblr.xml");
             var client = new MetaWeblogSharp.Client(bci);
             var blogs = client.GetUsersBlogs();
 
             var blog = blogs;
 
             var posts = client.GetRecentPosts(10000);
-
-            // clean out all posts
-            foreach (var post in posts)
-            {
-                client.DeletePost(post.PostID);
-            }
 
             posts = client.GetRecentPosts(10000);
 
