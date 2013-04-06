@@ -1,7 +1,7 @@
 <package >
   <metadata>
     <id>MetaWeblogSharp</id>
-    <version>1.0.23</version>
+    <version>1.1.0</version>
     <authors>saveenr</authors>
     <owners>saveenr</owners>
     <licenseUrl>http://metaweblogsharp.codeplex.com</licenseUrl>
@@ -12,7 +12,7 @@
 </description>
 
 <releaseNotes>
-Fixed a Stackoverflow bug when adding parameters
+Now use correct ISO8601. This means CreateDate for posts is correctly set.
 </releaseNotes>
     <copyright>Copyright 2013</copyright>
     <tags>MetaWeblog</tags>
