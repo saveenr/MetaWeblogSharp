@@ -171,7 +171,7 @@ namespace MetaWeblogSharp
             return success.Boolean;
         }
 
-        public BlogInfo GetUsersBlogs()
+        public List<BlogInfo> GetUsersBlogs()
         {
             var service = new XmlRPC.Service(this.BlogConnectionInfo.MetaWeblogURL);
 
@@ -182,19 +182,28 @@ namespace MetaWeblogSharp
 
             var response = service.Execute(method);
             var list = (XmlRPC.Array)response.Parameters[0];
-            var struct_ = (XmlRPC.Struct)list[0];
 
-            var boginfo = new BlogInfo();
-            boginfo.BlogID = struct_.Get<StringValue>("blogid", StringValue.NullString).String;
-            boginfo.URL = struct_.Get<StringValue>("url", StringValue.NullString).String;
-            boginfo.BlogName = struct_.Get<StringValue>("blogName", StringValue.NullString).String;
-            boginfo.IsAdmin = struct_.Get<BooleanValue>("isAdmin", false).Boolean;
-            boginfo.SiteName = struct_.Get<StringValue>("siteName", StringValue.NullString).String;
-            boginfo.Capabilities = struct_.Get<StringValue>("capabilities", StringValue.NullString).String;
-            boginfo.XmlRPCEndPoint = struct_.Get<StringValue>("xmlrpc", StringValue.NullString).String;
-            boginfo.RawData = struct_;
+            var blogs = new List<BlogInfo>(list.Count);
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                var struct_ = (XmlRPC.Struct)list[0];
+
+                var boginfo = new BlogInfo();
+                boginfo.BlogID = struct_.Get<StringValue>("blogid", StringValue.NullString).String;
+                boginfo.URL = struct_.Get<StringValue>("url", StringValue.NullString).String;
+                boginfo.BlogName = struct_.Get<StringValue>("blogName", StringValue.NullString).String;
+                boginfo.IsAdmin = struct_.Get<BooleanValue>("isAdmin", false).Boolean;
+                boginfo.SiteName = struct_.Get<StringValue>("siteName", StringValue.NullString).String;
+                boginfo.Capabilities = struct_.Get<StringValue>("capabilities", StringValue.NullString).String;
+                boginfo.XmlRPCEndPoint = struct_.Get<StringValue>("xmlrpc", StringValue.NullString).String;
+                boginfo.RawData = struct_;
+
+                blogs.Add(boginfo);
+               
+            }
             
-            return boginfo;
+            return blogs;
         }
         
         public bool EditPost(string postid, string title, string description, IList<string> categories, bool publish)

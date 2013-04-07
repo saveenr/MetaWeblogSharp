@@ -135,17 +135,11 @@ namespace MetaWeblogSharpTests
         [TestMethod]
         public void GetPosts1()
         {
-            var bci = MetaWeblogSharp.BlogConnectionInfo.Load("d:\\saveenr\\skydrive\\blogscripts\\viziblr.xml");
+            var bci = MetaWeblogSharp.BlogConnectionInfo.Load("d:\\saveenr\\skydrive\\blogscripts\\localhost.xml");
             var client = new MetaWeblogSharp.Client(bci);
             var blogs = client.GetUsersBlogs();
 
-            var blog = blogs;
-
             var posts = client.GetRecentPosts(10000);
-
-            posts = client.GetRecentPosts(10000);
-
-            Assert.AreEqual(0,posts.Count);
 
             // create and verify a normal post
             string postid = client.NewPost("P1", "P1Content", null, false, null);
