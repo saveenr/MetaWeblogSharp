@@ -128,36 +128,4 @@ namespace MetaWeblogSharpTests
             return dest_value;
         }
     }
-
-    [TestClass]
-    public class Test_BlogEngine
-    {
-        [TestMethod]
-        public void GetPosts1()
-        {
-            var bci = MetaWeblogSharp.BlogConnectionInfo.Load("d:\\saveenr\\skydrive\\blogscripts\\localhost.xml");
-            var client = new MetaWeblogSharp.Client(bci);
-            var blogs = client.GetUsersBlogs();
-
-            var posts = client.GetRecentPosts(10000);
-
-            // create and verify a normal post
-            string postid = client.NewPost("P1", "P1Content", null, false, null);
-            posts = client.GetRecentPosts(10000);
-            Assert.AreEqual(1,posts.Count);
-            Assert.AreEqual(postid, posts[0].PostID);
-
-
-            // Create another post
-            string postid2 = client.NewPost("P2", "P2Content", null, false, null);
-            posts = client.GetRecentPosts(10000);
-            Assert.AreEqual(2, posts.Count);
-            Assert.AreEqual(postid2, posts[0].PostID);
-            Assert.AreEqual(postid, posts[1].PostID);
-            Assert.AreEqual(null, posts[0].PostStatus);
-            
-
-
-        }
-    }
 }

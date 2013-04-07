@@ -187,7 +187,7 @@ namespace MetaWeblogSharp
 
             for (int i = 0; i < list.Count; i++)
             {
-                var struct_ = (XmlRPC.Struct)list[0];
+                var struct_ = (XmlRPC.Struct)list[i];
 
                 var boginfo = new BlogInfo();
                 boginfo.BlogID = struct_.Get<StringValue>("blogid", StringValue.NullString).String;
@@ -200,7 +200,6 @@ namespace MetaWeblogSharp
                 boginfo.RawData = struct_;
 
                 blogs.Add(boginfo);
-               
             }
             
             return blogs;
@@ -209,14 +208,11 @@ namespace MetaWeblogSharp
         public bool EditPost(string postid, string title, string description, IList<string> categories, bool publish)
         {
             // Create an array to hold any categories
-            XmlRPC.Array categories_;
-            if (categories == null)
+            var categories_ = new XmlRPC.Array( categories == null ? 0: categories.Count);
+            if (categories != null)
             {
-                categories_ = new XmlRPC.Array(0);
+                categories_.AddRange(categories.Select(c => new StringValue(c)));                
             }
-
-            categories_ = new XmlRPC.Array(categories.Count);
-            categories_.AddRange(categories.Select(c=>new StringValue(c)));
 
             var service = new XmlRPC.Service(this.BlogConnectionInfo.MetaWeblogURL);
             var struct_ = new XmlRPC.Struct();
