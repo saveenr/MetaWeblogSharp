@@ -7,7 +7,5 @@
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string URL { get; set; }
-
-        public object RawData { get; set; }
     }
 }

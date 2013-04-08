@@ -4,7 +4,7 @@
     {
         public int FaultCode { get; set; }
         public string FaultString { get; set; }
-        public object RawData { get; set; }
+        public string RawData { get; set; }
 
         public static Fault ParseXml(System.Xml.Linq.XElement fault_el)
         {

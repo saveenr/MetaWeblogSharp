@@ -46,7 +46,6 @@ namespace MetaWeblogSharp
                 postinfo.PostStatus = struct_.Get<StringValue>("post_status", StringValue.NullString).String;
                 postinfo.PermaLink = struct_.Get<StringValue>("permaLink", StringValue.NullString).String;
                 postinfo.Description = struct_.Get<StringValue>("description", StringValue.NullString).String;
-                postinfo.RawData = struct_;
 
                 items.Add(postinfo);
             }
@@ -74,7 +73,6 @@ namespace MetaWeblogSharp
             
             var mediaobject = new MediaObjectInfo();
             mediaobject.URL = struct_.Get<StringValue>("url", StringValue.NullString).String;
-            mediaobject.RawData = struct_;
 
             return mediaobject;
         }
@@ -104,7 +102,6 @@ namespace MetaWeblogSharp
             postinfo.Title = struct_.Get<StringValue>("title").String;
             postinfo.UserID = struct_.Get<StringValue>("userid", StringValue.NullString).String;
 
-            postinfo.RawData = struct_;
             return postinfo;
         }
 
@@ -197,7 +194,6 @@ namespace MetaWeblogSharp
                 boginfo.SiteName = struct_.Get<StringValue>("siteName", StringValue.NullString).String;
                 boginfo.Capabilities = struct_.Get<StringValue>("capabilities", StringValue.NullString).String;
                 boginfo.XmlRPCEndPoint = struct_.Get<StringValue>("xmlrpc", StringValue.NullString).String;
-                boginfo.RawData = struct_;
 
                 blogs.Add(boginfo);
             }
@@ -260,7 +256,6 @@ namespace MetaWeblogSharp
                 catinfo.RSSURL = struct_.Get<StringValue>("rssUrl", StringValue.NullString).String;
                 catinfo.CategoryID = struct_.Get<StringValue>("categoryid", StringValue.NullString).String;
 
-                catinfo.RawData = struct_;
                 items.Add(catinfo);
             }
             return items;
@@ -286,7 +281,6 @@ namespace MetaWeblogSharp
             item.LastName = struct_.Get<StringValue>("lastname", StringValue.NullString).String;
             item.URL = struct_.Get<StringValue>("url", StringValue.NullString).String;
 
-            item.RawData = struct_;
             return item;
         }
     }

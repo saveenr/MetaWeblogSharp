@@ -7,6 +7,5 @@
         public string RSSURL { get; set; }
         public string Title { get; set; }
         public string CategoryID { get; set; }
-        public object RawData { get; set; }
     }
 }

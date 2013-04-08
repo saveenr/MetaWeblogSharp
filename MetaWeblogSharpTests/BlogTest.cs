@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Xml.Serialization;
+using MetaWeblogSharp;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MetaWeblogSharp.XmlRPC;
 using X=MetaWeblogSharp.XmlRPC;
@@ -12,12 +14,7 @@ namespace MetaWeblogSharpTests
         public void GetPosts1()
         {
 
-            var con1 = new MetaWeblogSharp.BlogConnectionInfo(
-                "http://localhost:14228/test1",
-                "http://localhost:14882/test1/metaweblog.axd",
-                "test1",
-                "admin",
-                "admin" );
+            var con1 = GetBlog1();
 
             var con2 = new MetaWeblogSharp.BlogConnectionInfo(
                 "http://localhost:14228/test2",
@@ -29,7 +26,7 @@ namespace MetaWeblogSharpTests
 
             var client = new MetaWeblogSharp.Client(con1);
 
-            var blogs = client.GetUsersBlogs();
+      
 
             var posts = client.GetRecentPosts(10000);
             foreach (var p in posts)
@@ -64,6 +61,59 @@ namespace MetaWeblogSharpTests
 
 
 
+        }
+
+        private static BlogConnectionInfo GetBlog1()
+        {
+            var con1 = new MetaWeblogSharp.BlogConnectionInfo(
+                "http://localhost:14228/test1",
+                "http://localhost:14882/test1/metaweblog.axd",
+                "test1",
+                "admin",
+                "admin");
+            return con1;
+        }
+
+        private static BlogConnectionInfo GetBlog2()
+        {
+            var con1 = new MetaWeblogSharp.BlogConnectionInfo(
+                "http://localhost:14228/test2",
+                "http://localhost:14882/test2/metaweblog.axd",
+                "test2",
+                "admin",
+                "admin");
+            return con1;
+        }
+
+        [TestMethod]
+        public void SerializeTests()
+        {
+            var con1 = new MetaWeblogSharp.BlogConnectionInfo(
+                "http://localhost:14228/test1",
+                "http://localhost:14882/test1/metaweblog.axd",
+                "test1",
+                "admin",
+                "admin");
+
+
+             var client1 = new MetaWeblogSharp.Client(con1);
+             var posts = client1.GetRecentPosts(100000).ToArray();
+
+             MetaWeblogSharp.PostInfo.Serialize(posts,@"d:\blog_con_info.xml");
+
+             var loaded_posts = MetaWeblogSharp.PostInfo.Deserialize(@"d:\blog_con_info.xml");
+
+
+             for (int i = 0; i < posts.Length; i++)
+             {
+                 var original = posts[i];
+                 var loaded = loaded_posts[i];
+                 Assert.AreEqual(original.Description,loaded.Description);
+                 Assert.AreEqual(original.DateCreated, loaded.DateCreated);
+                 Assert.AreEqual(original.PostID, loaded.PostID);
+                 Assert.AreEqual(original.Title, loaded.Title);
+                 
+             }
         }
     }
 }

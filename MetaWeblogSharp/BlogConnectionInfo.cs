@@ -24,6 +24,7 @@
             return coninfo;
         }
 
+
         public void Save(string filename)
         {
             var doc = new System.Xml.Linq.XDocument();
@@ -44,6 +45,12 @@
             this.MetaWeblogURL = metaweblogurl;
             this.Username = username;
             this.Password = password;
+        }
+
+        private BlogConnectionInfo():
+            this(null,null,null,null,null)
+        {
+            
         }
     }
 }

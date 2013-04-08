@@ -49,6 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BodyAnalysis.cs" />
+    <Compile Include="Import_MetaWeblogPostFromXml.cs" />
+    <Compile Include="Export_MetaWeblogPostToXml.cs" />
     <Compile Include="Edit_MetaWeblogPost.cs" />
     <Compile Include="Export_MetaWeblogPostToHTML.cs" />
     <Compile Include="Get_MetaWeblogPost.cs" />

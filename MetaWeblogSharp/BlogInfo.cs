@@ -9,6 +9,5 @@
         public string Capabilities { get; set; }
         public bool IsAdmin { get; set; }
         public string XmlRPCEndPoint { get; set; }
-        public object RawData { get; set; }
     }
 }
