@@ -6,8 +6,8 @@ namespace MetaWeblogPS
     public class Get_MetaWeblogPost : Cmdlet
     {
         [System.Management.Automation.Parameter(Mandatory = true, Position = 0)] public MetaWeblogSharp.Client Client;
-        [System.Management.Automation.Parameter(Mandatory = true, Position = 1, ParameterSetName = "postid")] public string PostID;
-        [System.Management.Automation.Parameter(Mandatory = true, Position = 1, ParameterSetName = "recent")] public int NumPosts;
+        [System.Management.Automation.Parameter(Mandatory = true, ParameterSetName = "postid")] public string PostID;
+        [System.Management.Automation.Parameter(Mandatory = true, ParameterSetName = "recent")] public int NumPosts;
 
         protected override void ProcessRecord()
         {
