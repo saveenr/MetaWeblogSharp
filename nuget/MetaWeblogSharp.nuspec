@@ -1,0 +1,25 @@
+<package >
+  <metadata>
+    <id>MetaWeblogSharp</id>
+    <version>1.1.1</version>
+    <authors>saveenr</authors>
+    <owners>saveenr</owners>
+    <licenseUrl>http://metaweblogsharp.codeplex.com</licenseUrl>
+    <projectUrl>http://metaweblogsharp.codeplex.com</projectUrl>
+    <iconUrl>about:blank</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>MetaWeblogSharp is a simple MetaWeblog client. It has no dependencies on other libraries. 
+</description>
+
+<releaseNotes>
+EditPost fixed
+</releaseNotes>
+    <copyright>Copyright 2013</copyright>
+    <tags>MetaWeblog</tags>
+    <dependencies>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\MetaWeblogSharp\bin\debug\*.dll" target="lib\net40"/>
+  </files>
+</package>
