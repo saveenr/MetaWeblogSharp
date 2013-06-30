@@ -1,16 +1,69 @@
-﻿namespace MetaWeblogSharp
+﻿// ----------------------
+//  MetaWeblogSharp - PostInfo.cs 
+//  administrator - 6/29/2013 
+// ----------------------
+
+using System.Collections.Generic;
+
+namespace MetaWeblogSharp
 {
     public class PostInfo
     {
-        public string Title { get; set; }
-        public string Link { get; set; }
-        public System.DateTime? DateCreated { get; set; }
-        public string PostID { get; set; }
-        public string UserID { get; set; }
-        public int CommentCount { get; set; }
-        public string PostStatus { get; set; }
-        public string PermaLink { get; set; }
-        public string Description { get; set; }
+        public List<string> Categories = new List<string>();
+
+        public string Title
+        {
+            get;
+            set;
+        }
+
+        public string Link
+        {
+            get;
+            set;
+        }
+
+        public System.DateTime? DateCreated
+        {
+            get;
+            set;
+        }
+
+        public string PostID
+        {
+            get;
+            set;
+        }
+
+        public string UserID
+        {
+            get;
+            set;
+        }
+
+        public int CommentCount
+        {
+            get;
+            set;
+        }
+
+        public string PostStatus
+        {
+            get;
+            set;
+        }
+
+        public string PermaLink
+        {
+            get;
+            set;
+        }
+
+        public string Description
+        {
+            get;
+            set;
+        }
 
         public static void Serialize(MetaWeblogSharp.PostInfo[] posts, string filename)
         {

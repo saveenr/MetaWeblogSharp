@@ -7,7 +7,7 @@ namespace MetaWeblogSharp
     public class Client
     {
         //http://xmlrpc.scripting.com/metaWeblogApi.html
-        
+
         public string AppKey = "0123456789ABCDEF";
         public BlogConnectionInfo BlogConnectionInfo;
 
@@ -42,7 +42,7 @@ namespace MetaWeblogSharp
                 postinfo.Link = struct_.Get<StringValue>("link", StringValue.NullString).String;
                 postinfo.PostID = struct_.Get<StringValue>("postid", StringValue.NullString).String;
                 postinfo.UserID = struct_.Get<StringValue>("userid", StringValue.NullString).String;
-                postinfo.CommentCount = struct_.Get<IntegerValue>("commentCount",0).Integer;
+                postinfo.CommentCount = struct_.Get<IntegerValue>("commentCount", 0).Integer;
                 postinfo.PostStatus = struct_.Get<StringValue>("post_status", StringValue.NullString).String;
                 postinfo.PermaLink = struct_.Get<StringValue>("permaLink", StringValue.NullString).String;
                 postinfo.Description = struct_.Get<StringValue>("description", StringValue.NullString).String;
@@ -52,7 +52,7 @@ namespace MetaWeblogSharp
             return items;
         }
 
-        public MediaObjectInfo NewMediaObject(string name, string type, byte [] bits)
+        public MediaObjectInfo NewMediaObject(string name, string type, byte[] bits)
         {
             var service = new XmlRPC.Service(this.BlogConnectionInfo.MetaWeblogURL);
 
@@ -70,7 +70,7 @@ namespace MetaWeblogSharp
             var response = service.Execute(method);
             var param = response.Parameters[0];
             var struct_ = (XmlRPC.Struct)param;
-            
+
             var mediaobject = new MediaObjectInfo();
             mediaobject.URL = struct_.Get<StringValue>("url", StringValue.NullString).String;
 
@@ -102,17 +102,31 @@ namespace MetaWeblogSharp
             postinfo.Title = struct_.Get<StringValue>("title").String;
             postinfo.UserID = struct_.Get<StringValue>("userid", StringValue.NullString).String;
 
+            var rawCats = struct_.Get<Array>("categories");
+
+            rawCats.ToList().ForEach(i =>
+            {
+                if (i is StringValue)
+                {
+                    var cat = (i as StringValue).String;
+
+                    if (cat != "" && !postinfo.Categories.Contains(cat))
+                        postinfo.Categories.Add(cat);
+
+                }
+            });
+
             return postinfo;
         }
 
-        public string NewPost(PostInfo pi,IList<string> categories, bool publish)
+        public string NewPost(PostInfo pi, IList<string> categories, bool publish)
         {
             return NewPost(pi.Title, pi.Description, categories, publish, pi.DateCreated);
         }
 
         public string NewPost(string title, string description, IList<string> categories, bool publish, System.DateTime? date_created)
         {
-            XmlRPC.Array cats=null;
+            XmlRPC.Array cats = null;
 
             if (categories == null)
             {
@@ -121,7 +135,12 @@ namespace MetaWeblogSharp
             else
             {
                 cats = new XmlRPC.Array(categories.Count);
-                cats.AddRange( categories.Select(c=>new StringValue(c)));
+
+                var ss = new List<Value>();
+
+                categories.Select(c => new StringValue(c)).ToList().ForEach(i => ss.Add(i));
+
+                cats.AddRange(ss);
             }
 
             var service = new XmlRPC.Service(this.BlogConnectionInfo.MetaWeblogURL);
@@ -134,7 +153,7 @@ namespace MetaWeblogSharp
             {
                 struct_["dateCreated"] = new DateTimeValue(date_created.Value);
                 struct_["date_created_gmt"] = new DateTimeValue(date_created.Value.ToUniversalTime());
-                
+
             }
             var method = new XmlRPC.MethodCall("metaWeblog.newPost");
             method.Parameters.Add(this.BlogConnectionInfo.BlogID);
@@ -197,21 +216,32 @@ namespace MetaWeblogSharp
 
                 blogs.Add(boginfo);
             }
-            
+
             return blogs;
         }
-        
+
         public bool EditPost(string postid, string title, string description, IList<string> categories, bool publish)
         {
+
             // Create an array to hold any categories
-            var categories_ = new XmlRPC.Array( categories == null ? 0: categories.Count);
+            var categories_ = new XmlRPC.Array(categories == null ? 0 : categories.Count);
+
             if (categories != null)
             {
-                categories_.AddRange(categories.Select(c => new StringValue(c)));                
+                var sorted = categories.Distinct().ToList();
+
+                sorted.Sort();
+
+                var ss = new List<Value>();
+
+                sorted.Select(c => new StringValue(c)).ToList().ForEach(i => ss.Add(i));
+
+                categories_.AddRange(ss);
             }
 
             var service = new XmlRPC.Service(this.BlogConnectionInfo.MetaWeblogURL);
             var struct_ = new XmlRPC.Struct();
+
             struct_["title"] = new StringValue(title);
             struct_["description"] = new StringValue(description);
             struct_["categories"] = categories_;
