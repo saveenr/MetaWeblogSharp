@@ -30,7 +30,11 @@ namespace MetaWeblogSharp.XmlRPC
             {
                 return new DateTimeValue(dt);
             }
-            var x = System.DateTime.ParseExact(parent.Value, "yyyyMMddTHH:mm:ss", null);
+
+            /// TODO: what is Z for?
+            var date = parent.Value.Trim('Z');// remove Z from SharePoint date
+
+            var x = System.DateTime.ParseExact(date, "yyyyMMddTHH:mm:ss", null);
             var y = new DateTimeValue(x);
             return y;
         }

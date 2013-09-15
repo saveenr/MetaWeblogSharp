@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MetaWeblogSharp.XmlRPC;
 
@@ -25,6 +26,8 @@ namespace MetaWeblogSharp
             method.Parameters.Add(this.BlogConnectionInfo.Username);
             method.Parameters.Add(this.BlogConnectionInfo.Password);
             method.Parameters.Add(numposts);
+
+            service.Cookies = this.BlogConnectionInfo.Cookies;
 
             var response = service.Execute(method);
 
@@ -67,6 +70,8 @@ namespace MetaWeblogSharp
             method.Parameters.Add(this.BlogConnectionInfo.Password);
             method.Parameters.Add(input_struct_);
 
+            service.Cookies = this.BlogConnectionInfo.Cookies;
+
             var response = service.Execute(method);
             var param = response.Parameters[0];
             var struct_ = (XmlRPC.Struct)param;
@@ -86,6 +91,8 @@ namespace MetaWeblogSharp
             method.Parameters.Add(this.BlogConnectionInfo.Username);
             method.Parameters.Add(this.BlogConnectionInfo.Password);
 
+            service.Cookies = this.BlogConnectionInfo.Cookies;
+
             var response = service.Execute(method);
             var param = response.Parameters[0];
             var struct_ = (XmlRPC.Struct)param;
@@ -102,7 +109,7 @@ namespace MetaWeblogSharp
             postinfo.Title = struct_.Get<StringValue>("title").String;
             postinfo.UserID = struct_.Get<StringValue>("userid", StringValue.NullString).String;
 
-            var rawCats = struct_.Get<Array>("categories");
+            var rawCats = struct_.Get<MetaWeblogSharp.XmlRPC.Array>("categories");
 
             rawCats.ToList().ForEach(i =>
             {
@@ -162,6 +169,8 @@ namespace MetaWeblogSharp
             method.Parameters.Add(struct_);
             method.Parameters.Add(publish);
 
+            service.Cookies = this.BlogConnectionInfo.Cookies;
+
             var response = service.Execute(method);
             var param = response.Parameters[0];
             var postid = ((StringValue)param).String;
@@ -180,7 +189,10 @@ namespace MetaWeblogSharp
             method.Parameters.Add(this.BlogConnectionInfo.Password);
             method.Parameters.Add(true);
 
+            service.Cookies = this.BlogConnectionInfo.Cookies;
+
             var response = service.Execute(method);
+
             var param = response.Parameters[0];
             var success = (BooleanValue)param;
 
@@ -193,8 +205,14 @@ namespace MetaWeblogSharp
 
             var method = new XmlRPC.MethodCall("blogger.getUsersBlogs");
             method.Parameters.Add(this.AppKey);
-            method.Parameters.Add(this.BlogConnectionInfo.Username);
-            method.Parameters.Add(this.BlogConnectionInfo.Password);
+
+            //if (!String.IsNullOrEmpty(this.BlogConnectionInfo.Username))
+                method.Parameters.Add(this.BlogConnectionInfo.Username);
+
+            //if (!String.IsNullOrEmpty(this.BlogConnectionInfo.Password))
+                method.Parameters.Add(this.BlogConnectionInfo.Password);
+
+            service.Cookies = this.BlogConnectionInfo.Cookies;
 
             var response = service.Execute(method);
             var list = (XmlRPC.Array)response.Parameters[0];
@@ -253,6 +271,8 @@ namespace MetaWeblogSharp
             method.Parameters.Add(struct_);
             method.Parameters.Add(publish);
 
+            service.Cookies = this.BlogConnectionInfo.Cookies;
+
             var response = service.Execute(method);
             var param = response.Parameters[0];
             var success = (BooleanValue)param;
@@ -268,7 +288,7 @@ namespace MetaWeblogSharp
             method.Parameters.Add(this.BlogConnectionInfo.BlogID);
             method.Parameters.Add(this.BlogConnectionInfo.Username);
             method.Parameters.Add(this.BlogConnectionInfo.Password);
-
+            service.Cookies = this.BlogConnectionInfo.Cookies;
             var response = service.Execute(method);
 
             var param = response.Parameters[0];
@@ -299,6 +319,8 @@ namespace MetaWeblogSharp
             method.Parameters.Add(this.AppKey);
             method.Parameters.Add(this.BlogConnectionInfo.Username);
             method.Parameters.Add(this.BlogConnectionInfo.Password);
+
+            service.Cookies = this.BlogConnectionInfo.Cookies;
 
             var response = service.Execute(method);
             var param = response.Parameters[0];
