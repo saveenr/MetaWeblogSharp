@@ -61,5 +61,6 @@ public class MetaWeblogSharpSample1 : AbstractInstruction
         var posts = client.GetRecentPosts(10);
 
         ResultTable = posts.GetSerializedList().ListToTable();
+
     }
 }
