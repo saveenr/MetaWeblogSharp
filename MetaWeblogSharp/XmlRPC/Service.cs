@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Text;
 
 namespace MetaWeblogSharp.XmlRPC
@@ -13,10 +14,19 @@ namespace MetaWeblogSharp.XmlRPC
             this.URL = url;
         }
 
+        public CookieContainer Cookies = null;
+
         public MethodResponse Execute(MethodCall methodcall)
         {
             var doc = methodcall.CreateDocument();
             var request = System.Net.WebRequest.Create(this.URL);
+
+            if (Cookies != null)
+            {
+            var hRequest = request as HttpWebRequest;
+            hRequest.CookieContainer = Cookies;
+
+            }
             request.Method = "POST";
 
             var content = doc.ToString();

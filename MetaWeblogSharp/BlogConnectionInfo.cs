@@ -1,4 +1,5 @@
-﻿namespace MetaWeblogSharp
+﻿using System.Net;
+namespace MetaWeblogSharp
 {
     public class BlogConnectionInfo
     {
@@ -38,6 +39,8 @@
             doc.Save(filename);
         }
         
+        public CookieContainer Cookies = null;
+
         public BlogConnectionInfo(string blogurl, string metaweblogurl, string blogid, string username, string password)
         {
             this.BlogURL = blogurl;
@@ -45,6 +48,7 @@
             this.MetaWeblogURL = metaweblogurl;
             this.Username = username;
             this.Password = password;
+
         }
 
         private BlogConnectionInfo():
