@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Text;
 
 namespace MetaWeblogSharp.XmlRPC
@@ -7,6 +6,8 @@ namespace MetaWeblogSharp.XmlRPC
     public class Service
     {
         public String URL { get; private set; }
+
+        private bool EnableExpect100Continue=false;
 
         public Service(string url)
         {
@@ -17,11 +18,13 @@ namespace MetaWeblogSharp.XmlRPC
         {
             var doc = methodcall.CreateDocument();
             var request = System.Net.WebRequest.Create(this.URL);
-            request.Method = "POST";
 
+            var wr = (System.Net.HttpWebRequest) request;
+            wr.ServicePoint.Expect100Continue = this.EnableExpect100Continue;
+            request.Method = "POST";
             var content = doc.ToString();
             var byteArray = Encoding.UTF8.GetBytes(content);
-            request.ContentType = "text/xml";
+            request.ContentType = "text/xml;charset=utf-8";
             request.ContentLength = byteArray.Length;
 
             using (var webpageStream = request.GetRequestStream())
