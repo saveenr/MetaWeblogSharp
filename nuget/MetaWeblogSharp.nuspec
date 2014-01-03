@@ -1,25 +1,20 @@
-<package >
-  <metadata>
-    <id>MetaWeblogSharp</id>
-    <version>1.1.1</version>
-    <authors>saveenr</authors>
-    <owners>saveenr</owners>
-    <licenseUrl>http://metaweblogsharp.codeplex.com</licenseUrl>
-    <projectUrl>http://metaweblogsharp.codeplex.com</projectUrl>
-    <iconUrl>about:blank</iconUrl>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>MetaWeblogSharp is a simple MetaWeblog client. It has no dependencies on other libraries. 
-</description>
-
-<releaseNotes>
-EditPost fixed
-</releaseNotes>
-    <copyright>Copyright 2013</copyright>
-    <tags>MetaWeblog</tags>
-    <dependencies>
-    </dependencies>
-  </metadata>
-  <files>
-    <file src="..\MetaWeblogSharp\bin\debug\*.dll" target="lib\net40"/>
-  </files>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>MetaWeblogSharp</id>
+        <version>1.1.2</version>
+        <authors>saveenr</authors>
+        <owners>saveenr</owners>
+        <licenseUrl>http://metaweblogsharp.codeplex.com</licenseUrl>
+        <projectUrl>http://metaweblogsharp.codeplex.com</projectUrl>
+        <iconUrl>about:blank</iconUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>MetaWeblogSharp is a simple MetaWeblog client. It has no dependencies on other libraries.</description>
+        <releaseNotes>Disabled use of HTTP EnableExpect100Continue for more reliable communication with server</releaseNotes>
+        <copyright>Copyright 2014</copyright>
+        <tags>MetaWeblog</tags>
+    </metadata>
+    <files>
+        <file src="lib\net40\MetaWeblogSharp.dll" target="lib\net40\MetaWeblogSharp.dll" />
+    </files>
 </package>
